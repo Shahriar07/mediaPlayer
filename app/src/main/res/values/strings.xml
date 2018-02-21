@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidTestApplication</string>
+    <string name="start_button">Start</string>
+    <string name="pause_button">Pause</string>
+    <string name="start_loop">Loop Start</string>
+    <string name="stop_loop">Loop End</string>
+    <string name="reset_loop">Reset</string>
+</resources>
