@@ -13,13 +13,25 @@ import android.widget.TextView;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
+    // Media Control Buttons
     Button play_pause_button;
+    Button loop_start_button;
+    Button loop_end_button;
+    Button loop_reset_button;
+
+    // Media player informations
     SeekBar seek_bar;
-    MediaPlayer player;
     TextView current_time;
     TextView end_time;
+
+    // Media player
+    MediaPlayer player;
+
     Handler seekHandler = new Handler();
     Utility utility = new Utility();
+    int loopStartTime = 0;
+    int loopEndTime = 0;
+    int mediaDuration = 0;
     /**
      * Called when the activity is first created.
      */
@@ -29,19 +41,30 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         setContentView(R.layout.activity_main);
 
         getInit();
-//        seekUpdation();
     }
 
     public void getInit() {
         seek_bar = (SeekBar) findViewById(R.id.seek_bar);
         play_pause_button = (Button) findViewById(R.id.startButton);
         play_pause_button.setOnClickListener(this);
-        player = MediaPlayer.create(this, R.raw.small_town_boy);
+
+        loop_start_button = (Button) findViewById(R.id.start_loop);
+        loop_start_button.setOnClickListener(this);
+
+        loop_end_button = (Button) findViewById(R.id.end_loop);
+        loop_end_button.setOnClickListener(this);
+
+        loop_reset_button = (Button) findViewById(R.id.reset_loop);
+        loop_reset_button.setOnClickListener(this);
+
+        player = MediaPlayer.create(this, R.raw.surah_al_fatiha);
         player.setOnCompletionListener(this);
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
         end_time = (TextView) findViewById(R.id.audio_max_time_text);
-        seek_bar.setMax(player.getDuration());
-        end_time.setText(utility.getFormatedTimeFromMilisecond(player.getDuration()));
+        mediaDuration = player.getDuration();
+        seek_bar.setMax(mediaDuration);
+        loopEndTime = mediaDuration;
+        end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration));
         seek_bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean inputFromUser) {
@@ -65,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     Runnable run = new Runnable() {
         @Override
         public void run() {
+            if (loopEndTime < mediaDuration && player.getCurrentPosition() >= loopEndTime){
+                player.seekTo(loopStartTime);
+            }
             seekUpdation();
         }
     };
@@ -98,8 +124,17 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
                 changePlayPauseButton();
                 break;
             }
+            case R.id.start_loop:{
+                loopStartTime = player.getCurrentPosition();
+                break;
+            }
+            case R.id.end_loop:{
+                loopEndTime = player.getCurrentPosition();
+                break;
+            }
             case R.id.reset_loop:{
-
+                loopStartTime = 0;
+                loopEndTime = mediaDuration;
                 break;
             }
         }
