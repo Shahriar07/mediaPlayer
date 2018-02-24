@@ -5,4 +5,7 @@
     <string name="start_loop">Loop Start</string>
     <string name="stop_loop">Loop End</string>
     <string name="reset_loop">Reset</string>
+    <string name="surah_and_verse">Verse: </string>
+    <string name="arabic_verse">Arabic Verse</string>
+    <string name="translated_verse">Translated Verse</string>
 </resources>
