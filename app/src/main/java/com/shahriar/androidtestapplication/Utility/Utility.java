@@ -5,7 +5,7 @@ import android.util.Log;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by USER on 2/21/2018.
+ * Created by H. M. Shahriar on 2/21/2018.
  */
 
 public class Utility {

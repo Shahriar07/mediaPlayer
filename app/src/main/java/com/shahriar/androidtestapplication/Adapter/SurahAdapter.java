@@ -12,7 +12,7 @@ import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.R;
 
 /**
- * Created by USER on 2/24/2018.
+ * Created by H. M. Shahriar on 2/24/2018.
  */
 
 public class SurahAdapter extends RecyclerView.Adapter {

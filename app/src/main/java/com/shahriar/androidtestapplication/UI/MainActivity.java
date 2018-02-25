@@ -1,11 +1,10 @@
-package com.shahriar.androidtestapplication;
+package com.shahriar.androidtestapplication.UI;
 
-import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,13 +13,23 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.shahriar.androidtestapplication.Adapter.SurahAdapter;
 import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
+import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
+import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
+import com.shahriar.androidtestapplication.Utility.DurationConstants;
+import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
 import java.util.ArrayList;
+
+/**
+ * Created by H. M. Shahriar on 2/21/2018.
+ */
+
 
 public class MainActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
     // Media Control Buttons
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     // Media player
     MediaPlayer player;
+    Surah surah;
 
     Handler seekHandler = new Handler();
     Utility utility = new Utility();
@@ -50,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView verseList;
+    private RecyclerView verseListView;
+
     /**
      * Called when the activity is first created.
      */
@@ -87,11 +98,27 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration));
         seek_bar.setOnSeekBarChangeListener(seekBarChangeListener);
 
-        verseList = (RecyclerView) findViewById(R.id.listView);
+        verseListView = (RecyclerView) findViewById(R.id.listView);
         mLayoutManager = new LinearLayoutManager(this);
-        verseList.setLayoutManager(mLayoutManager);
-        mAdapter = new SurahAdapter(prepareSurah());
-        verseList.setAdapter(mAdapter);
+        verseListView.setLayoutManager(mLayoutManager);
+        surah = prepareSurah();
+        mAdapter = new SurahAdapter(surah);
+        verseListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        verseListView.setAdapter(mAdapter);
+
+        verseListView.addOnItemTouchListener(new VerseTouchListener(getApplicationContext(), verseListView, new OnRecycleViewClicked(){
+            @Override
+            public void onClick(View view, int position) {
+                Verse verse = surah.getVerses().get(position);
+                Toast.makeText(getApplicationContext(), verse.getVerseNo() + " is selected!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
     }
 
 

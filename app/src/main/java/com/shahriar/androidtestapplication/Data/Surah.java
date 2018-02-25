@@ -3,7 +3,7 @@ package com.shahriar.androidtestapplication.Data;
 import java.util.ArrayList;
 
 /**
- * Created by USER on 2/24/2018.
+ * Created by H. M. Shahriar on 2/24/2018.
  */
 
 public class Surah {

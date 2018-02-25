@@ -1,7 +1,7 @@
 package com.shahriar.androidtestapplication.Data;
 
 /**
- * Created by USER on 2/24/2018.
+ * Created by H. M. Shahriar on 2/24/2018.
  */
 
 public class Verse {
