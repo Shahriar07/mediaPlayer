@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.shahriar.androidtestapplication.Adapter.SurahAdapter;
 import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
+import com.shahriar.androidtestapplication.Factory.SurahFactory;
 import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
 import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
 import com.shahriar.androidtestapplication.Utility.DurationConstants;
@@ -54,13 +55,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     int loopEndTime = 0;
     int mediaDuration = 0;
     int loopCount = 0;
-    int maxLoopCount = 2;
+    int maxLoopCount = 4;
     int currentLoopIndex = 0;
     int durationArray[];
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView verseListView;
+
+
+    // Need to register Surah in factory
+    static
+    {
+        try
+        {
+            Log.d("MainActivity","Static block called");
+            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad");
+        }
+        catch (ClassNotFoundException any)
+        {
+            any.printStackTrace();
+        }
+    }
 
     /**
      * Called when the activity is first created.
@@ -70,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getInit();
-        durationArray = DurationConstants.surah_al_balad;
+
     }
 
     public void getInit() {
@@ -101,8 +117,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         verseListView = (RecyclerView) findViewById(R.id.listView);
         mLayoutManager = new LinearLayoutManager(this);
         verseListView.setLayoutManager(mLayoutManager);
-        surah = prepareSurah();
-        mAdapter = new SurahAdapter(surah);
+        surah = SurahFactory.getInstance().prepareSurah("90");
+
+        durationArray = surah.getDuration();
+        mAdapter = new SurahAdapter(surah,this);
         verseListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         verseListView.setAdapter(mAdapter);
 
@@ -111,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
             public void onClick(View view, int position) {
                 Verse verse = surah.getVerses().get(position);
                 Toast.makeText(getApplicationContext(), verse.getVerseNo() + " is selected!", Toast.LENGTH_SHORT).show();
+                setLoopWhenVerseClicked(position);
             }
 
             @Override
@@ -121,51 +140,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
     }
 
-
-    private Surah prepareSurah(){
-        Verse v = new Verse(1,"Verse in arabic","Verse in bangla");
-        Verse v1 = new Verse(2,"Verse in arabic","Verse in bangla");
-        Verse v2 = new Verse(3,"Verse in arabic","Verse in bangla");
-        Verse v3 = new Verse(4,"Verse in arabic","Verse in bangla");
-        Verse v4 = new Verse(5,"Verse in arabic","Verse in bangla");
-        Verse v5 = new Verse(6,"Verse in arabic","Verse in bangla");
-        Verse v6 = new Verse(7,"Verse in arabic","Verse in bangla");
-        Verse v7 = new Verse(8,"Verse in arabic","Verse in bangla");
-        Verse v8 = new Verse(9,"Verse in arabic","Verse in bangla");
-
-
-        ArrayList<Verse> verseArrayList = new ArrayList<>();
-        verseArrayList.add(v);
-        verseArrayList.add(v1);
-        verseArrayList.add(v2);
-        verseArrayList.add(v3);
-        verseArrayList.add(v4);
-        verseArrayList.add(v5);
-        verseArrayList.add(v6);
-        verseArrayList.add(v7);
-        verseArrayList.add(v8);
-        Surah surah = new Surah("Surah-Al-Balad",verseArrayList,90,true);
-        return surah;
-    }
-
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean inputFromUser) {
-            current_time.setText(utility.getFormatedTimeFromMilisecond(i));
             if(inputFromUser){
-                currentLoopIndex = utility.getIndexForLoop(i,durationArray);
-                if (currentLoopIndex == 0) {
-                    loopStartTime = durationArray[0];
-                    loopEndTime = durationArray[1];
-                }
-                else {
-                    loopStartTime = durationArray[currentLoopIndex];
-                    loopEndTime = durationArray[currentLoopIndex+1];
-                }
-                loopCount = 0;
-                player.seekTo(loopStartTime);
-
-                Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime + " LoopEndTime " + loopEndTime);
+                int index = utility.getIndexForLoop(i,durationArray);
+                setLoopWhenVerseClicked(index);
             }
         }
 
@@ -179,6 +159,28 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 
         }
     };
+
+    void setLoopWhenVerseClicked(int index){
+        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
+        currentLoopIndex = index;
+        if (currentLoopIndex == 0) {
+            loopStartTime = durationArray[0];
+            loopEndTime = durationArray[1];
+        }
+        else {
+            loopStartTime = durationArray[currentLoopIndex];
+            loopEndTime = durationArray[currentLoopIndex+1];
+        }
+        loopCount = 0;
+        player.seekTo(loopStartTime);
+        if (!player.isPlaying()){
+            player.start();
+            seekUpdation();
+            changePlayPauseButton();
+        }
+        Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime + " LoopEndTime " + loopEndTime);
+    }
+
     void setNextLoop(){
         loopCount = 0;
         ++currentLoopIndex;
@@ -198,17 +200,18 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     Runnable run = new Runnable() {
         @Override
         public void run() {
-            if (loopCount == maxLoopCount){
-                Log.d(getClass().getSimpleName(),"Set Next Loop Count");
-                setNextLoop();
-            }
+            if (maxLoopCount > 0) {
+                if (loopCount == maxLoopCount) {
+                    Log.d(getClass().getSimpleName(), "Set Next Loop Count");
+                    setNextLoop();
+                }
 
-            if (loopEndTime < mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount ){
-                player.seekTo(loopStartTime);
-                Log.d(getClass().getSimpleName(),"Loop Count ++ " + loopCount);
-                ++loopCount;
+                if (loopEndTime < mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount) {
+                    player.seekTo(loopStartTime);
+                    Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
+                    ++loopCount;
+                }
             }
-
             seekUpdation();
         }
     };

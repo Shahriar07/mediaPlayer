@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class Utility {
 
     public String getFormatedTimeFromMilisecond (long millisecond){
-        Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
+//        Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
         String time = "00:00:00";
         if (millisecond >= 0) {
             time = String.format("%02d:%02d:%02d",

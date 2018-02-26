@@ -1,17 +1,23 @@
 package com.shahriar.androidtestapplication.Data;
 
+import com.shahriar.androidtestapplication.Exception.SurahContentNotPreparedException;
+
 import java.util.ArrayList;
 
 /**
  * Created by H. M. Shahriar on 2/24/2018.
  */
 
-public class Surah {
+public abstract class  Surah {
+
+    public abstract Surah getSuraContent();
+    public abstract void prepareSuraVerses();
 
     private String surahName;
     private ArrayList<Verse> verses = new ArrayList<>();
     private int surahNumber;
     private boolean madani;
+    public abstract int[] getDuration();
 
     public ArrayList<Verse> getVerses() {
         return verses;
@@ -26,6 +32,10 @@ public class Surah {
         this.verses = verses;
         this.surahNumber = surahNumber;
         this.madani = madani;
+    }
+
+    public Surah() {
+
     }
 
     public int getSurahNumber() {

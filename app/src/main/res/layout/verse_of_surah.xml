@@ -16,6 +16,7 @@
         android:id="@+id/arabic_verse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textDirection="rtl"
         android:text="@string/arabic_verse" />
 
     <TextView
