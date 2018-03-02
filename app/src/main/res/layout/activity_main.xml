@@ -48,7 +48,7 @@
                 android:id="@+id/audio_current_time_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".2"
+                android:layout_weight=".22"
                 android:gravity="center_vertical"
                 android:text="00:00:00"
                 android:textIsSelectable="false" />
@@ -58,18 +58,14 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_weight=".8"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".75" />
 
             <TextView
                 android:id="@+id/audio_max_time_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight=".2"
+                android:layout_weight=".22"
                 android:gravity="center_vertical"
                 android:text="00:00:00"
                 android:textIsSelectable="false" />

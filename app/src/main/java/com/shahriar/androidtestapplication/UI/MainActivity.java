@@ -20,12 +20,10 @@ import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.Factory.SurahFactory;
 import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
+import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
-import com.shahriar.androidtestapplication.Utility.DurationConstants;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.Utility;
-
-import java.util.ArrayList;
 
 /**
  * Created by H. M. Shahriar on 2/21/2018.
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         seek_bar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         verseListView = (RecyclerView) findViewById(R.id.listView);
-        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         verseListView.setLayoutManager(mLayoutManager);
         surah = SurahFactory.getInstance().prepareSurah("90");
 
