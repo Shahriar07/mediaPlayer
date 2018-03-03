@@ -53,6 +53,8 @@ public class SurahAdapter extends RecyclerView.Adapter {
         return verseArrayList.size();
     }
 }
+
+
 class VerseHolder extends RecyclerView.ViewHolder {
     // each data item is just a string in this case
     public TextView verseNo;
@@ -77,5 +79,7 @@ class VerseHolder extends RecyclerView.ViewHolder {
         surahVersesArabic.setText(verse.getSurahVersesArabic());
         surahVersesTranslated.setText(verse.getSurahVersesTranslated());
     }
+
+
 }
 

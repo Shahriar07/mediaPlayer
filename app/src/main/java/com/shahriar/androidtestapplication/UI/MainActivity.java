@@ -10,8 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView verseListView;
 
+    Spinner startSpinner;
+    Spinner endSpinner;
+
 
     // Need to register Surah in factory
     static
@@ -92,11 +98,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         play_pause_button = (Button) findViewById(R.id.startButton);
         play_pause_button.setOnClickListener(this);
 
-        loop_start_button = (Button) findViewById(R.id.start_loop);
-        loop_start_button.setOnClickListener(this);
+        surah = SurahFactory.getInstance().prepareSurah("90");
 
-        loop_end_button = (Button) findViewById(R.id.end_loop);
-        loop_end_button.setOnClickListener(this);
+        startSpinner = (Spinner) findViewById(R.id.start_loop);
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getDuration().length-2));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        startSpinner.setAdapter(adapter);
+        startSpinner.setOnItemSelectedListener(startItemSelectedListener);
+
+//        loop_start_button = (Button) findViewById(R.id.start_loop);
+//        loop_start_button.setOnClickListener(this);
+
+//        loop_end_button = (Button) findViewById(R.id.end_loop);
+//        loop_end_button.setOnClickListener(this);
+
+        endSpinner = (Spinner) findViewById(R.id.end_loop);
+        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(surah.getDuration().length-2,1));
+        endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        endSpinner.setAdapter(endSpinnerAdapter);
+        endSpinner.setOnItemSelectedListener(endItemSelectedListener);
 
         loop_reset_button = (Button) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
@@ -115,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         verseListView = (RecyclerView) findViewById(R.id.listView);
         mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         verseListView.setLayoutManager(mLayoutManager);
-        surah = SurahFactory.getInstance().prepareSurah("90");
 
         durationArray = surah.getDuration();
         mAdapter = new SurahAdapter(surah,this);
@@ -278,5 +297,56 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //            mediaPlayer.start();
 //        }
 
+    }
+
+    AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            setLoopWhenStartVerseIndexSelected(position);
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    public void setLoopWhenStartVerseIndexSelected(int index){
+        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
+        currentLoopIndex = index;
+        loopStartTime = durationArray[currentLoopIndex];
+        loopCount = 0;
+        player.seekTo(loopStartTime);
+        if (!player.isPlaying()){
+            player.start();
+            seekUpdation();
+            changePlayPauseButton();
+        }
+        Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime);
+    }
+
+    AdapterView.OnItemSelectedListener endItemSelectedListener = new AdapterView.OnItemSelectedListener() {
+        @Override
+        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            Log.d(getLocalClassName(),"Position " + position + " ID "+parent.getItemAtPosition(position));
+            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getItemAtPosition(position).toString()));
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> parent) {
+
+        }
+    };
+
+    public void setLoopWhenEndVerseIndexSelected(int index){
+//        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
+//        currentLoopIndex = index;
+        loopEndTime = durationArray[index];
+        if (!player.isPlaying()){
+            player.start();
+            seekUpdation();
+            changePlayPauseButton();
+        }
+        Log.d(getLocalClassName(),"LoopIndex " + index + " LoopEndTime " +loopEndTime);
     }
 }

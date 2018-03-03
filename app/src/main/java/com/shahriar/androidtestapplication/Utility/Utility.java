@@ -49,4 +49,20 @@ public class Utility {
             System.out.println(currentPosition + " is not found. Middle " + middle +"\n");
         return middle;
     }
+
+    public Integer[] getIntArray(int startRange, int endRange){
+        int duration = Math.abs(endRange-startRange);
+        Integer[] intArray = new Integer[duration+1];
+        if (endRange > startRange){
+            for (int i = 0;i <= duration; ++i,++startRange){
+                intArray[i] = startRange;
+            }
+        }
+        else {
+            for (int i = 0;i <= duration; ++i,--startRange){
+                intArray[i] = startRange;
+            }
+        }
+        return intArray;
+    }
 }
