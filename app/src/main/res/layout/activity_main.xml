@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.shahriar.androidtestapplication.UI.MainActivity">
+    tools:context="com.shahriar.androidtestapplication.UI.SurahActivity">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline"
@@ -95,13 +95,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.913" />
 
-            <Spinner
+            <com.shahriar.androidtestapplication.CustomComponents.CustomSpinner
                 android:id="@+id/start_loop"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
-            <Spinner
+            <com.shahriar.androidtestapplication.CustomComponents.CustomSpinner
                 android:id="@+id/end_loop"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

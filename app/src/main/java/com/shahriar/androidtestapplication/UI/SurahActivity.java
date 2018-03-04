@@ -14,11 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.androidtestapplication.Adapter.SurahAdapter;
+import com.shahriar.androidtestapplication.CustomComponents.CustomSpinner;
 import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.Factory.SurahFactory;
@@ -26,6 +26,7 @@ import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
 import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
 import com.shahriar.androidtestapplication.R;
+import com.shahriar.androidtestapplication.Utility.Constants;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
 /**
@@ -33,8 +34,8 @@ import com.shahriar.androidtestapplication.Utility.Utility;
  */
 
 
-public class MainActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
-    // Media Control Buttons
+public class SurahActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
+    // Media Controllers
     Button play_pause_button;
     Button loop_start_button;
     Button loop_end_button;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     // Media player
     MediaPlayer player;
     Surah surah;
-
+    int surahNo = 114;
     Handler seekHandler = new Handler();
     Utility utility = new Utility();
 
@@ -59,13 +60,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     int maxLoopCount = 4;
     int currentLoopIndex = 0;
     int durationArray[];
+    boolean isActivityInitialized = false;
 
+    // list to show verses
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView verseListView;
 
-    Spinner startSpinner;
-    Spinner endSpinner;
+    // Spinner to select loop start and loop end verse
+    CustomSpinner startSpinner;
+    CustomSpinner endSpinner;
 
 
     // Need to register Surah in factory
@@ -73,8 +77,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     {
         try
         {
-            Log.d("MainActivity","Static block called");
-            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad");
+            Log.d("SurahActivity","Static block called");
+            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad"); //This call will execute register of surah in surahfactory
         }
         catch (ClassNotFoundException any)
         {
@@ -89,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+        Log.d(getLocalClassName(),"Surah number "+ surahNo);
         getInit();
 
     }
@@ -98,9 +104,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         play_pause_button = (Button) findViewById(R.id.startButton);
         play_pause_button.setOnClickListener(this);
 
-        surah = SurahFactory.getInstance().prepareSurah("90");
+        surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
 
-        startSpinner = (Spinner) findViewById(R.id.start_loop);
+        startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getDuration().length-2));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(adapter);
@@ -112,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //        loop_end_button = (Button) findViewById(R.id.end_loop);
 //        loop_end_button.setOnClickListener(this);
 
-        endSpinner = (Spinner) findViewById(R.id.end_loop);
+        endSpinner = (CustomSpinner) findViewById(R.id.end_loop);
         ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(surah.getDuration().length-2,1));
         endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endSpinner.setAdapter(endSpinnerAdapter);
@@ -144,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         verseListView.addOnItemTouchListener(new VerseTouchListener(getApplicationContext(), verseListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
+                isActivityInitialized = true;
                 Verse verse = surah.getVerses().get(position);
                 Toast.makeText(getApplicationContext(), verse.getVerseNo() + " is selected!", Toast.LENGTH_SHORT).show();
                 setLoopWhenVerseClicked(position);
@@ -161,6 +168,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean inputFromUser) {
             if(inputFromUser){
+                isActivityInitialized = true;
                 int index = utility.getIndexForLoop(i,durationArray);
                 setLoopWhenVerseClicked(index);
             }
@@ -252,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.startButton:{
+                isActivityInitialized = true;
                 if (player.isPlaying()){
                     player.pause();
                 }
@@ -317,7 +326,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
         loopStartTime = durationArray[currentLoopIndex];
         loopCount = 0;
         player.seekTo(loopStartTime);
-        if (!player.isPlaying()){
+        if (!player.isPlaying() && isActivityInitialized){
             player.start();
             seekUpdation();
             changePlayPauseButton();
@@ -342,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener, 
 //        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
 //        currentLoopIndex = index;
         loopEndTime = durationArray[index];
-        if (!player.isPlaying()){
+        if (!player.isPlaying() && isActivityInitialized){
             player.start();
             seekUpdation();
             changePlayPauseButton();
