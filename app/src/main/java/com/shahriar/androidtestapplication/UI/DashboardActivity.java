@@ -28,13 +28,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     void initComponent(){
         surahButton = (Button) findViewById(R.id.test);
         surahButton.setOnClickListener(this);
-
     }
 
     @Override
     public void onClick(View v) {
         Intent surahIntent = new Intent(this, SurahActivity.class);
-        surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
+        surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         startActivity(surahIntent);
     }
 }

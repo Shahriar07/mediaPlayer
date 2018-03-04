@@ -17,6 +17,8 @@ public abstract class  Surah {
     private ArrayList<Verse> verses = new ArrayList<>();
     private int surahNumber;
     private boolean madani;
+
+    int resourceId;
     public abstract int[] getDuration();
 
     public ArrayList<Verse> getVerses() {
@@ -60,5 +62,13 @@ public abstract class  Surah {
 
     public void setSurahName(String surahName) {
         this.surahName = surahName;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 }

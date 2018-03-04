@@ -79,6 +79,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         {
             Log.d("SurahActivity","Static block called");
             Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad"); //This call will execute register of surah in surahfactory
+            Class.forName("com.shahriar.androidtestapplication.Data.SurahAnNas");
         }
         catch (ClassNotFoundException any)
         {
@@ -127,7 +128,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         loop_reset_button = (Button) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
 
-        player = MediaPlayer.create(this, R.raw.surah_al_balad_90);
+        player = MediaPlayer.create(this, surah.getResourceId());
         player.setOnCompletionListener(this);
 //        player.setLooping(true);
         current_time = (TextView) findViewById(R.id.audio_current_time_text);

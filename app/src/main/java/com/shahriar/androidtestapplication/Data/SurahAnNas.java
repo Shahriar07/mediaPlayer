@@ -1,40 +1,37 @@
 package com.shahriar.androidtestapplication.Data;
 
-import com.shahriar.androidtestapplication.Exception.SurahContentNotPreparedException;
 import com.shahriar.androidtestapplication.Factory.SurahFactory;
 import com.shahriar.androidtestapplication.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by H. M. Shahriar on 2/25/2018.
  */
 
-public class SurahAlBalad extends Surah {
+public class SurahAnNas extends Surah {
 
     static
     {
-        SurahFactory.getInstance().registerSurah("90", new SurahAlBalad());
+        SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
     }
 
     public int[] getDuration() {
         return duration;
     }
 
-    protected final int duration[] ={0, 7200,13230,19200,23500,29000,35200,39300,45000,51000,57000,63300,66100,71800,73800,80000,84000,88400,99200,105300,113050,119015,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6850,13230,18600,24500,32600,41600,49700,Integer.MAX_VALUE};
 
-    public SurahAlBalad() {
+    public SurahAnNas() {
         super();
-        this.setSurahName("Surah-Al-Balad");
-        this.setSurahNumber(90);
+        this.setSurahName("Surah-An-Nas");
+        this.setSurahNumber(114);
         this.setMadani(false);
-        this.setResourceId(R.raw.surah_al_balad_90);
+        this.setResourceId(R.raw.surah_an_nas_114);
         prepareSuraVerses();
     }
 
     @Override
     public Surah getSuraContent() {
-        return new SurahAlBalad();
+        return new SurahAnNas();
     }
 
     @Override
