@@ -18,6 +18,7 @@ import com.shahriar.androidtestapplication.Utility.Constants;
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button surahButton;
+    Button surahButton2;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,14 +27,28 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     void initComponent(){
-        surahButton = (Button) findViewById(R.id.test);
+        surahButton = (Button) findViewById(R.id.surah_balad);
         surahButton.setOnClickListener(this);
+
+        surahButton2 = (Button) findViewById(R.id.surah_naas);
+        surahButton2.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         Intent surahIntent = new Intent(this, SurahActivity.class);
-        surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+        switch (v.getId()){
+            case R.id.surah_balad:
+                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
+                break;
+            case R.id.surah_naas:
+                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+                break;
+            default:
+                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+                break;
+        }
+
         startActivity(surahIntent);
     }
 }
