@@ -39,18 +39,4 @@ public class SurahAlBalad extends Surah {
     public Surah getSuraContent() {
         return new SurahAlBalad();
     }
-
-    @Override
-    public void prepareSuraVerses() {
-        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
-        Context context = applicationContextManager.getAppContext();
-        if ( context ==null){
-            throw new NullPointerException("Need to set ApplicationContext in contextManager");
-        }
-        for (int i =0; i < duration.length - 1 ; i++){
-            String verseName = "b"+getSurahNumber()+"1";//"b"+getSurahNumber()+""+(i+1);
-            Verse v = new Verse(i, "Verse in Arabic", context.getResources().getIdentifier(verseName,"drawable",context.getPackageName()));
-            this.getVerses().add(v);
-        }
-    }
 }

@@ -1,6 +1,9 @@
 package com.shahriar.androidtestapplication.Data;
 
+import android.content.Context;
+
 import com.shahriar.androidtestapplication.Exception.SurahContentNotPreparedException;
+import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
 
 import java.util.ArrayList;
@@ -12,7 +15,6 @@ import java.util.ArrayList;
 public abstract class  Surah {
 
     public abstract Surah getSuraContent();
-    public abstract void prepareSuraVerses();
 
     private String surahName;
     private ArrayList<Verse> verses = new ArrayList<>();
@@ -74,5 +76,28 @@ public abstract class  Surah {
 
     public void setResourceId(int resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public void prepareSuraVerses() {
+        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
+        Context context = applicationContextManager.getAppContext();
+        if ( context ==null){
+            throw new NullPointerException("Need to set ApplicationContext in contextManager");
+        }
+        String arabicVerseName = "a_bismillah";
+        String secondLanguageVerseName = "b_bismillah";
+        int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
+        int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
+        Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
+        this.getVerses().add(v);
+        int verseCount = getVerseCount();
+        for (int i =1; i <= verseCount ; i++){
+            arabicVerseName = "a"+getSurahNumber()+""+(i);
+            secondLanguageVerseName = "b"+getSurahNumber()+""+(i);
+            arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
+            secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
+            v = new Verse(i, arabicVerseId, secondLanguageVerseId);
+            this.getVerses().add(v);
+        }
     }
 }

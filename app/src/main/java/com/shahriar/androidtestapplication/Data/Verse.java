@@ -6,12 +6,12 @@ package com.shahriar.androidtestapplication.Data;
 
 public class Verse {
     private int verseNo;
-    private String surahVersesArabic;
+    private int surahVersesArabicResourceId;
     private int surahVersesTranslatedResourceId;
 
-    public Verse(int verseNo, String surahVersesArabic, int surahVersesTranslated) {
+    public Verse(int verseNo, int surahVersesArabicResourceId, int surahVersesTranslated) {
         this.verseNo = verseNo;
-        this.surahVersesArabic = surahVersesArabic;
+        this.surahVersesArabicResourceId = surahVersesArabicResourceId;
         this.surahVersesTranslatedResourceId = surahVersesTranslated;
     }
 
@@ -23,12 +23,12 @@ public class Verse {
         this.verseNo = verseNo;
     }
 
-    public String getSurahVersesArabic() {
-        return surahVersesArabic;
+    public int getSurahVersesArabicResourceId() {
+        return surahVersesArabicResourceId;
     }
 
-    public void setSurahVersesArabic(String surahVersesArabic) {
-        this.surahVersesArabic = surahVersesArabic;
+    public void setSurahVersesArabicResourceId(int surahVersesArabicResourceId) {
+        this.surahVersesArabicResourceId = surahVersesArabicResourceId;
     }
 
     public int getSurahVersesTranslatedResourceId() {
