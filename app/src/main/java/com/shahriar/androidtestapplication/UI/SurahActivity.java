@@ -60,7 +60,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int maxLoopCount = 4;
     int currentLoopIndex = 0;
     int durationArray[];
-    boolean isActivityInitialized = false;
+    boolean isActivityInitialized = false; // As the spinners set the initial items, Surah should not start at that time.
 
     // list to show verses
     private RecyclerView.LayoutManager mLayoutManager;
@@ -97,7 +97,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
         getInit();
-
     }
 
     public void getInit() {
@@ -108,7 +107,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
 
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getDuration().length-2));
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(adapter);
         startSpinner.setOnItemSelectedListener(startItemSelectedListener);
@@ -120,7 +119,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 //        loop_end_button.setOnClickListener(this);
 
         endSpinner = (CustomSpinner) findViewById(R.id.end_loop);
-        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(surah.getDuration().length-2,1));
+        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(surah.getVerseCount(),0));
         endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endSpinner.setAdapter(endSpinnerAdapter);
         endSpinner.setOnItemSelectedListener(endItemSelectedListener);
@@ -339,7 +338,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d(getLocalClassName(),"Position " + position + " ID "+parent.getItemAtPosition(position));
-            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getItemAtPosition(position).toString()));
+            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getItemAtPosition(position).toString()) + 1);
         }
 
         @Override
@@ -349,8 +348,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     };
 
     public void setLoopWhenEndVerseIndexSelected(int index){
-//        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
-//        currentLoopIndex = index;
         loopEndTime = durationArray[index];
         if (!player.isPlaying() && isActivityInitialized){
             player.start();

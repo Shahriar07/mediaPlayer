@@ -1,7 +1,10 @@
 package com.shahriar.androidtestapplication.Data;
 
+import android.content.Context;
+
 import com.shahriar.androidtestapplication.Factory.SurahFactory;
 import com.shahriar.androidtestapplication.R;
+import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 
 /**
  * Created by H. M. Shahriar on 2/25/2018.
@@ -17,8 +20,8 @@ public class SurahAnNas extends Surah {
     public int[] getDuration() {
         return duration;
     }
-
-    protected final int duration[] ={0, 6850,13230,18600,24500,32600,41600,49700,Integer.MAX_VALUE};
+    // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
+    protected final int duration[] ={0, 6850,13200,18650,24500,32920,41600,49700,Integer.MAX_VALUE};
 
     public SurahAnNas() {
         super();
@@ -36,8 +39,18 @@ public class SurahAnNas extends Surah {
 
     @Override
     public void prepareSuraVerses() {
-        for (int i =0; i < duration.length - 1 ; i++){
-            Verse v = new Verse(i, "Verse in Arabic", "Verse in Bangla");
+        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
+        Context context = applicationContextManager.getAppContext();
+        if ( context ==null){
+            throw new NullPointerException("Need to set ApplicationContext in contextManager");
+        }
+        String verseName = "bismilla";
+        Verse v = new Verse(0, "Verse in Arabic", context.getResources().getIdentifier(verseName,"drawable",context.getPackageName()));
+        this.getVerses().add(v);
+        int verseCount = getVerseCount();
+        for (int i =1; i <= verseCount ; i++){
+            verseName = "b"+getSurahNumber()+""+(i);
+            v = new Verse(i, "Verse in Arabic", context.getResources().getIdentifier(verseName,"drawable",context.getPackageName()));
             this.getVerses().add(v);
         }
     }

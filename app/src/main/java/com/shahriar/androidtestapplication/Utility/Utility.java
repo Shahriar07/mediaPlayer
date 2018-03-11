@@ -52,6 +52,7 @@ public class Utility {
 
     public Integer[] getIntArray(int startRange, int endRange){
         int duration = Math.abs(endRange-startRange);
+        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
         Integer[] intArray = new Integer[duration+1];
         if (endRange > startRange){
             for (int i = 0;i <= duration; ++i,++startRange){

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.shahriar.androidtestapplication.R;
+import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
 
 /**
@@ -24,6 +25,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
         initComponent();
+        ApplicationContextManager.getInstance(this);
     }
 
     void initComponent(){

@@ -6,13 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.R;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -59,7 +59,8 @@ class VerseHolder extends RecyclerView.ViewHolder {
     // each data item is just a string in this case
     public TextView verseNo;
     public TextView surahVersesArabic;
-    public TextView surahVersesTranslated;
+//    public TextView surahVersesTranslated;
+    public ImageView surahVersesTranslated;
 
 //        public View layout;
 
@@ -69,7 +70,7 @@ class VerseHolder extends RecyclerView.ViewHolder {
         verseNo = (TextView) v.findViewById(R.id.verse_no);
         surahVersesArabic = (TextView) v.findViewById(R.id.arabic_verse);
         surahVersesArabic.setTextDirection(View.TEXT_DIRECTION_RTL);
-        surahVersesTranslated = (TextView) v.findViewById(R.id.second_language_verse);
+        surahVersesTranslated = (ImageView) v.findViewById(R.id.second_language_verse);
         Log.d(getClass().getSimpleName(),"VerseHolder");
 
     }
@@ -77,7 +78,7 @@ class VerseHolder extends RecyclerView.ViewHolder {
     public void bindVerse(Verse verse){
         verseNo.setText(verseNo.getContext().getString(R.string.surah_and_verse) + " " +verse.getVerseNo());
         surahVersesArabic.setText(verse.getSurahVersesArabic());
-        surahVersesTranslated.setText(verse.getSurahVersesTranslated());
+        surahVersesTranslated.setImageResource(verse.getSurahVersesTranslatedResourceId());
     }
 
 

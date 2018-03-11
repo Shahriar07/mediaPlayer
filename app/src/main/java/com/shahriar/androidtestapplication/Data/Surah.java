@@ -1,6 +1,7 @@
 package com.shahriar.androidtestapplication.Data;
 
 import com.shahriar.androidtestapplication.Exception.SurahContentNotPreparedException;
+import com.shahriar.androidtestapplication.Utility.Constants;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,9 @@ public abstract class  Surah {
 
     int resourceId;
     public abstract int[] getDuration();
+    public int getVerseCount(){
+        return getDuration().length - Constants.EXTRA_SURAH_VERSE_IN_DURATION;
+    }
 
     public ArrayList<Verse> getVerses() {
         return verses;
