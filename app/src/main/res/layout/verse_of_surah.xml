@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
-    android:background="@color/colorAccent"
     android:orientation="vertical">
 
     <TextView
@@ -17,13 +17,13 @@
         android:id="@+id/arabic_verse"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_gravity="right|center_vertical|end"
-        android:background="@color/colorPrimary" />
+        android:background="@android:color/transparent"
+        android:layout_gravity="right|center_vertical|end"/>
 
     <ImageView
         android:id="@+id/second_language_verse"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_gravity="center_vertical|start"
-        android:background="@color/colorArabicBackground" />
+        android:background="@android:color/transparent"
+        android:layout_gravity="center_vertical|start" />
 </LinearLayout>
