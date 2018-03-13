@@ -49,7 +49,7 @@ public class SurahAnNas extends Surah {
         String secondLanguageVerseName = "b_bismillah";
         int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
         int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
-        Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+arabicVerseId);
+        Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
         Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
         this.getVerses().add(v);
         int verseCount = getVerseCount();
@@ -59,6 +59,7 @@ public class SurahAnNas extends Surah {
             arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
             secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
             v = new Verse(i, arabicVerseId, secondLanguageVerseId);
+            Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
             this.getVerses().add(v);
         }
     }

@@ -16,14 +16,13 @@
     <ImageView
         android:id="@+id/arabic_verse"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:background="@android:color/transparent"
+        android:contentDescription="test"
+        android:layout_height="50dp"
         android:layout_gravity="right|center_vertical|end"/>
 
     <ImageView
         android:id="@+id/second_language_verse"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:background="@android:color/transparent"
+        android:layout_height="35dp"
         android:layout_gravity="center_vertical|start" />
 </LinearLayout>
