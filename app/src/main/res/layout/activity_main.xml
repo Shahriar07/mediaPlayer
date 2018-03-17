@@ -27,7 +27,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".76"
+            android:layout_weight=".80"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
@@ -41,7 +41,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_weight=".12"
+            android:layout_weight=".08"
             android:orientation="horizontal">
 
             <TextView
@@ -83,13 +83,16 @@
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 
-            <Button
+            <ImageButton
                 android:id="@+id/startButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="@string/start_button"
+                android:src="@drawable/play"
+                android:background="@color/window_background"
                 android:textAllCaps="false"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -108,10 +111,14 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
-            <Button
+            <ImageButton
                 android:id="@+id/reset_loop"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@color/window_background"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/reset"
                 android:layout_weight="1"
                 android:text="@string/reset_loop"
                 android:textAllCaps="false" />

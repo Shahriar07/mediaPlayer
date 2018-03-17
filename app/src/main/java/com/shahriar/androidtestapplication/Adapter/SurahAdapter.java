@@ -33,9 +33,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
         View v = inflater.inflate(R.layout.verse_of_surah, parent, false);
-        // set the view's size, margins, paddings and layout parameters
         VerseHolder vh = new VerseHolder(v);
         Log.d(getClass().getSimpleName(),"onCreateViewHolder");
         return vh;
@@ -73,7 +71,5 @@ class VerseHolder extends RecyclerView.ViewHolder {
         surahVersesArabic.setImageResource(verse.getSurahVersesArabicResourceId());
         surahVersesTranslated.setImageResource(verse.getSurahVersesTranslatedResourceId());
     }
-
-
 }
 

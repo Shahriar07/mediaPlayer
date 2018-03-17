@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +37,10 @@ import com.shahriar.androidtestapplication.Utility.Utility;
 
 public class SurahActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
     // Media Controllers
-    Button play_pause_button;
+    ImageButton play_pause_button;
     Button loop_start_button;
     Button loop_end_button;
-    Button loop_reset_button;
+    ImageButton loop_reset_button;
 
     // Media player informations
     SeekBar seek_bar;
@@ -101,8 +102,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     public void getInit() {
         seek_bar = (SeekBar) findViewById(R.id.seek_bar);
-        play_pause_button = (Button) findViewById(R.id.startButton);
+        play_pause_button = (ImageButton) findViewById(R.id.startButton);
         play_pause_button.setOnClickListener(this);
+        play_pause_button.setTag(R.drawable.play);
 
         surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
 
@@ -124,7 +126,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         endSpinner.setAdapter(endSpinnerAdapter);
         endSpinner.setOnItemSelectedListener(endItemSelectedListener);
 
-        loop_reset_button = (Button) findViewById(R.id.reset_loop);
+        loop_reset_button = (ImageButton) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
 
         player = MediaPlayer.create(this, surah.getResourceId());
@@ -144,7 +146,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         durationArray = surah.getDuration();
         mAdapter = new SurahAdapter(surah,this);
-        verseListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
+        verseListView.addItemDecoration(dividerItemDecoration);
+
         verseListView.setAdapter(mAdapter);
 
         verseListView.addOnItemTouchListener(new VerseTouchListener(getApplicationContext(), verseListView, new OnRecycleViewClicked(){
@@ -248,12 +253,21 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     void changePlayPauseButton(){
-        if(getString(R.string.start_button).equals(play_pause_button.getText())){
-            play_pause_button.setText(R.string.pause_button);
+        if ((int)play_pause_button.getTag() == R.drawable.play){
+            play_pause_button.setImageResource(R.drawable.pause);
+            play_pause_button.setTag(R.drawable.pause);
         }
         else {
-            play_pause_button.setText(R.string.start_button);
+            play_pause_button.setImageResource(R.drawable.play);
+            play_pause_button.setTag(R.drawable.play);
         }
+//        @android:drawable/play
+//        if(getString(R.string.start_button).equals(play_pause_button.getText())){
+//            play_pause_button.setText(R.string.pause_button);
+//        }
+//        else {
+//            play_pause_button.setText(R.string.start_button);
+//        }
     }
 
     @Override
