@@ -17,7 +17,7 @@ public class SurahAnNas extends Surah {
     {
         SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
     }
-
+    Context context;
     public int[] getDuration() {
         return duration;
     }
@@ -26,7 +26,9 @@ public class SurahAnNas extends Surah {
 
     public SurahAnNas() {
         super();
-        this.setSurahName("Surah-An-Nas");
+        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
+        context = applicationContextManager.getAppContext();
+        this.setSurahName(context.getString(R.string.surah_an_nas));
         this.setSurahNumber(114);
         this.setMadani(false);
         this.setResourceId(R.raw.surah_an_nas_114);
@@ -40,8 +42,7 @@ public class SurahAnNas extends Surah {
 
     @Override
     public void prepareSuraVerses() {
-        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
-        Context context = applicationContextManager.getAppContext();
+
         if ( context ==null){
             throw new NullPointerException("Need to set ApplicationContext in contextManager");
         }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidTestApplication</string>
+    <string name="app_name">Learn Surah</string>
     <string name="start_button">Start</string>
     <string name="pause_button">Pause</string>
     <string name="start_loop">Loop Start</string>
@@ -8,4 +8,13 @@
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>
     <string name="translated_verse">Translated Verse</string>
+
+
+    // Surah names
+    <string name="surah_an_nas">Surah-an-nas</string>
+
+
+    // Menu
+    <string name="loop_count">Loop Count</string>
+    <string name="language">Language</string>
 </resources>

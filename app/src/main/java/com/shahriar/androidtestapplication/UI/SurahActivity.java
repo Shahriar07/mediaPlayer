@@ -3,11 +3,14 @@ package com.shahriar.androidtestapplication.UI;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -97,17 +100,26 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setContentView(R.layout.activity_main);
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
+
         getInit();
     }
 
     public void getInit() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
+
         seek_bar = (SeekBar) findViewById(R.id.seek_bar);
         play_pause_button = (ImageButton) findViewById(R.id.startButton);
         play_pause_button.setOnClickListener(this);
         play_pause_button.setTag(R.drawable.play);
 
         surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
-
+        setTitle(surah.getSurahName());
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -261,13 +273,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             play_pause_button.setImageResource(R.drawable.play);
             play_pause_button.setTag(R.drawable.play);
         }
-//        @android:drawable/play
-//        if(getString(R.string.start_button).equals(play_pause_button.getText())){
-//            play_pause_button.setText(R.string.pause_button);
-//        }
-//        else {
-//            play_pause_button.setText(R.string.start_button);
-//        }
     }
 
     @Override
