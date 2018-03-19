@@ -3,6 +3,7 @@ package com.shahriar.androidtestapplication.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +23,7 @@ import com.shahriar.androidtestapplication.Utility.Constants;
  * Created by H. M. Shahriar on 3/3/2018.
  */
 
-public class DashboardActivity extends AppCompatActivity implements View.OnClickListener {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener  {
 
     private DrawerLayout mDrawerLayout;
 
@@ -44,35 +45,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        // set item as selected to persist highlight
-                        menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
-                        Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
-//                        switch (v.getId()){
-//                            case R.id.surah_balad:
-//                                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
-//                                break;
-//                            case R.id.surah_naas:
-                                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-//                                break;
-//                            default:
-//                                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-//                                break;
-//                        }
-
-                        startActivity(surahIntent);
-
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-
-                        return true;
-                    }
-                });
+        navigationView.setNavigationItemSelectedListener(this);
 
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
@@ -130,4 +103,29 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+        Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+        if (id == R.id.nav_camera) {
+            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
+        } else if (id == R.id.nav_gallery) {
+            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        // set item as selected to persist highlight
+        item.setChecked(true);
+        // close drawer when item is tapped
+        mDrawerLayout.closeDrawers();
+
+        startActivity(surahIntent);
+
+        // Add code here to update the UI based on the item selected
+        // For example, swap UI fragments here
+
+        return true;
+    }
 }

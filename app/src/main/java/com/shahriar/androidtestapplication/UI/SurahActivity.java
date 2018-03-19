@@ -110,8 +110,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
-
+        actionbar.setHomeAsUpIndicator(R.drawable.arrow_back);
 
         seek_bar = (SeekBar) findViewById(R.id.seek_bar);
         play_pause_button = (ImageButton) findViewById(R.id.startButton);
