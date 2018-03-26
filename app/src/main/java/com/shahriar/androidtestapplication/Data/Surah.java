@@ -14,12 +14,9 @@ import java.util.ArrayList;
 
 public abstract class  Surah {
 
-    public abstract Surah getSuraContent();
-
-    private String surahName;
+//    public abstract Surah getSuraContent();
     private ArrayList<Verse> verses = new ArrayList<>();
-    private int surahNumber;
-    private boolean madani;
+    private SurahInfo surahInfo;
 
     int resourceId;
     public abstract int[] getDuration();
@@ -36,38 +33,36 @@ public abstract class  Surah {
     }
 
     public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani) {
-        this.surahName = surahName;
+        this.surahInfo = new SurahInfo(surahName,surahNumber,madani);
         this.verses = verses;
-        this.surahNumber = surahNumber;
-        this.madani = madani;
     }
 
     public Surah() {
-
+        this.surahInfo = new SurahInfo();
     }
 
     public int getSurahNumber() {
-        return surahNumber;
+        return surahInfo.getSurahNumber();
     }
 
     public void setSurahNumber(int surahNumber) {
-        this.surahNumber = surahNumber;
+        this.surahInfo.setSurahNumber(surahNumber);
     }
 
     public boolean isMadani() {
-        return madani;
+        return surahInfo.isMadani();
     }
 
     public void setMadani(boolean madani) {
-        this.madani = madani;
+        this.surahInfo.setMadani(madani);
     }
 
     public String getSurahName() {
-        return surahName;
+        return surahInfo.getSurahName();
     }
 
     public void setSurahName(String surahName) {
-        this.surahName = surahName;
+        this.surahInfo.setSurahName(surahName);
     }
 
     public int getResourceId() {

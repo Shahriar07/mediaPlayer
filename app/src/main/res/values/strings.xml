@@ -8,7 +8,8 @@
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>
     <string name="translated_verse">Translated Verse</string>
-
+    <string name="surah_number">Surah No: </string>
+    <string name="surah_name">Surah: </string>
 
     // Surah names
     <string name="surah_an_nas">Surah-an-nas</string>

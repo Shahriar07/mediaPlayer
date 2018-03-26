@@ -10,14 +10,28 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.shahriar.androidtestapplication.Adapter.SurahAdapter;
+import com.shahriar.androidtestapplication.Adapter.SurahListAdapter;
+import com.shahriar.androidtestapplication.Data.SurahInfo;
+import com.shahriar.androidtestapplication.Data.Verse;
+import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
+import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutManager;
+import com.shahriar.androidtestapplication.Listeners.SurahItemTouchListener;
+import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
+
+import java.util.ArrayList;
 
 /**
  * Created by H. M. Shahriar on 3/3/2018.
@@ -27,12 +41,19 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private DrawerLayout mDrawerLayout;
 
+    // list to show surah
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView surahListView;
+
+    private ArrayList<SurahInfo> surahInfoList;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
-        initComponent();
         ApplicationContextManager.getInstance(this);
+        initComponent();
     }
 
     void initComponent(){
@@ -41,7 +62,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionbar.setHomeAsUpIndicator(R.drawable.menu);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -73,6 +94,33 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
 
 
+        surahListView = (RecyclerView) findViewById(R.id.surahList);
+        mLayoutManager = new ScrollingLinearLayoutManager(this,5);
+        surahListView.setLayoutManager(mLayoutManager);
+        surahInfoList = getSurahInfoList();
+
+        mAdapter = new SurahListAdapter(surahInfoList,this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
+        surahListView.addItemDecoration(dividerItemDecoration);
+
+        surahListView.setAdapter(mAdapter);
+
+        surahListView.addOnItemTouchListener(new SurahItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
+            @Override
+            public void onClick(View view, int position) {
+                SurahInfo info = surahInfoList.get(position);
+                Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
+                startActivity(surahIntent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
     }
 
     @Override
@@ -106,26 +154,35 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
-        if (id == R.id.nav_camera) {
-            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
-        } else if (id == R.id.nav_gallery) {
-            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        // set item as selected to persist highlight
-        item.setChecked(true);
-        // close drawer when item is tapped
-        mDrawerLayout.closeDrawers();
-
-        startActivity(surahIntent);
+//        int id = item.getItemId();
+//        Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+//        if (id == R.id.nav_camera) {
+//            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
+//        } else if (id == R.id.nav_gallery) {
+//            surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
+//        }
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
+//
+//        // set item as selected to persist highlight
+//        item.setChecked(true);
+//        // close drawer when item is tapped
+//        mDrawerLayout.closeDrawers();
+//
+//        startActivity(surahIntent);
 
         // Add code here to update the UI based on the item selected
         // For example, swap UI fragments here
 
         return true;
     }
+
+    private ArrayList<SurahInfo> getSurahInfoList (){
+        ArrayList<SurahInfo> surahList = new ArrayList<>();
+        surahList.add(new SurahInfo("Surah-al-balad", 90, false));
+        surahList.add(new SurahInfo("Surah-an-naas", 114, false));
+        return surahList;
+    }
+
+
 }

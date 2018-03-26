@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -54,8 +53,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     MediaPlayer player;
     Surah surah;
     int surahNo = 114;
-    Handler seekHandler = new Handler();
-    Utility utility = new Utility();
+    Handler seekHandler;
+    Utility utility;
 
     int loopStartTime = 0;
     int loopEndTime = 0;
@@ -77,19 +76,19 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
 
     // Need to register Surah in factory
-    static
-    {
-        try
-        {
-            Log.d("SurahActivity","Static block called");
-            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad"); //This call will execute register of surah in surahfactory
-            Class.forName("com.shahriar.androidtestapplication.Data.SurahAnNas");
-        }
-        catch (ClassNotFoundException any)
-        {
-            any.printStackTrace();
-        }
-    }
+//    static
+//    {
+//        try
+//        {
+//            Log.d("SurahActivity","Static block called");
+//            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad"); //This call will execute register of surah in surahfactory
+//            Class.forName("com.shahriar.androidtestapplication.Data.SurahAnNas");
+//        }
+//        catch (ClassNotFoundException any)
+//        {
+//            any.printStackTrace();
+//        }
+//    }
 
     /**
      * Called when the activity is first created.
@@ -97,7 +96,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.surah_activity_layout);
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
 
@@ -105,6 +104,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     public void getInit() {
+        seekHandler = new Handler();
+        utility = new Utility();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -119,6 +121,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
         setTitle(surah.getSurahName());
+
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
         ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

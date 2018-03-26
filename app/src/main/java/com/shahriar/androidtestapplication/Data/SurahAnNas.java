@@ -13,10 +13,10 @@ import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 
 public class SurahAnNas extends Surah {
 
-    static
-    {
-        SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
-    }
+//    static
+//    {
+//        SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
+//    }
     Context context;
     public int[] getDuration() {
         return duration;
@@ -35,33 +35,33 @@ public class SurahAnNas extends Surah {
         prepareSuraVerses();
     }
 
-    @Override
-    public Surah getSuraContent() {
-        return new SurahAnNas();
-    }
+//    @Override
+//    public Surah getSuraContent() {
+//        return new SurahAnNas();
+//    }
 
-    @Override
-    public void prepareSuraVerses() {
-
-        if ( context ==null){
-            throw new NullPointerException("Need to set ApplicationContext in contextManager");
-        }
-        String arabicVerseName = "a_bismillah";
-        String secondLanguageVerseName = "b_bismillah";
-        int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
-        int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
-        Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
-        Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
-        this.getVerses().add(v);
-        int verseCount = getVerseCount();
-        for (int i =1; i <= verseCount ; i++){
-            arabicVerseName = "a"+getSurahNumber()+""+(i);
-            secondLanguageVerseName = "b"+getSurahNumber()+""+(i);
-            arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
-            secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
-            v = new Verse(i, arabicVerseId, secondLanguageVerseId);
-            Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
-            this.getVerses().add(v);
-        }
-    }
+//    @Override
+//    public void prepareSuraVerses() {
+//
+//        if ( context ==null){
+//            throw new NullPointerException("Need to set ApplicationContext in contextManager");
+//        }
+//        String arabicVerseName = "a_bismillah";
+//        String secondLanguageVerseName = "b_bismillah";
+//        int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
+//        int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
+//        Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
+//        Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
+//        this.getVerses().add(v);
+//        int verseCount = getVerseCount();
+//        for (int i =1; i <= verseCount ; i++){
+//            arabicVerseName = "a"+getSurahNumber()+""+(i);
+//            secondLanguageVerseName = "b"+getSurahNumber()+""+(i);
+//            arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
+//            secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
+//            v = new Verse(i, arabicVerseId, secondLanguageVerseId);
+//            Log.d(getClass().getSimpleName(),"Arabic verse Id "+arabicVerseId + " secondLanguageVerseId "+secondLanguageVerseId);
+//            this.getVerses().add(v);
+//        }
+//    }
 }

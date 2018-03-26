@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/surahListSurahNumber"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingTop="8dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/surah_list_item_color"
+        android:textAllCaps="false"/>
+    <TextView
+        android:id="@+id/surahListSurahName"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:paddingTop="4dp"
+        android:paddingStart="8dp"
+        android:textColor="@color/surah_list_item_color"
+        android:textAllCaps="false"/>
+
+</LinearLayout>

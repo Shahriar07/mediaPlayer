@@ -15,10 +15,10 @@ import java.util.ArrayList;
 
 public class SurahAlBalad extends Surah {
 
-    static
-    {
-        SurahFactory.getInstance().registerSurah("90", new SurahAlBalad());
-    }
+//    static
+//    {
+//        SurahFactory.getInstance().registerSurah("90", new SurahAlBalad());
+//    }
 
     public int[] getDuration() {
         return duration;
@@ -35,8 +35,8 @@ public class SurahAlBalad extends Surah {
         prepareSuraVerses();
     }
 
-    @Override
-    public Surah getSuraContent() {
-        return new SurahAlBalad();
-    }
+//    @Override
+//    public Surah getSuraContent() {
+//        return new SurahAlBalad();
+//    }
 }
