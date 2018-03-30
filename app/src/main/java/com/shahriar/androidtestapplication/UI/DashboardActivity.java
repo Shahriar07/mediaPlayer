@@ -6,14 +6,18 @@ import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -45,6 +49,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView surahListView;
+
+    private SwitchCompat switcher;
 
     private ArrayList<SurahInfo> surahInfoList;
 
@@ -121,6 +127,21 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             }
         }));
+
+
+
+        Menu menu = navigationView.getMenu();
+        MenuItem menuItem = menu.findItem(R.id.loop_control_switch);
+        View actionView = MenuItemCompat.getActionView(menuItem);
+
+        switcher = (SwitchCompat) actionView.findViewById(R.id.switcher);
+        switcher.setChecked(true);
+        switcher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v, (switcher.isChecked()) ? "is checked!!!" : "not checked!!!", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
+            }
+        });
     }
 
     @Override
