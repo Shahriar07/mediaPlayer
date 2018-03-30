@@ -1,8 +1,9 @@
 package com.shahriar.androidtestapplication.Data;
 
 import android.content.Context;
+import android.media.MediaPlayer;
+import android.util.Log;
 
-import com.shahriar.androidtestapplication.Exception.SurahContentNotPreparedException;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
 
@@ -19,9 +20,17 @@ public abstract class  Surah {
     private SurahInfo surahInfo;
 
     int resourceId;
-    public abstract int[] getDuration();
+    public abstract int[] getDurationList();
+
+    protected void setsurahDurationFromRaw() {
+        Context context = ApplicationContextManager.getInstance(null).getAppContext();
+        MediaPlayer mp = MediaPlayer.create(context, getResourceId());
+        int duration = mp.getDuration();
+        Log.i(getClass().getSimpleName(),"Duration :"+duration);
+        setSurahDuration(duration);
+    }
     public int getVerseCount(){
-        return getDuration().length - Constants.EXTRA_SURAH_VERSE_IN_DURATION;
+        return getDurationList().length - Constants.EXTRA_SURAH_VERSE_IN_DURATION;
     }
 
     public ArrayList<Verse> getVerses() {
@@ -33,7 +42,7 @@ public abstract class  Surah {
     }
 
     public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani) {
-        this.surahInfo = new SurahInfo(surahName,surahNumber,madani);
+        this.surahInfo = new SurahInfo(surahName,surahNumber,madani,0);
         this.verses = verses;
     }
 
@@ -71,6 +80,14 @@ public abstract class  Surah {
 
     public void setResourceId(int resourceId) {
         this.resourceId = resourceId;
+    }
+
+    public int getSurahDuration() {
+        return surahInfo.getSurahDuration();
+    }
+
+    public void setSurahDuration(int surahDuration) {
+        this.surahInfo.setSurahDuration(surahDuration);
     }
 
     public void prepareSuraVerses() {

@@ -158,7 +158,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         verseListView.setLayoutManager(mLayoutManager);
 
-        durationArray = surah.getDuration();
+        durationArray = surah.getDurationList();
         mAdapter = new SurahAdapter(surah,this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
         dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));

@@ -14,6 +14,7 @@ import com.shahriar.androidtestapplication.Data.SurahInfo;
 import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
+import com.shahriar.androidtestapplication.Utility.Utility;
 
 import java.util.ArrayList;
 
@@ -57,17 +58,21 @@ public class SurahListAdapter extends RecyclerView.Adapter {
 class SurahHolder extends RecyclerView.ViewHolder {
     public TextView surahNo;
     public TextView surahName;
+    public TextView surahDuration;
+    Utility utility = new Utility();
 
     public SurahHolder(View v) {
         super(v);
         surahNo = (TextView) v.findViewById(R.id.surahListSurahNumber);
         surahName = (TextView) v.findViewById(R.id.surahListSurahName);
+        surahDuration = (TextView) v.findViewById(R.id.surahDuration);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 
     public void bindSurah(SurahInfo surahInfo){
         surahNo.setText(ApplicationContextManager.getInstance(null).getAppContext().getString(R.string.surah_number) + " " +surahInfo.getSurahNumber());
         surahName.setText(surahInfo.getSurahName());
+        surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration()));
     }
 }
 

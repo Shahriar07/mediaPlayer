@@ -8,11 +8,13 @@ public class SurahInfo {
     private String surahName;
     private int surahNumber;
     private boolean madani;
+    private int surahDuration;
 
-    public SurahInfo(String surahName, int surahNumber, boolean madani) {
+    public SurahInfo(String surahName, int surahNumber, boolean madani,int surahDuration) {
         this.surahName = surahName;
         this.surahNumber = surahNumber;
         this.madani = madani;
+        this.surahDuration = surahDuration;
     }
 
     public SurahInfo(){
@@ -41,5 +43,13 @@ public class SurahInfo {
 
     public void setMadani(boolean madani) {
         this.madani = madani;
+    }
+
+    public int getSurahDuration() {
+        return surahDuration;
+    }
+
+    public void setSurahDuration(int surahDuration) {
+        this.surahDuration = surahDuration;
     }
 }

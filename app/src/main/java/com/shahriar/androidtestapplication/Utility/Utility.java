@@ -2,6 +2,7 @@ package com.shahriar.androidtestapplication.Utility;
 
 import android.util.Log;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -12,12 +13,18 @@ public class Utility {
 
     public String getFormatedTimeFromMilisecond (long millisecond){
         Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
-        String time = "00:00:00";
-        if (millisecond >= 0) {
-            time = String.format("%02d:%02d:%02d",
+        String time = "00:00";
+        if (millisecond >=3600000){
+            time = String.format(Locale.US,"%02d:%02d:%02d",
                     TimeUnit.MILLISECONDS.toHours(millisecond),
                     TimeUnit.MILLISECONDS.toMinutes(millisecond) -
                             TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecond)),
+                    TimeUnit.MILLISECONDS.toSeconds(millisecond) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecond)));
+        }
+        else if (millisecond > 0) {
+            time = String.format(Locale.US,"%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(millisecond),
                     TimeUnit.MILLISECONDS.toSeconds(millisecond) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecond)));
         }

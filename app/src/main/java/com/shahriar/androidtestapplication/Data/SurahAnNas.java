@@ -18,7 +18,7 @@ public class SurahAnNas extends Surah {
 //        SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
 //    }
     Context context;
-    public int[] getDuration() {
+    public int[] getDurationList() {
         return duration;
     }
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
@@ -33,6 +33,7 @@ public class SurahAnNas extends Surah {
         this.setMadani(false);
         this.setResourceId(R.raw.surah_an_nas_114);
         prepareSuraVerses();
+        setsurahDurationFromRaw();
     }
 
 //    @Override
