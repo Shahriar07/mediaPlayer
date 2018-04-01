@@ -30,6 +30,7 @@ import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutMa
 import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.Constants;
+import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
 /**
@@ -40,8 +41,6 @@ import com.shahriar.androidtestapplication.Utility.Utility;
 public class SurahActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
     // Media Controllers
     ImageButton play_pause_button;
-    Button loop_start_button;
-    Button loop_end_button;
     ImageButton loop_reset_button;
 
     // Media player informations
@@ -60,7 +59,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int loopEndTime = 0;
     int mediaDuration = 0;
     int loopCount = 0;
-    int maxLoopCount = 4;
+    int maxLoopCount = 2;
     int currentLoopIndex = 0;
     int durationArray[];
     boolean isActivityInitialized = false; // As the spinners set the initial items, Surah should not start at that time.
@@ -75,20 +74,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     CustomSpinner endSpinner;
 
 
-    // Need to register Surah in factory
-//    static
-//    {
-//        try
-//        {
-//            Log.d("SurahActivity","Static block called");
-//            Class.forName("com.shahriar.androidtestapplication.Data.SurahAlBalad"); //This call will execute register of surah in surahfactory
-//            Class.forName("com.shahriar.androidtestapplication.Data.SurahAnNas");
-//        }
-//        catch (ClassNotFoundException any)
-//        {
-//            any.printStackTrace();
-//        }
-//    }
+    final SharedPreferenceController controller = new SharedPreferenceController();
 
     /**
      * Called when the activity is first created.
@@ -244,7 +230,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     Runnable run = new Runnable() {
         @Override
         public void run() {
-            if (maxLoopCount > 0) {
+            boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+            if (maxLoopCount > 0 && isRepeatOn) {
                 if (loopCount == maxLoopCount) {
                     Log.d(getClass().getSimpleName(), "Set Next Loop Count");
                     setNextLoop();

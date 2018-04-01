@@ -17,5 +17,6 @@
 
     // Menu
     <string name="loop_count">Loop Count</string>
-    <string name="language">Language</string>
+    <string name="loop_control">Repeat Verse</string>
+    <string name="max_repeat_count">Max Repeat</string>
 </resources>

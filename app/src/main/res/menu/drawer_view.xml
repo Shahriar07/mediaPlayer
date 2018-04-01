@@ -2,16 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_camera"
-            android:title="@string/loop_count" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:title="@string/language" />
-    </group>
-    <group android:checkableBehavior="single">
         <item android:id="@+id/loop_control_switch"
+            android:icon="@drawable/repeat"
+            android:checkable="false"
             app:actionLayout="@layout/repeat_controller_switch"
-            android:title="Switch" />
+            android:title="@string/loop_control" />
+        <item android:id="@+id/max_loop_count_control"
+            android:icon="@drawable/menu_max_repeat_count"
+            app:actionLayout="@layout/menu_max_repeat_count"
+            android:title="@string/max_repeat_count" />
     </group>
 </menu>

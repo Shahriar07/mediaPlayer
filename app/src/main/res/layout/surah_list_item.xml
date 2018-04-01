@@ -30,7 +30,7 @@
         android:id="@+id/surahDuration"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:paddingTop="4dp"
+        android:paddingTop="8dp"
         android:paddingEnd="8dp"
         android:textColor="@color/surah_list_item_color"
         android:textAllCaps="false"
