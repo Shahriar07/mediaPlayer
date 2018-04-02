@@ -13,4 +13,8 @@
         <item name="actionMenuTextColor">@color/actionMenuTextColor</item>
     </style>
 
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/window_background</item>
+    </style>
+
 </resources>

@@ -85,8 +85,13 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setContentView(R.layout.surah_activity_layout);
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
-
         getInit();
+        setMaxLoopCountFromSharedPreference();
+    }
+
+    public void setMaxLoopCountFromSharedPreference(){
+        SharedPreferenceController controller = new SharedPreferenceController();
+        maxLoopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
     }
 
     public void getInit() {

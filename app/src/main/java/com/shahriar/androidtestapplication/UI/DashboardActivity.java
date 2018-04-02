@@ -1,7 +1,9 @@
 package com.shahriar.androidtestapplication.UI;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,10 +20,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.androidtestapplication.Adapter.SurahListAdapter;
@@ -51,6 +57,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView surahListView;
 
     private SwitchCompat switcher;
+    private TextView drawerMaxRepeatCount;
 
     private ArrayList<SurahInfo> surahInfoList;
 
@@ -144,6 +151,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             }
         });
+
+        menuItem = menu.findItem(R.id.max_loop_count_control);
+        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+        drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
+        int maxRepeatCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
+        if (maxRepeatCount == 0) {
+            controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT, Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
+            maxRepeatCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
+        }
+        drawerMaxRepeatCount.setText(""+maxRepeatCount);
     }
 
     @Override
@@ -196,42 +213,29 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         return true;
     }
 
-    private String[] maxLoopCountArray(){
-//        int[] arrayList = {5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-//        Arrays.sort(arrayList);
-//        String[] a= Arrays.toString(arrayList).split("[\\[\\]]")[1].split(", ");
-//        return a;
-        String[] a= {"5","6","7","8"};
-        return a;
-    }
-
     private void showMaxLoopCountPopup() {
-
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-//        builderSingle.setIcon(R.drawable.ic_launcher);
-        builderSingle.setTitle("Select One Name:-");
-
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        builderSingle.setTitle("Repeat Count");
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Hardik");
-        arrayAdapter.add("Archit");
-        arrayAdapter.add("Jignesh");
-        arrayAdapter.add("Umang");
-        arrayAdapter.add("Gatti");
-
+        for (int i = 5; i<15; i++) {
+            arrayAdapter.add(""+i);
+        }
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-
+        final SharedPreferenceController controller = new SharedPreferenceController();
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                int maxRepeatCount = Integer.parseInt(arrayAdapter.getItem(which));
+                controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxRepeatCount);
+                drawerMaxRepeatCount.setText(""+maxRepeatCount);
             }
         });
-        builderSingle.show();
+        builderSingle.create().show();
 //
 //        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //        builder.setMessage("Select maximum verse repeat count")

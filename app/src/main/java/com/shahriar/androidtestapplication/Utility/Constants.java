@@ -12,5 +12,7 @@ public class Constants {
 
     // Shared preference key
     public static final String SURAH_VERSE_REPEAT_CONTROL = "surah_verse_repeat";
+    public static final String SURAH_VERSE_MAX_REPEAT_COUNT = "surah_verse_max_repeat_count";
+    public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 10;
 
 }
