@@ -98,7 +98,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         seekHandler = new Handler();
         utility = new Utility();
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.surahActivityToolbar);
         setSupportActionBar(toolbar);
 
         ActionBar actionbar = getSupportActionBar();
@@ -369,4 +369,34 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }
         Log.d(getLocalClassName(),"LoopIndex " + index + " LoopEndTime " +loopEndTime);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        android.view.MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.surah_activity_action_bar_items, menu);
+        return true;
+    }
+
+
+@Override
+public boolean onOptionsItemSelected(android.view.MenuItem item) {
+    switch (item.getItemId()) {
+        case R.id.action_max_repeat_count:
+            // User chose the "Settings" item, show the app settings UI...
+            return true;
+
+        case R.id.action_repeat_control:
+            // User chose the "Favorite" action, mark the current item
+            // as a favorite...
+            return true;
+
+        default:
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            return super.onOptionsItemSelected(item);
+
+    }
+}
+
+
 }

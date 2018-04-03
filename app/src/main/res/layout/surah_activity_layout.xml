@@ -15,14 +15,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
         <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/surahActivityToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:titleTextColor="@color/actionMenuTextColor"
                 android:elevation="4dp"
                 android:background="@color/colorPrimary"
-                android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listView"

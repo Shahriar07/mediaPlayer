@@ -56,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView.Adapter mAdapter;
     private RecyclerView surahListView;
 
-    private SwitchCompat switcher;
+    private SwitchCompat menuRepeatSwitch;
     private TextView drawerMaxRepeatCount;
 
     private ArrayList<SurahInfo> surahInfoList;
@@ -139,16 +139,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         MenuItem menuItem = menu.findItem(R.id.loop_control_switch);
         View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
 
-        switcher = (SwitchCompat) actionView.findViewById(R.id.switcher);
+        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
         final SharedPreferenceController controller = new SharedPreferenceController();
         boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-        switcher.setChecked(isRepeatOn);
-        switcher.setOnClickListener(new View.OnClickListener() {
+        menuRepeatSwitch.setChecked(isRepeatOn);
+        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,switcher.isChecked());
-                Snackbar.make(v, (switcher.isChecked()) ? "is checked!!!" : "not checked!!!", Snackbar.LENGTH_SHORT).setAction("Action", null).show();
-
+                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
             }
         });
 
@@ -193,23 +191,34 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        // Handle navigation view item clicks here.
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+        // close drawer when item is tapped
+        mDrawerLayout.closeDrawers();
         int id = item.getItemId();
 
+        // Handle navigation view item clicks here.
         switch(id){
             case R.id.max_loop_count_control:
             {
                 showMaxLoopCountPopup();
                 break;
             }
+            case R.id.loop_control_switch:
+            {
+                final SharedPreferenceController controller = new SharedPreferenceController();
+                if(menuRepeatSwitch.isChecked()){
+                    menuRepeatSwitch.setChecked(false);
+                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,false);
+                }
+                else{
+                    menuRepeatSwitch.setChecked(true);
+                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,true);
+                }
+                break;
+            }
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-
-        // set item as selected to persist highlight
-        item.setChecked(true);
-        // close drawer when item is tapped
-        mDrawerLayout.closeDrawers();
         return true;
     }
 
