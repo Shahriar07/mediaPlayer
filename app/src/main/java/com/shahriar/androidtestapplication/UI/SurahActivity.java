@@ -1,9 +1,11 @@
 package com.shahriar.androidtestapplication.UI;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,7 +16,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -85,7 +86,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setContentView(R.layout.surah_activity_layout);
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
-        getInit();
+        initializeComponents();
         setMaxLoopCountFromSharedPreference();
     }
 
@@ -94,7 +95,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         maxLoopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
     }
 
-    public void getInit() {
+    public void initializeComponents() {
         seekHandler = new Handler();
         utility = new Utility();
 
@@ -114,7 +115,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setTitle(surah.getSurahName());
 
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getVerseCount()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(adapter);
         startSpinner.setOnItemSelectedListener(startItemSelectedListener);
@@ -126,7 +127,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 //        loop_end_button.setOnClickListener(this);
 
         endSpinner = (CustomSpinner) findViewById(R.id.end_loop);
-        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(surah.getVerseCount(),0));
+        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getVerseCount()));
         endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endSpinner.setAdapter(endSpinnerAdapter);
         endSpinner.setOnItemSelectedListener(endItemSelectedListener);
@@ -216,6 +217,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime + " LoopEndTime " + loopEndTime);
     }
 
+    /*
+    * if verse 2 is running set verse 3
+    * if verse 2-4 is running set verse 5
+    * if verse 2-4 is the last set 0-4
+    *
+     */
     void setNextLoop(){
         loopCount = 0;
         ++currentLoopIndex;
@@ -248,13 +255,18 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                     ++loopCount;
                 }
             }
-            seekUpdation();
+            if (player.isPlaying()){
+                seekUpdation();
+            }
+
         }
     };
 
     public void seekUpdation() {
-        seek_bar.setProgress(player.getCurrentPosition());
-        current_time.setText(utility.getFormatedTimeFromMilisecond(player.getCurrentPosition()));
+        int currentTime = player.getCurrentPosition();
+        Log.d(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
+        seek_bar.setProgress(currentTime);
+        current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime));
         seekHandler.postDelayed(run, 300);
     }
 
@@ -324,7 +336,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            setLoopWhenStartVerseIndexSelected(position);
+            Log.d(SurahActivity.this.getClass().getSimpleName(),"Start ID is "+ id);
+            if (isActivityInitialized)
+                setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
+            else
+                setLoopWhenStartVerseIndexSelected(0); // Set start index when activity just started;
         }
 
         @Override
@@ -350,8 +366,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     AdapterView.OnItemSelectedListener endItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(getLocalClassName(),"Position " + position + " ID "+parent.getItemAtPosition(position));
-            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getItemAtPosition(position).toString()) + 1);
+            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getItemAtPosition(position).toString())+1);
         }
 
         @Override
@@ -382,12 +397,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 public boolean onOptionsItemSelected(android.view.MenuItem item) {
     switch (item.getItemId()) {
         case R.id.action_max_repeat_count:
-            // User chose the "Settings" item, show the app settings UI...
+            showMaxLoopCountPopup();
             return true;
 
         case R.id.action_repeat_control:
-            // User chose the "Favorite" action, mark the current item
-            // as a favorite...
+            boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+            updateRepeatStateandImage(isRepeatOn, item);
             return true;
 
         default:
@@ -397,6 +412,43 @@ public boolean onOptionsItemSelected(android.view.MenuItem item) {
 
     }
 }
+
+private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item){
+    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,!isOn);
+    // Update UI
+        if (isOn){
+            item.setIcon(R.drawable.ic_repeat_white_24dp);
+        }
+        else {
+            item.setIcon(R.drawable.repeat);
+        }
+}
+
+
+    private void showMaxLoopCountPopup() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        builderSingle.setTitle("Repeat Count");
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
+        for (int i = 5; i<15; i++) {
+            arrayAdapter.add(""+i);
+        }
+        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final SharedPreferenceController controller = new SharedPreferenceController();
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int newMaxRepeatCount = Integer.parseInt(arrayAdapter.getItem(which));
+                controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,newMaxRepeatCount);
+                maxLoopCount = newMaxRepeatCount;
+            }
+        });
+        builderSingle.create().show();
+    }
 
 
 }

@@ -6,12 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.SurahInfo;
-import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Utility;
@@ -35,7 +32,7 @@ public class SurahListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = inflater.inflate(R.layout.surah_list_item, parent, false);
+        View v = inflater.inflate(R.layout.dashboard_surah_list_item, parent, false);
         SurahHolder vh = new SurahHolder(v);
         Log.d(getClass().getSimpleName(),"onCreateViewHolder");
         return vh;

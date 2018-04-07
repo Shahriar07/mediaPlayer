@@ -245,30 +245,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
         });
         builderSingle.create().show();
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("Select maximum verse repeat count")
-//                .setTitle("Max Repeat Count")
-//                .setItems(R.array.titles, new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        // The 'which' argument contains the index position
-//                        // of the selected item
-//                    }
-////                })
-////                .setPositiveButton("Set", new DialogInterface.OnClickListener() {
-////                    public void onClick(DialogInterface dialog, int id) {
-////
-////                    }
-////                })
-////                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-////                    public void onClick(DialogInterface dialog, int id) {
-////                        // User cancelled the dialog
-////                    }
-//                });
-//        // Create the AlertDialog object and return it
-//        builder.show();
-//
-//        Log.d(getClass().getSimpleName(),"showMaxLoopCountPopup");
     }
 
     private ArrayList<SurahInfo> getSurahInfoList (){
