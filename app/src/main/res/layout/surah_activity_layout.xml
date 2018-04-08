@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
         <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
@@ -29,7 +30,7 @@
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".80"
+            android:layout_weight=".82"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginLeft="8dp"
@@ -40,7 +41,8 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.08"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"
             android:elevation="4dp"
@@ -84,7 +86,8 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="0dp"
+            android:layout_weight=".10"
             android:orientation="horizontal"
             android:layout_marginLeft="1dp"
             android:layout_marginRight="1dp"

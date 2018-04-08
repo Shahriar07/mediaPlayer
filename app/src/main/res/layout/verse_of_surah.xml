@@ -25,11 +25,13 @@
         android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:src="@drawable/a11"
         android:layout_gravity="center_vertical|end"/>
 
     <ImageView
         android:id="@+id/second_language_verse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/b11"
         android:layout_gravity="center_vertical|start" />
 </LinearLayout>
