@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,10 +62,13 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int loopEndTime = 0;
     int mediaDuration = 0;
     int loopCount = 0;
-    int maxLoopCount = 2;
+
     int currentLoopIndex = 0;
     int durationArray[];
+
+    int maxLoopCount = 2;
     boolean isActivityInitialized = false; // As the spinners set the initial items, Surah should not start at that time.
+    boolean isScrollEnabled = true; // This value should set from shared preference
 
     // list to show verses
     private RecyclerView.LayoutManager mLayoutManager;
@@ -90,11 +93,23 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
         initializeComponents();
         setMaxLoopCountFromSharedPreference();
+        setAutoScrollFromSharedPreference();
     }
 
-    public void setMaxLoopCountFromSharedPreference(){
+    private void setMaxLoopCountFromSharedPreference(){
         SharedPreferenceController controller = new SharedPreferenceController();
         maxLoopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
+    }
+
+    private void setAutoScrollFromSharedPreference(){
+        SharedPreferenceController controller = new SharedPreferenceController();
+        isScrollEnabled = controller.readBooleanWithKey(Constants.SURAH_VERSE_AUTO_SCROLL);
+    }
+
+    private void updateAutoScrollToSharedPreference(boolean isAutoScrollEnabled){
+        SharedPreferenceController controller = new SharedPreferenceController();
+        controller.writeBooleanWithKey(Constants.SURAH_VERSE_AUTO_SCROLL, isAutoScrollEnabled);
+        isScrollEnabled = isAutoScrollEnabled;
     }
 
     public void initializeComponents() {
@@ -180,12 +195,22 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     private  void scrollListToPosition(int index){
         mLayoutManager.scrollToPosition(index);
     }
+
+
+    /*
+     * Scroll List to position
+     */
+    private  void scrollListToPositionDuringPlay(int currentTime){
+        int index = utility.getIndexForLoop(currentTime,durationArray);
+        mLayoutManager.scrollToPosition(index);
+    }
+
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int i, boolean inputFromUser) {
-            if(inputFromUser){
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if(fromUser){
                 isActivityInitialized = true;
-                int index = utility.getIndexForLoop(i,durationArray);
+                int index = utility.getIndexForLoop(progress,durationArray);
                 startSpinner.setSelection(index);
                 endSpinner.setSelection(index);
                 scrollListToPosition(index);
@@ -281,6 +306,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         Log.d(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
         seek_bar.setProgress(currentTime);
         current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime));
+        scrollListToPositionDuringPlay(currentTime);
         seekHandler.postDelayed(run, 300);
     }
 
@@ -405,6 +431,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         MenuItem repeatItem = menu.findItem(R.id.action_repeat_control);
         boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
         setRepeatIcon(isRepeatOn,repeatItem);
+
+        MenuItem autoScroll = menu.findItem(R.id.action_auto_scroll);
+        setAutoScrollFromSharedPreference();
+
+
         return true;
     }
 

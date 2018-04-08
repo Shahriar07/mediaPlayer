@@ -11,8 +11,9 @@ public class Constants {
     public static final int EXTRA_SURAH_VERSE_IN_DURATION = 3; // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
 
     // Shared preference key
-    public static final String SURAH_VERSE_REPEAT_CONTROL = "surah_verse_repeat";
-    public static final String SURAH_VERSE_MAX_REPEAT_COUNT = "surah_verse_max_repeat_count";
+    public static final String SURAH_VERSE_REPEAT_CONTROL = "verse_repeat";
+    public static final String SURAH_VERSE_MAX_REPEAT_COUNT = "max_repeat_count";
+    public static final String SURAH_VERSE_AUTO_SCROLL = "auto_scroll";
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 10;
 
 }
