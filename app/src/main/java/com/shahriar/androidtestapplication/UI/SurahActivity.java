@@ -12,12 +12,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -115,21 +117,16 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setTitle(surah.getSurahName());
 
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getVerseCount()));
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(adapter);
         startSpinner.setOnItemSelectedListener(startItemSelectedListener);
 
-//        loop_start_button = (Button) findViewById(R.id.start_loop);
-//        loop_start_button.setOnClickListener(this);
-
-//        loop_end_button = (Button) findViewById(R.id.end_loop);
-//        loop_end_button.setOnClickListener(this);
-
         endSpinner = (CustomSpinner) findViewById(R.id.end_loop);
-        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(1,surah.getVerseCount()));
+        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
         endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endSpinner.setAdapter(endSpinnerAdapter);
+        endSpinner.setSelection(endSpinnerAdapter.getCount()-1);
         endSpinner.setOnItemSelectedListener(endItemSelectedListener);
 
         loop_reset_button = (ImageButton) findViewById(R.id.reset_loop);
@@ -137,7 +134,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         player = MediaPlayer.create(this, surah.getResourceId());
         player.setOnCompletionListener(this);
-//        player.setLooping(true);
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
         end_time = (TextView) findViewById(R.id.audio_max_time_text);
         mediaDuration = player.getDuration();
@@ -147,7 +143,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         seek_bar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         verseListView = (RecyclerView) findViewById(R.id.listView);
-        mLayoutManager = new ScrollingLinearLayoutManager(this,5);
+        mLayoutManager = new ScrollingLinearLayoutManager(this,1);
         verseListView.setLayoutManager(mLayoutManager);
 
         durationArray = surah.getDurationList();
@@ -164,7 +160,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 isActivityInitialized = true;
                 Verse verse = surah.getVerses().get(position);
                 Toast.makeText(getApplicationContext(), verse.getVerseNo() + " is selected!", Toast.LENGTH_SHORT).show();
-                setLoopWhenVerseClicked(position);
+                startSpinner.setSelection(position);
+                endSpinner.setSelection(position);
+                scrollListToPosition(position);
             }
 
             @Override
@@ -175,13 +173,22 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     }
 
+
+    /*
+     * Scroll List to position
+     */
+    private  void scrollListToPosition(int index){
+        mLayoutManager.scrollToPosition(index);
+    }
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int i, boolean inputFromUser) {
             if(inputFromUser){
                 isActivityInitialized = true;
                 int index = utility.getIndexForLoop(i,durationArray);
-                setLoopWhenVerseClicked(index);
+                startSpinner.setSelection(index);
+                endSpinner.setSelection(index);
+                scrollListToPosition(index);
             }
         }
 
@@ -196,6 +203,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }
     };
 
+    /*
+     * Select only one verse
+     * Set start position as index and end position as index + 1
+     */
     void setLoopWhenVerseClicked(int index){
         current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
         currentLoopIndex = index;
@@ -224,17 +235,20 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     *
      */
     void setNextLoop(){
+        Log.i(getClass().getSimpleName(),"Set next loop with current index " + currentLoopIndex);
         loopCount = 0;
         ++currentLoopIndex;
         if (currentLoopIndex == (durationArray.length -1)) {
             loopStartTime = durationArray[0];
             loopEndTime = durationArray[durationArray.length - 1];
+            scrollListToPosition(0);
             Log.d(getClass().getSimpleName(),"Set Next Loop in last index with start time " + loopStartTime + " End time "+ loopEndTime);
         }
         else{
             loopStartTime = durationArray[currentLoopIndex];
             loopEndTime = durationArray[currentLoopIndex + 1];
             Log.d(getClass().getSimpleName(),"Set Next Loop with start time " + loopStartTime + " End time "+ loopEndTime);
+            scrollListToPosition(currentLoopIndex);
         }
 
         Log.d(getClass().getSimpleName(),"Set Next Loop with currentLoopIndex" + currentLoopIndex);
@@ -296,14 +310,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 changePlayPauseButton();
                 break;
             }
-            case R.id.start_loop:{
-                loopStartTime = player.getCurrentPosition();
-                break;
-            }
-            case R.id.end_loop:{
-                loopEndTime = player.getCurrentPosition();
-                break;
-            }
             case R.id.reset_loop:{
                 loopStartTime = 0;
                 loopEndTime = mediaDuration;
@@ -322,25 +328,14 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-//        if (loopCount == maxLoopCount){
             changePlayPauseButton();
-//        }
-//        else {
-//            seekUpdation();
-//            player.seekTo(loopStartTime);
-//            mediaPlayer.start();
-//        }
-
     }
 
     AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d(SurahActivity.this.getClass().getSimpleName(),"Start ID is "+ id);
-            if (isActivityInitialized)
                 setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
-            else
-                setLoopWhenStartVerseIndexSelected(0); // Set start index when activity just started;
         }
 
         @Override
@@ -349,12 +344,18 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }
     };
 
+    /*
+     * Select only the starting verse
+     * Set start position as index and end position will remain unchanged
+     */
     public void setLoopWhenStartVerseIndexSelected(int index){
         current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
         currentLoopIndex = index;
         loopStartTime = durationArray[currentLoopIndex];
         loopCount = 0;
         player.seekTo(loopStartTime);
+        scrollListToPosition(index);
+        seek_bar.setProgress(loopStartTime);
         if (!player.isPlaying() && isActivityInitialized){
             player.start();
             seekUpdation();
@@ -376,53 +377,77 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     };
 
     public void setLoopWhenEndVerseIndexSelected(int index){
-        loopEndTime = durationArray[index];
-        if (!player.isPlaying() && isActivityInitialized){
+        if (durationArray[index]<loopStartTime){
+            // Show a dialog to choose large number than the start index
+            Toast.makeText(getApplicationContext(), " Choose a large index than start", Toast.LENGTH_SHORT).show();
+            loopEndTime = durationArray[currentLoopIndex];
+            endSpinner.setSelection(currentLoopIndex);
+        }
+        else {
+            loopEndTime = durationArray[index];
+        }
+        if (!player.isPlaying() && isActivityInitialized) {
             player.start();
             seekUpdation();
             changePlayPauseButton();
         }
+
         Log.d(getLocalClassName(),"LoopIndex " + index + " LoopEndTime " +loopEndTime);
     }
 
+    /*
+     * Create and set menu items for action bar
+     */
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.surah_activity_action_bar_items, menu);
+        MenuItem repeatItem = menu.findItem(R.id.action_repeat_control);
+        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+        setRepeatIcon(isRepeatOn,repeatItem);
         return true;
     }
 
 
-@Override
-public boolean onOptionsItemSelected(android.view.MenuItem item) {
-    switch (item.getItemId()) {
-        case R.id.action_max_repeat_count:
-            showMaxLoopCountPopup();
-            return true;
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_max_repeat_count:
+                showMaxLoopCountPopup();
+                return true;
 
-        case R.id.action_repeat_control:
-            boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-            updateRepeatStateandImage(isRepeatOn, item);
-            return true;
+            case R.id.action_repeat_control:
+                boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+                updateRepeatStateandImage(isRepeatOn, item);
+                return true;
 
-        default:
-            // If we got here, the user's action was not recognized.
-            // Invoke the superclass to handle it.
-            return super.onOptionsItemSelected(item);
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
 
+        }
     }
-}
 
-private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item){
-    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,!isOn);
-    // Update UI
+    /*
+     * Update action menu bar icon
+     */
+    private void setRepeatIcon(boolean isOn, android.view.MenuItem item){
         if (isOn){
             item.setIcon(R.drawable.ic_repeat_white_24dp);
         }
         else {
             item.setIcon(R.drawable.repeat);
         }
-}
+    }
+
+    /*
+     * Update Repeat state in preference and change action menu bar icon
+     */
+    private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item){
+        controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,!isOn);
+        setRepeatIcon(!isOn,item);
+    }
 
 
     private void showMaxLoopCountPopup() {
@@ -449,6 +474,4 @@ private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item)
         });
         builderSingle.create().show();
     }
-
-
 }

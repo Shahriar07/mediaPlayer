@@ -59,5 +59,4 @@ public class ScrollingLinearLayoutManager extends LinearLayoutManager {
             return (int) (duration * proportion);
         }
     }
-
 }
