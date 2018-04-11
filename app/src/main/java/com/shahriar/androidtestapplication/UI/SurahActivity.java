@@ -313,7 +313,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     public void seekUpdation() {
         int currentTime = player.getCurrentPosition();
-        Log.d(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
+        Log.i(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
         seek_bar.setProgress(currentTime);
         current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime));
         int index = utility.getIndexForLoop(currentTime,durationArray);

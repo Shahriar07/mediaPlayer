@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.SurahAlBalad;
+import com.shahriar.androidtestapplication.Data.SurahAlFatihah;
 import com.shahriar.androidtestapplication.Data.SurahAnNas;
 
 import java.util.HashMap;
@@ -35,6 +36,10 @@ public class SurahFactory {
 
     public Surah prepareSurah(String surahNumber){
         switch (surahNumber){
+            case "1":
+            {
+                return new SurahAlFatihah();
+            }
             case "114":
             {
                 return new SurahAnNas();
