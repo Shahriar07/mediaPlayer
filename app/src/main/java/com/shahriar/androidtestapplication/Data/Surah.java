@@ -41,8 +41,8 @@ public abstract class  Surah {
         this.verses = verses;
     }
 
-    public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani) {
-        this.surahInfo = new SurahInfo(surahName,surahNumber,madani,0);
+    public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani, int verseCount) {
+        this.surahInfo = new SurahInfo(surahName,surahNumber,madani,0, verseCount);
         this.verses = verses;
     }
 
@@ -88,6 +88,10 @@ public abstract class  Surah {
 
     public void setSurahDuration(int surahDuration) {
         this.surahInfo.setSurahDuration(surahDuration);
+    }
+
+    public void setVerseCount(int verseCount) {
+        this.surahInfo.setVerseCount(verseCount);
     }
 
     public void prepareSuraVerses() {

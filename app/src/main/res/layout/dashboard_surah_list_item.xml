@@ -45,4 +45,17 @@
         android:text="Duration"
         android:layout_alignParentTop="true"/>
 
+    <TextView
+        android:id="@+id/verseCount"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:textColor="@color/surah_list_item_color"
+        android:textAllCaps="false"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text=" "
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

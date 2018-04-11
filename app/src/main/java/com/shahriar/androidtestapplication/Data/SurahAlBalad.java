@@ -36,6 +36,7 @@ public class SurahAlBalad extends Surah {
         this.setResourceId(R.raw.surah_al_balad_90);
         prepareSuraVerses();
         setsurahDurationFromRaw();
+        setVerseCount(getVerses().size());
     }
 
 //    @Override

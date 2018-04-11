@@ -56,6 +56,7 @@ class SurahHolder extends RecyclerView.ViewHolder {
     public TextView surahNo;
     public TextView surahName;
     public TextView surahDuration;
+    public TextView verseCount;
     Utility utility = new Utility();
 
     public SurahHolder(View v) {
@@ -63,6 +64,7 @@ class SurahHolder extends RecyclerView.ViewHolder {
         surahNo = (TextView) v.findViewById(R.id.surahListSurahNumber);
         surahName = (TextView) v.findViewById(R.id.surahListSurahName);
         surahDuration = (TextView) v.findViewById(R.id.surahDuration);
+        verseCount = (TextView) v.findViewById(R.id.verseCount);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 
@@ -70,6 +72,7 @@ class SurahHolder extends RecyclerView.ViewHolder {
         surahNo.setText(ApplicationContextManager.getInstance(null).getAppContext().getString(R.string.surah_number) + " " +surahInfo.getSurahNumber());
         surahName.setText(surahInfo.getSurahName());
         surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration()));
+        verseCount.setText(""+surahInfo.getVerseCount());
     }
 }
 

@@ -34,6 +34,7 @@ public class SurahAnNas extends Surah {
         this.setResourceId(R.raw.surah_an_nas_114);
         prepareSuraVerses();
         setsurahDurationFromRaw();
+        setVerseCount(getVerses().size());
     }
 
 //    @Override

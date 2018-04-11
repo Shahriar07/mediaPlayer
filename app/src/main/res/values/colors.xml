@@ -9,6 +9,7 @@
     <color name="decorationDivider">#4DB6AC</color>
     <color name="controll_background">#B2DFDB</color>
     <color name="window_background">#E0F2F1</color>
+    <color name="selected_verse_background">#caf1f9</color>
 
     <color name="actionMenuTextColor">#FFFFFF</color>
     <color name="surah_list_item_color">#000000</color>

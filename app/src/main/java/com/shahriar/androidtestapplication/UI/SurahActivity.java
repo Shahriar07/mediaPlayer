@@ -69,10 +69,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int maxLoopCount = 2;
     boolean isActivityInitialized = false; // As the spinners set the initial items, Surah should not start at that time.
     boolean isScrollEnabled = true; // This value should set from shared preference
+    int currentScrollIndex = 0;
+    int currentSelectedIndex = 0;
 
     // list to show verses
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private SurahAdapter mAdapter;
     private RecyclerView verseListView;
 
     // Spinner to select loop start and loop end verse
@@ -178,6 +180,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 startSpinner.setSelection(position);
                 endSpinner.setSelection(position);
                 scrollListToPosition(position);
+                setCurrentSelectedIndex(position);
             }
 
             @Override
@@ -194,15 +197,16 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
      */
     private  void scrollListToPosition(int index){
         mLayoutManager.scrollToPosition(index);
+        currentScrollIndex = index;
     }
 
 
     /*
      * Scroll List to position
      */
-    private  void scrollListToPositionDuringPlay(int currentTime){
-        int index = utility.getIndexForLoop(currentTime,durationArray);
-        mLayoutManager.scrollToPosition(index);
+    private  void setCurrentSelectedIndex(int index){
+        currentSelectedIndex = index;
+        mAdapter.onItemChanged(index);
     }
 
     SeekBar.OnSeekBarChangeListener seekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
@@ -267,13 +271,19 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             loopStartTime = durationArray[0];
             loopEndTime = durationArray[durationArray.length - 1];
             scrollListToPosition(0);
+            setCurrentSelectedIndex(0);
             Log.d(getClass().getSimpleName(),"Set Next Loop in last index with start time " + loopStartTime + " End time "+ loopEndTime);
         }
         else{
             loopStartTime = durationArray[currentLoopIndex];
+            if (loopStartTime < loopEndTime){
+                loopStartTime = loopEndTime;
+                currentLoopIndex = utility.getIndexForLoop(loopStartTime,durationArray);
+            }
             loopEndTime = durationArray[currentLoopIndex + 1];
             Log.d(getClass().getSimpleName(),"Set Next Loop with start time " + loopStartTime + " End time "+ loopEndTime);
             scrollListToPosition(currentLoopIndex);
+            setCurrentSelectedIndex(currentLoopIndex);
         }
 
         Log.d(getClass().getSimpleName(),"Set Next Loop with currentLoopIndex" + currentLoopIndex);
@@ -306,7 +316,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         Log.d(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
         seek_bar.setProgress(currentTime);
         current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime));
-        scrollListToPositionDuringPlay(currentTime);
+        int index = utility.getIndexForLoop(currentTime,durationArray);
+        if (index != currentScrollIndex) {
+            scrollListToPosition(index);
+            setCurrentSelectedIndex(index);
+        }
         seekHandler.postDelayed(run, 300);
     }
 
@@ -381,6 +395,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         loopCount = 0;
         player.seekTo(loopStartTime);
         scrollListToPosition(index);
+        setCurrentSelectedIndex(index);
         seek_bar.setProgress(loopStartTime);
         if (!player.isPlaying() && isActivityInitialized){
             player.start();
