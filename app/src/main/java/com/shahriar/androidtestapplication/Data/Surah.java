@@ -18,12 +18,12 @@ public abstract class  Surah {
 //    public abstract Surah getSuraContent();
     private ArrayList<Verse> verses = new ArrayList<>();
     private SurahInfo surahInfo;
+    Context context;
 
     int resourceId;
     public abstract int[] getDurationList();
 
     protected void setsurahDurationFromRaw() {
-        Context context = ApplicationContextManager.getInstance(null).getAppContext();
         MediaPlayer mp = MediaPlayer.create(context, getResourceId());
         int duration = mp.getDuration();
         Log.i(getClass().getSimpleName(),"Duration :"+duration);
@@ -42,11 +42,13 @@ public abstract class  Surah {
     }
 
     public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani, int verseCount) {
+        context = ApplicationContextManager.getInstance(null).getAppContext();
         this.surahInfo = new SurahInfo(surahName,surahNumber,madani,0, verseCount);
         this.verses = verses;
     }
 
     public Surah() {
+        context = ApplicationContextManager.getInstance(null).getAppContext();
         this.surahInfo = new SurahInfo();
     }
 

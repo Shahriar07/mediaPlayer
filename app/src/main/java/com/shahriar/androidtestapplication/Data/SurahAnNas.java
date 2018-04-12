@@ -13,11 +13,6 @@ import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 
 public class SurahAnNas extends Surah {
 
-//    static
-//    {
-//        SurahFactory.getInstance().registerSurah("114", new SurahAnNas());
-//    }
-    Context context;
     public int[] getDurationList() {
         return duration;
     }
@@ -26,8 +21,6 @@ public class SurahAnNas extends Surah {
 
     public SurahAnNas() {
         super();
-        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
-        context = applicationContextManager.getAppContext();
         this.setSurahName(context.getString(R.string.surah_an_nas));
         this.setSurahNumber(114);
         this.setMadani(false);

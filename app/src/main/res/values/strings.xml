@@ -13,6 +13,13 @@
 
     // Surah names
     <string name="surah_an_nas">Surah-an-nas</string>
+    <string name="surah_al_balad">Surah-al-balad</string>
+    <string name="surah_al_fatihah">Surah-al-fatihah</string>
+
+    // Surah Number
+    <string name="s1">1</string>
+    <string name="s90">90</string>
+    <string name="s114">114</string>
 
 
     // Menu

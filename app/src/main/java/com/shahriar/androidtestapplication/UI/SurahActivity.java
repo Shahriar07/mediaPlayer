@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +34,8 @@ import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.Constants;
 import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
 import com.shahriar.androidtestapplication.Utility.Utility;
+
+import java.util.Locale;
 
 /**
  * Created by H. M. Shahriar on 2/21/2018.
@@ -83,6 +84,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
 
     final SharedPreferenceController controller = new SharedPreferenceController();
+    Locale currentLocale=Locale.ENGLISH;
 
     /**
      * Called when the activity is first created.
@@ -149,6 +151,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         loop_reset_button = (ImageButton) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
 
+        currentLocale = this.getResources().getConfiguration().locale;
+
         player = MediaPlayer.create(this, surah.getResourceId());
         player.setOnCompletionListener(this);
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
@@ -156,7 +160,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         mediaDuration = player.getDuration();
         seek_bar.setMax(mediaDuration);
         loopEndTime = mediaDuration;
-        end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration));
+        end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration, currentLocale));
         seek_bar.setOnSeekBarChangeListener(seekBarChangeListener);
 
         verseListView = (RecyclerView) findViewById(R.id.listView);
@@ -237,7 +241,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
      * Set start position as index and end position as index + 1
      */
     void setLoopWhenVerseClicked(int index){
-        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
+        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
         currentLoopIndex = index;
         if (currentLoopIndex == 0) {
             loopStartTime = durationArray[0];
@@ -264,7 +268,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     *
      */
     void setNextLoop(){
-        Log.i(getClass().getSimpleName(),"Set next loop with current index " + currentLoopIndex);
+        Log.i(getClass().getSimpleName(),"Set next loop with currentLocale index " + currentLoopIndex);
         loopCount = 0;
         ++currentLoopIndex;
         if (currentLoopIndex == (durationArray.length -1)) {
@@ -315,7 +319,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         int currentTime = player.getCurrentPosition();
         Log.i(getClass().getSimpleName(), "seekUpdation Current player time " + currentTime);
         seek_bar.setProgress(currentTime);
-        current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime));
+        current_time.setText(utility.getFormatedTimeFromMilisecond(currentTime,currentLocale));
         int index = utility.getIndexForLoop(currentTime,durationArray);
         if (index != currentScrollIndex) {
             scrollListToPosition(index);
@@ -389,7 +393,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
      * Set start position as index and end position will remain unchanged
      */
     public void setLoopWhenStartVerseIndexSelected(int index){
-        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index]));
+        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
         currentLoopIndex = index;
         loopStartTime = durationArray[currentLoopIndex];
         loopCount = 0;

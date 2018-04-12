@@ -249,9 +249,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<SurahInfo> getSurahInfoList (){
         ArrayList<SurahInfo> surahList = new ArrayList<>();
-        surahList.add(new SurahInfo("Surah-al-Fatihah", 1, false,51015,7));
-        surahList.add(new SurahInfo("Surah-al-balad", 90, false,120015,20));
-        surahList.add(new SurahInfo("Surah-an-naas", 114, false,50015,6));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah), 1, false,51015,7));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_balad), 90, false,120015,20));
+        surahList.add(new SurahInfo(getString(R.string.surah_an_nas), 114, false,50015,6));
         return surahList;
     }
 }

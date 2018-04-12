@@ -13,7 +13,9 @@ import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by H. M. Shahriar on 2/24/2018.
@@ -69,10 +71,14 @@ class SurahHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindSurah(SurahInfo surahInfo){
-        surahNo.setText(ApplicationContextManager.getInstance(null).getAppContext().getString(R.string.surah_number) + " " +surahInfo.getSurahNumber());
+        Context context = ApplicationContextManager.getInstance(null).getAppContext();
+        String number = NumberFormat.getInstance().format(surahInfo.getSurahNumber());
+//        +context.getString(context.getResources().getIdentifier("s"+,"id",context.getPackageName()))
+        surahNo.setText(context.getString(R.string.surah_number) + " " +number);
         surahName.setText(surahInfo.getSurahName());
-        surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration()));
-        verseCount.setText(""+surahInfo.getVerseCount());
+        Locale current = context.getResources().getConfiguration().locale;
+        surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current));
+        verseCount.setText(NumberFormat.getInstance().format(surahInfo.getVerseCount()));
     }
 }
 

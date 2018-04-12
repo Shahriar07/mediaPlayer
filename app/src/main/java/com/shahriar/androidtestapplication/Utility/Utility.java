@@ -11,11 +11,11 @@ import java.util.concurrent.TimeUnit;
 
 public class Utility {
 
-    public String getFormatedTimeFromMilisecond (long millisecond){
+    public String getFormatedTimeFromMilisecond (long millisecond, Locale locale){
         Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
-        String time = "00:00";
+        String time = String.format(locale,"%02d:%02d",0,0);
         if (millisecond >=3600000){
-            time = String.format(Locale.US,"%02d:%02d:%02d",
+            time = String.format(locale,"%02d:%02d:%02d",
                     TimeUnit.MILLISECONDS.toHours(millisecond),
                     TimeUnit.MILLISECONDS.toMinutes(millisecond) -
                             TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisecond)),
@@ -23,7 +23,7 @@ public class Utility {
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecond)));
         }
         else if (millisecond > 0) {
-            time = String.format(Locale.US,"%02d:%02d",
+            time = String.format(locale,"%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(millisecond),
                     TimeUnit.MILLISECONDS.toSeconds(millisecond) -
                             TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisecond)));

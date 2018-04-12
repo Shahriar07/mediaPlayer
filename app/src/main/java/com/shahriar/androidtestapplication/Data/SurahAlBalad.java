@@ -16,11 +16,6 @@ import java.util.ArrayList;
 
 public class SurahAlBalad extends Surah {
 
-//    static
-//    {
-//        SurahFactory.getInstance().registerSurah("90", new SurahAlBalad());
-//    }
-
     public int[] getDurationList() {
         return duration;
     }
@@ -30,7 +25,7 @@ public class SurahAlBalad extends Surah {
 
     public SurahAlBalad() {
         super();
-        this.setSurahName("Surah-Al-Balad");
+        this.setSurahName(context.getString(R.string.surah_al_balad));
         this.setSurahNumber(90);
         this.setMadani(false);
         this.setResourceId(R.raw.surah_al_balad_90);
