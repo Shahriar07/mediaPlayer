@@ -71,6 +71,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int maxLoopCount = 2;
     boolean isActivityInitialized = false; // As the spinners set the initial items, Surah should not start at that time.
     boolean isScrollEnabled = true; // This value should set from shared preference
+    boolean isActivityForsedPaused = false; // Need to set when some other application stops the player. we shall resume after activity resumes
     int currentScrollIndex = 0;
     int currentSelectedIndex = 0;
 
@@ -524,5 +525,26 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             }
         });
         builderSingle.create().show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(getClass().getSimpleName(),"OnStop");
+        if (player.isPlaying()){
+            player.pause();
+            isActivityForsedPaused = true;
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(getClass().getSimpleName(),"onRestart");
+        if (isActivityForsedPaused){
+            player.start();
+            seekUpdation();
+            isActivityForsedPaused = false;
+        }
     }
 }
