@@ -14,6 +14,7 @@ import com.shahriar.androidtestapplication.Data.Surah;
 import com.shahriar.androidtestapplication.Data.Verse;
 import com.shahriar.androidtestapplication.R;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -91,7 +92,8 @@ public class SurahAdapter extends RecyclerView.Adapter {
         }
 
         public void bindVerse(Verse verse) {
-            verseNo.setText(verseNo.getContext().getString(R.string.surah_and_verse) + " " + verse.getVerseNo());
+            String text = verseNo.getContext().getString(R.string.surah_and_verse) + " " + NumberFormat.getInstance().format(verse.getVerseNo());
+            verseNo.setText(text);
             surahVersesArabic.setImageResource(verse.getSurahVersesArabicResourceId());
             surahVersesTranslated.setImageResource(verse.getSurahVersesTranslatedResourceId());
         }

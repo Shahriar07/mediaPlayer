@@ -35,6 +35,7 @@ import com.shahriar.androidtestapplication.Utility.Constants;
 import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 
 /**
@@ -136,13 +137,13 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setTitle(surah.getSurahName());
 
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
-        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.spinner_item_layout,utility.getStringArray(0,surah.getVerseCount(),true));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         startSpinner.setAdapter(adapter);
         startSpinner.setOnItemSelectedListener(startItemSelectedListener);
 
         endSpinner = (CustomSpinner) findViewById(R.id.end_loop);
-        ArrayAdapter<Integer> endSpinnerAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item,utility.getIntArray(0,surah.getVerseCount()));
+        ArrayAdapter<String> endSpinnerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item_layout,utility.getStringArray(0,surah.getVerseCount(),true));
         endSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         endSpinner.setAdapter(endSpinnerAdapter);
         endSpinner.setSelection(endSpinnerAdapter.getCount()-1);
@@ -502,12 +503,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     private void showMaxLoopCountPopup() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builderSingle.setTitle("Repeat Count");
+        builderSingle.setTitle(getString(R.string.max_repeat_count));
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
         for (int i = 5; i<15; i++) {
-            arrayAdapter.add(""+i);
+            arrayAdapter.add(NumberFormat.getInstance().format(i));
         }
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();

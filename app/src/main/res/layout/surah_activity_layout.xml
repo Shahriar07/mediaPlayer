@@ -117,11 +117,13 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/SpinnerStartTheme"
+                android:dropDownWidth="60dp"
                 android:layout_weight="1"/>
 
             <com.shahriar.androidtestapplication.CustomComponents.CustomSpinner
                 android:id="@+id/end_loop"
                 android:layout_width="0dp"
+                android:dropDownWidth="60dp"
                 style="@style/SpinnerEndTheme"
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>

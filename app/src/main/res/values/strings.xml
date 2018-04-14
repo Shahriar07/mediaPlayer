@@ -7,7 +7,6 @@
     <string name="reset_loop">Reset</string>
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>
-    <string name="translated_verse">Translated Verse</string>
     <string name="surah_number">Surah No: </string>
     <string name="surah_name">Surah: </string>
 
@@ -16,15 +15,13 @@
     <string name="surah_al_balad">Surah-al-balad</string>
     <string name="surah_al_fatihah">Surah-al-fatihah</string>
 
-    // Surah Number
-    <string name="s1">1</string>
-    <string name="s90">90</string>
-    <string name="s114">114</string>
-
 
     // Menu
     <string name="loop_count">Loop Count</string>
     <string name="loop_control">Repeat Verse</string>
     <string name="max_repeat_count">Max Repeat</string>
     <string name="verse_auto_scroll">Auto Scroll</string>
+
+    <string name="translated_verse">Translated Verse</string>
+    <string name="cancel">Cancel</string>
 </resources>

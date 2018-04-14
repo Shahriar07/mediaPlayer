@@ -2,6 +2,7 @@ package com.shahriar.androidtestapplication.Utility;
 
 import android.util.Log;
 
+import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
@@ -70,6 +71,37 @@ public class Utility {
             for (int i = 0;i <= duration; ++i,--startRange){
                 intArray[i] = startRange;
             }
+        }
+        return intArray;
+    }
+    public String[] getStringArray(int startRange, int endRange, boolean localized){
+        int duration = Math.abs(endRange-startRange);
+        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
+        String[] intArray = new String[duration+1];
+        if (endRange > startRange){
+            if (localized){
+                for (int i = 0;i <= duration; ++i,++startRange){
+                    intArray[i] = NumberFormat.getInstance().format(startRange);
+                }
+            }
+            else {
+                for (int i = 0;i <= duration; ++i,++startRange){
+                    intArray[i] = ""+startRange;
+                }
+            }
+        }
+        else {
+            if (localized){
+                for (int i = 0;i <= duration; ++i,--startRange){
+                    intArray[i] = NumberFormat.getInstance().format(startRange);
+                }
+            }
+            else {
+                for (int i = 0;i <= duration; ++i,--startRange){
+                    intArray[i] = ""+startRange;
+                }
+            }
+
         }
         return intArray;
     }
