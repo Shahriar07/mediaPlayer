@@ -1,5 +1,6 @@
 package com.shahriar.androidtestapplication.Factory;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.shahriar.androidtestapplication.Data.Surah;
@@ -17,8 +18,9 @@ public class SurahFactory {
 
 //    private HashMap m_RegisteredSurah = new HashMap();
     private static SurahFactory instance;
+    Context applicationContext;
 
-    public static SurahFactory getInstance(){
+    public static SurahFactory getInstance(Context context){
         if (instance == null)
         {
             synchronized (SurahFactory.class){
@@ -26,6 +28,8 @@ public class SurahFactory {
                 instance = new SurahFactory();
             }
         }
+        if (context != null)
+            instance.applicationContext = context.getApplicationContext();
         return instance;
     }
 
@@ -38,18 +42,18 @@ public class SurahFactory {
         switch (surahNumber){
             case "1":
             {
-                return new SurahAlFatihah();
+                return new SurahAlFatihah(applicationContext);
             }
             case "114":
             {
-                return new SurahAnNas();
+                return new SurahAnNas(applicationContext);
             }
             case "90":
             {
-                return new SurahAlBalad();
+                return new SurahAlBalad(applicationContext);
             }
             default:
-                return new SurahAnNas();
+                return new SurahAnNas(applicationContext);
         }
 //        Surah surah = (Surah)m_RegisteredSurah.get(surahNumber);
 //        if (surah != null)

@@ -1,5 +1,7 @@
 package com.shahriar.androidtestapplication.Data;
 
+import android.content.Context;
+
 import com.shahriar.androidtestapplication.R;
 
 /**
@@ -13,10 +15,10 @@ public class SurahAlFatihah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 12200,17330,22200,26700,33300,38750,42650,51400,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 12200,17330,22200,26700,33300,38750,42650,51200,Integer.MAX_VALUE}; //51931
 
-    public SurahAlFatihah() {
-        super();
+    public SurahAlFatihah(Context context) {
+        super(context);
         this.setSurahName(context.getString(R.string.surah_al_fatihah));
         this.setSurahNumber(1);
         this.setMadani(false);

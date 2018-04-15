@@ -8,14 +8,9 @@
         android:title="Repeat"
         app:showAsAction="ifRoom"/>
 
-    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_max_repeat_count"
         android:icon="@drawable/menu_max_repeat_count"
         android:title="@string/max_repeat_count"
-        app:showAsAction="never"/>
-
-    <item android:id="@+id/action_auto_scroll"
-        android:title="@string/verse_auto_scroll"
-        app:showAsAction="never"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>

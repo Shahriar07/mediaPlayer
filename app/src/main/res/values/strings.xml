@@ -24,4 +24,5 @@
 
     <string name="translated_verse">Translated Verse</string>
     <string name="cancel">Cancel</string>
+    <string name="language_control">Select Language</string>
 </resources>

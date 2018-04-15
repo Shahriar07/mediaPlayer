@@ -17,10 +17,10 @@ public class SurahAnNas extends Surah {
         return duration;
     }
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6850,13200,18650,24500,32920,41550,49700,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6850,13200,18650,24500,32920,41550,49300,Integer.MAX_VALUE};
 
-    public SurahAnNas() {
-        super();
+    public SurahAnNas(Context context) {
+        super(context);
         this.setSurahName(context.getString(R.string.surah_an_nas));
         this.setSurahNumber(114);
         this.setMadani(false);

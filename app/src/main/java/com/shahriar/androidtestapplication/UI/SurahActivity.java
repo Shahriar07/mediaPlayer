@@ -1,6 +1,8 @@
 package com.shahriar.androidtestapplication.UI;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -43,7 +45,7 @@ import java.util.Locale;
  */
 
 
-public class SurahActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener {
+public class SurahActivity extends AppCompatActivity implements OnClickListener, MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
     // Media Controllers
     ImageButton play_pause_button;
     ImageButton loop_reset_button;
@@ -55,6 +57,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     // Media player
     MediaPlayer player;
+    private AudioManager mAudioManager;
     Surah surah;
     int surahNo = 114;
     Handler seekHandler;
@@ -85,7 +88,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     CustomSpinner endSpinner;
 
 
-    final SharedPreferenceController controller = new SharedPreferenceController();
+    final SharedPreferenceController controller = new SharedPreferenceController(this);
     Locale currentLocale=Locale.ENGLISH;
 
     /**
@@ -103,17 +106,21 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void setMaxLoopCountFromSharedPreference(){
-        SharedPreferenceController controller = new SharedPreferenceController();
+        SharedPreferenceController controller = new SharedPreferenceController(this);
         maxLoopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
+        if (maxLoopCount == -1){
+            maxLoopCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
+            controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxLoopCount);
+        }
     }
 
     private void setAutoScrollFromSharedPreference(){
-        SharedPreferenceController controller = new SharedPreferenceController();
+        SharedPreferenceController controller = new SharedPreferenceController(this);
         isScrollEnabled = controller.readBooleanWithKey(Constants.SURAH_VERSE_AUTO_SCROLL);
     }
 
     private void updateAutoScrollToSharedPreference(boolean isAutoScrollEnabled){
-        SharedPreferenceController controller = new SharedPreferenceController();
+        SharedPreferenceController controller = new SharedPreferenceController(this);
         controller.writeBooleanWithKey(Constants.SURAH_VERSE_AUTO_SCROLL, isAutoScrollEnabled);
         isScrollEnabled = isAutoScrollEnabled;
     }
@@ -134,7 +141,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         play_pause_button.setOnClickListener(this);
         play_pause_button.setTag(R.drawable.play);
 
-        surah = SurahFactory.getInstance().prepareSurah(""+surahNo);
+        surah = SurahFactory.getInstance(this).prepareSurah(""+surahNo);
         setTitle(surah.getSurahName());
 
         startSpinner = (CustomSpinner) findViewById(R.id.start_loop);
@@ -157,9 +164,13 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         player = MediaPlayer.create(this, surah.getResourceId());
         player.setOnCompletionListener(this);
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
         end_time = (TextView) findViewById(R.id.audio_max_time_text);
         mediaDuration = player.getDuration();
+        Log.d(getClass().getSimpleName(), " Media duration is " + mediaDuration);
         seek_bar.setMax(mediaDuration);
         loopEndTime = mediaDuration;
         end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration, currentLocale));
@@ -208,7 +219,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
 
     /*
-     * Scroll List to position
+     * Set Selected item and change background
      */
     private  void setCurrentSelectedIndex(int index){
         currentSelectedIndex = index;
@@ -224,6 +235,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 startSpinner.setSelection(index);
                 endSpinner.setSelection(index);
                 scrollListToPosition(index);
+                setCurrentSelectedIndex(index);
             }
         }
 
@@ -304,6 +316,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                     setNextLoop();
                 }
 
+                // If player continue playing and there is a loop set, go to the start position and play again
                 if (loopEndTime < mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount) {
                     player.seekTo(loopStartTime);
                     Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
@@ -327,7 +340,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             scrollListToPosition(index);
             setCurrentSelectedIndex(index);
         }
-        seekHandler.postDelayed(run, 300);
+        seekHandler.postDelayed(run, 250);
     }
 
     void changePlayPauseButton(){
@@ -366,14 +379,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        player.release();
-        seekHandler.removeCallbacks(run);
-    }
-
-    @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
+        Toast.makeText(getApplicationContext(), " On Completion called", Toast.LENGTH_SHORT).show();
+        if (!mediaPlayer.isPlaying())
             changePlayPauseButton();
     }
 
@@ -453,8 +461,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
         setRepeatIcon(isRepeatOn,repeatItem);
 
-        MenuItem autoScroll = menu.findItem(R.id.action_auto_scroll);
-        setAutoScrollFromSharedPreference();
+//        MenuItem autoScroll = menu.findItem(R.id.action_auto_scroll);
+//        setAutoScrollFromSharedPreference();
 
 
         return true;
@@ -501,12 +509,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setRepeatIcon(!isOn,item);
     }
 
-
     private void showMaxLoopCountPopup() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         builderSingle.setTitle(getString(R.string.max_repeat_count));
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-        for (int i = 5; i<15; i++) {
+        for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
             arrayAdapter.add(NumberFormat.getInstance().format(i));
         }
         builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -515,7 +522,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 dialog.dismiss();
             }
         });
-        final SharedPreferenceController controller = new SharedPreferenceController();
+        final SharedPreferenceController controller = new SharedPreferenceController(this);
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -528,23 +535,27 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i(getClass().getSimpleName(),"OnStop");
-        if (player.isPlaying()){
-            player.pause();
-            isActivityForsedPaused = true;
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        player.release();
+        seekHandler.removeCallbacks(run);
+        mAudioManager.abandonAudioFocus(this);
     }
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i(getClass().getSimpleName(),"onRestart");
-        if (isActivityForsedPaused){
-            player.start();
-            seekUpdation();
-            isActivityForsedPaused = false;
+    public void onAudioFocusChange(int focusChange) {
+        if(focusChange<=0) { // Focus losses
+            Log.i(getClass().getSimpleName(),"OnStop");
+            if (player.isPlaying()){
+                player.pause();
+                isActivityForsedPaused = true;
+            }
+        } else { // Focus gained
+            if (isActivityForsedPaused){
+                player.start();
+                seekUpdation();
+                isActivityForsedPaused = false;
+            }
         }
     }
 }

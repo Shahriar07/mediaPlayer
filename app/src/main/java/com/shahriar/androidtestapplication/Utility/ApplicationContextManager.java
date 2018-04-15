@@ -18,11 +18,14 @@ public class ApplicationContextManager {
                 }
             }
         }
+        if (context != null)
+            instance.context = context;
         return instance;
     }
 
-    ApplicationContextManager(Context context){
-        this.context = context.getApplicationContext();
+    private ApplicationContextManager(Context context){
+        if (context != null)
+            this.context = context.getApplicationContext();
     }
 
     public Context getAppContext(){

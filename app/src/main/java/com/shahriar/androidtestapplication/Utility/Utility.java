@@ -44,7 +44,7 @@ public class Utility {
                 first = middle + 1;
             else if ( array[middle] == currentPosition )
             {
-                System.out.println(currentPosition + " found at location " + (middle + 1) + ".");
+                System.out.println(currentPosition + " found at index " +middle);
                 break;
             }
             else
@@ -104,5 +104,26 @@ public class Utility {
 
         }
         return intArray;
+    }
+
+
+    public static String getLanguageText(int selectedLanguage) {
+        switch (selectedLanguage){
+            case Constants.LANGUAGE_ENGLISH_VALUE:
+            {
+                return Constants.LANGUAGE_ENGLISH;
+            }
+            case Constants.LANGUAGE_BANGLA_VALUE:
+            {
+                return Constants.LANGUAGE_BANGLA;
+            }
+            default:{
+                return Constants.LANGUAGE_ENGLISH;
+            }
+        }
+    }
+
+    public static String getLocalizedInteger(int maxRepeatCount) {
+        return NumberFormat.getInstance().format(maxRepeatCount);
     }
 }

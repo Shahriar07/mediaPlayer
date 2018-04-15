@@ -47,8 +47,8 @@ public abstract class  Surah {
         this.verses = verses;
     }
 
-    public Surah() {
-        context = ApplicationContextManager.getInstance(null).getAppContext();
+    public Surah(Context context) {
+        this.context = ApplicationContextManager.getInstance(context).getAppContext();
         this.surahInfo = new SurahInfo();
     }
 
@@ -97,7 +97,7 @@ public abstract class  Surah {
     }
 
     public void prepareSuraVerses() {
-        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(null);
+        ApplicationContextManager applicationContextManager = ApplicationContextManager.getInstance(this.context);
         Context context = applicationContextManager.getAppContext();
         if ( context ==null){
             throw new NullPointerException("Need to set ApplicationContext in contextManager");

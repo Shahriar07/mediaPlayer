@@ -32,6 +32,8 @@ import android.widget.Toast;
 
 import com.shahriar.androidtestapplication.Adapter.SurahListAdapter;
 import com.shahriar.androidtestapplication.Data.SurahInfo;
+import com.shahriar.androidtestapplication.Dialog.LanguageDialog;
+import com.shahriar.androidtestapplication.Interfaces.LanguageDialogInterface;
 import com.shahriar.androidtestapplication.Interfaces.OnRecycleViewClicked;
 import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.androidtestapplication.Listeners.SurahItemTouchListener;
@@ -39,9 +41,10 @@ import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
 import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
+import com.shahriar.androidtestapplication.Utility.Utility;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by H. M. Shahriar on 3/3/2018.
@@ -58,8 +61,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private SwitchCompat menuRepeatSwitch;
     private TextView drawerMaxRepeatCount;
+    private TextView drawerSelectedLanguage;
 
     private ArrayList<SurahInfo> surahInfoList;
+    SharedPreferenceController controller;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -136,11 +141,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }));
 
         Menu menu = navigationView.getMenu();
+
         MenuItem menuItem = menu.findItem(R.id.loop_control_switch);
         View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-
         menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-        final SharedPreferenceController controller = new SharedPreferenceController();
+        controller = new SharedPreferenceController(this);
         boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
         menuRepeatSwitch.setChecked(isRepeatOn);
         menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
@@ -154,29 +159,31 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
         int maxRepeatCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
-        if (maxRepeatCount == 0) {
+        if (maxRepeatCount == -1) {
             controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT, Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
             maxRepeatCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
         }
-        drawerMaxRepeatCount.setText(""+maxRepeatCount);
+        drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount));
+
+        menuItem = menu.findItem(R.id.language_control_switch);
+        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+        drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
+        int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
+        if (selectedLanguage == -1) {
+            controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_ENGLISH_VALUE);
+            selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
+        }
+        drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
     }
 
     @Override
     public void onClick(View v) {
-//        Intent surahIntent = new Intent(this, SurahActivity.class);
-//        switch (v.getId()){
-//            case R.id.surah_balad:
-//                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,90);
-//                break;
-//            case R.id.surah_naas:
-//                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-//                break;
-//            default:
-//                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-//                break;
-//        }
-//
-//        startActivity(surahIntent);
+        switch (v.getId()){
+            case R.id.language_control:
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
@@ -207,7 +214,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
             case R.id.loop_control_switch:
             {
-                final SharedPreferenceController controller = new SharedPreferenceController();
+                final SharedPreferenceController controller = new SharedPreferenceController(this);
                 if(menuRepeatSwitch.isChecked()){
                     menuRepeatSwitch.setChecked(false);
                     controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,false);
@@ -218,30 +225,49 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 }
                 break;
             }
+            case R.id.language_control_switch:
+            {
+                showLanguageDialog();
+                break;
+            }
         }
         return true;
     }
 
+    private void showLanguageDialog() {
+        LanguageDialog languageDialog = new LanguageDialog();
+        AlertDialog languageAlertDialog = languageDialog.createLanguageDialog(this, null, new LanguageDialogInterface() {
+            @Override
+            public void selectedLanguageIndex(int index) {
+                controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, index);
+                Toast.makeText(getApplicationContext(), "selectedLanguageIndex "+ index +" is selected!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        if (languageAlertDialog != null){
+            languageAlertDialog.show();
+        }
+    }
+
     private void showMaxLoopCountPopup() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builderSingle.setTitle("Repeat Count");
+        builderSingle.setTitle(getString(R.string.max_repeat_count));
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
-        for (int i = 5; i<15; i++) {
-            arrayAdapter.add(""+i);
+        for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
+            arrayAdapter.add(Utility.getLocalizedInteger(i)); // TODO: Need to get from single source
         }
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-        final SharedPreferenceController controller = new SharedPreferenceController();
+        final SharedPreferenceController controller = new SharedPreferenceController(this);
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 int maxRepeatCount = Integer.parseInt(arrayAdapter.getItem(which));
                 controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxRepeatCount);
-                drawerMaxRepeatCount.setText(""+maxRepeatCount);
+                drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount));
             }
         });
         builderSingle.create().show();
