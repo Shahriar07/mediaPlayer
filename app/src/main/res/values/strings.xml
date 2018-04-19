@@ -1,28 +1,28 @@
 <resources>
-    <string name="app_name">Learn Surah</string>
-    <string name="start_button">Start</string>
-    <string name="pause_button">Pause</string>
-    <string name="start_loop">Loop Start</string>
-    <string name="stop_loop">Loop End</string>
-    <string name="reset_loop">Reset</string>
-    <string name="surah_and_verse">Verse: </string>
-    <string name="arabic_verse">Arabic Verse</string>
-    <string name="surah_number">Surah No: </string>
-    <string name="surah_name">Surah: </string>
+    <string name="app_name" translatable="false">Surah Shikkha</string>
+    <string name="start_button" translatable="false">Start</string>
+    <string name="pause_button" translatable="false">Pause</string>
+    <string name="start_loop" translatable="false">Loop Start</string>
+    <string name="stop_loop" translatable="false">Loop End</string>
+    <string name="reset_loop" translatable="false">Reset</string>
+    <string name="surah_and_verse" translatable="false">Verse: </string>
+    <string name="arabic_verse" translatable="false">Arabic Verse</string>
+    <string name="surah_number" translatable="false">Surah No: </string>
+    <string name="surah_name" translatable="false">Surah: </string>
 
     // Surah names
-    <string name="surah_an_nas">Surah-an-nas</string>
-    <string name="surah_al_balad">Surah-al-balad</string>
-    <string name="surah_al_fatihah">Surah-al-fatihah</string>
+    <string name="surah_an_nas" translatable="false">Surah-an-nas</string>
+    <string name="surah_al_balad" translatable="false">Surah-al-balad</string>
+    <string name="surah_al_fatihah" translatable="false">Surah-al-fatihah</string>
 
 
     // Menu
-    <string name="loop_count">Loop Count</string>
-    <string name="loop_control">Repeat Verse</string>
-    <string name="max_repeat_count">Max Repeat</string>
-    <string name="verse_auto_scroll">Auto Scroll</string>
+    <string name="loop_count" translatable="false">Loop Count</string>
+    <string name="loop_control" translatable="false">Repeat Verse</string>
+    <string name="max_repeat_count" translatable="false">Max Repeat</string>
+    <string name="verse_auto_scroll" translatable="false">Auto Scroll</string>
 
-    <string name="translated_verse">Translated Verse</string>
-    <string name="cancel">Cancel</string>
-    <string name="language_control">Select Language</string>
+    <string name="translated_verse" translatable="false">Translated Verse</string>
+    <string name="cancel" translatable="false">Cancel</string>
+    <string name="language_control" translatable="false">Select Language</string>
 </resources>

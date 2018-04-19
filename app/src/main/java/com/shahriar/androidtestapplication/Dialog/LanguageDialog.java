@@ -22,7 +22,7 @@ public class LanguageDialog {
         if (context != null) {
             AlertDialog.Builder builderSingle = new AlertDialog.Builder(context, R.style.MyDialogTheme);
             builderSingle.setTitle(title != null? title : context.getString(R.string.language_control));
-            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.select_dialog_singlechoice);
+            final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_selectable_list_item);
             for (int i = 0; i < Constants.LANGUAGE_LIST.length; i++) {
                 arrayAdapter.add(Constants.LANGUAGE_LIST[i]); // TODO: Need to get from single source
             }

@@ -110,9 +110,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
         );
-
-
-
         surahListView = (RecyclerView) findViewById(R.id.surahList);
         mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         surahListView.setLayoutManager(mLayoutManager);
@@ -256,10 +253,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void selectedLanguageIndex(int index) {
                 controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, index);
                 drawerSelectedLanguage.setText(Utility.getLanguageText(index));
-                Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
+                //Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
                 //Toast.makeText(getApplicationContext(), "selectedLanguageIndex "+ index +" is selected!", Toast.LENGTH_SHORT).show();
-                updateLanguage(context);
-                recreate();
+                //updateLanguage(context);
+                //recreate();
 
             }
         });
@@ -271,7 +268,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private void showMaxLoopCountPopup() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         builderSingle.setTitle(getString(R.string.max_repeat_count));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
             arrayAdapter.add(Utility.getLocalizedInteger(i)); // TODO: Need to get from single source
         }

@@ -516,7 +516,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     private void showMaxLoopCountPopup() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
         builderSingle.setTitle(getString(R.string.max_repeat_count));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_singlechoice);
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
             arrayAdapter.add(NumberFormat.getInstance().format(i));
         }
