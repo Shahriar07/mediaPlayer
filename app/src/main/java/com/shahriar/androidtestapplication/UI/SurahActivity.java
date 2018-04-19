@@ -34,6 +34,7 @@ import com.shahriar.androidtestapplication.LayoutManager.ScrollingLinearLayoutMa
 import com.shahriar.androidtestapplication.Listeners.VerseTouchListener;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.Constants;
+import com.shahriar.androidtestapplication.Utility.LocaleManager;
 import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
@@ -66,7 +67,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     int loopStartTime = 0;
     int loopEndTime = 0;
     int mediaDuration = 0;
-    int loopCount = 0;
+    int loopCount = 1;
 
     int currentLoopIndex = 0;
     int durationArray[];
@@ -276,15 +277,16 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     /*
-    * if verse 2 is running set verse 3
-    * if verse 2-4 is running set verse 5
-    * if verse 2-4 is the last set 0-4
+    * 1. if verse 2 is running set verse 3
+    * 2. if verse 2-4 is running set verse 5
+    * 3. if verse 2-4 is the last set 0-4
     *
      */
     void setNextLoop(){
         Log.i(getClass().getSimpleName(),"Set next loop with currentLocale index " + currentLoopIndex);
-        loopCount = 0;
+        loopCount = 1;
         ++currentLoopIndex;
+        // 3. if verse 2-4 is the last set 0-4
         if (currentLoopIndex == (durationArray.length -1)) {
             loopStartTime = durationArray[0];
             loopEndTime = durationArray[durationArray.length - 1];
@@ -293,6 +295,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             Log.d(getClass().getSimpleName(),"Set Next Loop in last index with start time " + loopStartTime + " End time "+ loopEndTime);
         }
         else{
+            // 1. if verse 2 is running set verse 3
             loopStartTime = durationArray[currentLoopIndex];
             if (loopStartTime < loopEndTime){
                 loopStartTime = loopEndTime;
@@ -311,6 +314,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         public void run() {
             boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
             if (maxLoopCount > 0 && isRepeatOn) {
+                // This is the last play of loop Need to set the next loop
                 if (loopCount == maxLoopCount) {
                     Log.d(getClass().getSimpleName(), "Set Next Loop Count");
                     setNextLoop();
@@ -372,7 +376,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             case R.id.reset_loop:{
                 loopStartTime = 0;
                 loopEndTime = mediaDuration;
-                loopCount = 0;
+                loopCount = 1;
                 break;
             }
         }
@@ -406,7 +410,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
         currentLoopIndex = index;
         loopStartTime = durationArray[currentLoopIndex];
-        loopCount = 0;
+        loopCount = 1;
         player.seekTo(loopStartTime);
         scrollListToPosition(index);
         setCurrentSelectedIndex(index);
@@ -542,6 +546,17 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         mAudioManager.abandonAudioFocus(this);
     }
 
+    /*
+     * this function helps to change language
+     */
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.onAttach(newBase));
+    }
+
+    /*
+     * This method helps to run audio after screen off and stops during incoming call
+     */
     @Override
     public void onAudioFocusChange(int focusChange) {
         if(focusChange<=0) { // Focus losses

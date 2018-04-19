@@ -21,7 +21,6 @@
             android:icon="@drawable/language"
             android:checkable="false"
             app:itemBackground = "@drawable/menu_item_background"
-            app:actionLayout="@layout/drawer_language_control"
-            android:title="@string/language_control" />
+            app:actionLayout="@layout/drawer_language_control"/>
     </group>
 </menu>

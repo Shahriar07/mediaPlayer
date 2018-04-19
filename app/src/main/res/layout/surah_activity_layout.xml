@@ -136,7 +136,7 @@
                 android:scaleType="centerInside"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/bg_reset"
-
+                android:contentDescription="@string/reset_loop"
                 android:layout_weight="1"
                 android:text="@string/reset_loop"
                 android:textAllCaps="false" />

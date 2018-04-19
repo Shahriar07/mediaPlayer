@@ -3,12 +3,10 @@ package com.shahriar.androidtestapplication.UI;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -19,14 +17,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,10 +35,10 @@ import com.shahriar.androidtestapplication.Listeners.SurahItemTouchListener;
 import com.shahriar.androidtestapplication.R;
 import com.shahriar.androidtestapplication.Utility.ApplicationContextManager;
 import com.shahriar.androidtestapplication.Utility.Constants;
+import com.shahriar.androidtestapplication.Utility.LocaleManager;
 import com.shahriar.androidtestapplication.Utility.SharedPreferenceController;
 import com.shahriar.androidtestapplication.Utility.Utility;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -69,12 +64,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drawer_layout);
+        controller = new SharedPreferenceController(this);
+        int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
+        Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
+
         ApplicationContextManager.getInstance(this);
-        initComponent();
+        initComponent(context);
     }
 
-    void initComponent(){
+    void initComponent(Context context){
+
+
+        setContentView(R.layout.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -117,9 +118,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList();
 
-        mAdapter = new SurahListAdapter(surahInfoList,this);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
+        mAdapter = new SurahListAdapter(surahInfoList,context);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
+        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
         surahListView.addItemDecoration(dividerItemDecoration);
 
         surahListView.setAdapter(mAdapter);
@@ -145,7 +146,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         MenuItem menuItem = menu.findItem(R.id.loop_control_switch);
         View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-        controller = new SharedPreferenceController(this);
+
         boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
         menuRepeatSwitch.setChecked(isRepeatOn);
         menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +167,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount));
 
         menuItem = menu.findItem(R.id.language_control_switch);
+        menuItem.setTitle(R.string.language_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
         int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
@@ -174,12 +176,25 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
         }
         drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
+        drawerSelectedLanguage.setOnClickListener(this);
+    }
+
+    private void updateLanguage(Context localizedContext){
+        invalidateOptionsMenu();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.onAttach(newBase));
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.language_control:
+                mDrawerLayout.closeDrawers();
+                showLanguageDialog();
                 break;
             default:
                 break;
@@ -240,7 +255,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void selectedLanguageIndex(int index) {
                 controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, index);
-                Toast.makeText(getApplicationContext(), "selectedLanguageIndex "+ index +" is selected!", Toast.LENGTH_SHORT).show();
+                drawerSelectedLanguage.setText(Utility.getLanguageText(index));
+                Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
+                //Toast.makeText(getApplicationContext(), "selectedLanguageIndex "+ index +" is selected!", Toast.LENGTH_SHORT).show();
+                updateLanguage(context);
+                recreate();
+
             }
         });
         if (languageAlertDialog != null){
