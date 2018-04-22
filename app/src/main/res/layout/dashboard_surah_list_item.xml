@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/surahListSurahNumber"
+        android:id="@+id/surahListSurahName"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:paddingTop="8dp"
@@ -13,12 +13,13 @@
         android:paddingLeft="8dp"
         android:textColor="@color/surah_list_item_color"
         android:textAllCaps="false"
-        android:text="Number"
+        android:text="Name"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         />
+
     <TextView
-        android:id="@+id/surahListSurahName"
+        android:id="@+id/surahListSurahNumber"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:paddingTop="4dp"
@@ -26,10 +27,11 @@
         android:paddingLeft="8dp"
         android:textColor="@color/surah_list_item_color"
         android:textAllCaps="false"
-        android:text="Name"
+        android:text="Number"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        />
 
     <TextView
         android:id="@+id/surahDuration"
@@ -43,7 +45,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text="Duration"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentBottom="true"/>
 
     <TextView
         android:id="@+id/verseCount"
@@ -57,5 +59,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:text=" "
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentTop="true"
+        />
 </RelativeLayout>

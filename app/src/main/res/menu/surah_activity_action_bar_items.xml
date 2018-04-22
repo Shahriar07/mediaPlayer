@@ -8,9 +8,10 @@
         android:title="Repeat"
         app:showAsAction="ifRoom"/>
 
-    <item android:id="@+id/action_max_repeat_count"
-        android:icon="@drawable/menu_max_repeat_count"
+    <item
+        android:id="@+id/action_max_repeat_count"
         android:title="@string/max_repeat_count"
-        app:showAsAction="ifRoom"/>
+        app:actionLayout="@layout/surah_activity_menu_repeat_count"
+        app:showAsAction="ifRoom" />
 
 </menu>
