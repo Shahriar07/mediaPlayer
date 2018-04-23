@@ -412,8 +412,14 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     /*
      * Select only the starting verse
      * Set start position as index and end position will remain unchanged
+     *
+     * but update end time to index time if smaller than selected index
      */
     public void setLoopWhenStartVerseIndexSelected(int index){
+        if (loopEndTime < durationArray[index]){
+            loopEndTime = durationArray[index];
+            endSpinner.setSelection(currentLoopIndex);
+        }
         current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
         currentLoopIndex = index;
         loopStartTime = durationArray[currentLoopIndex];
@@ -549,7 +555,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         builderSingle.setTitle(getString(R.string.max_repeat_count));
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
-            arrayAdapter.add(NumberFormat.getInstance().format(i));
+            arrayAdapter.add(Utility.getLocalizedInteger(i,null));
         }
         builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
