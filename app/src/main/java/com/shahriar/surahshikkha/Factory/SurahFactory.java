@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.shahriar.surahshikkha.Data.Surah;
+import com.shahriar.surahshikkha.Data.SurahAdDuha;
 import com.shahriar.surahshikkha.Data.SurahAlBalad;
 import com.shahriar.surahshikkha.Data.SurahAlFatihah;
 import com.shahriar.surahshikkha.Data.SurahAnNas;
@@ -47,6 +48,10 @@ public class SurahFactory {
             case "114":
             {
                 return new SurahAnNas(applicationContext);
+            }
+            case "93":
+            {
+                return new SurahAdDuha(applicationContext);
             }
             case "90":
             {
