@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Utility {
 
     public String getFormatedTimeFromMilisecond (long millisecond, Locale locale){
-        Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
+        //Log.d(getClass().getSimpleName(),"Millisecond " + millisecond);
         String time = String.format(locale,"%02d:%02d",0,0);
         if (millisecond >=3600000){
             time = String.format(locale,"%02d:%02d:%02d",
@@ -45,7 +45,7 @@ public class Utility {
                 first = middle + 1;
             else if ( array[middle] == currentPosition )
             {
-                System.out.println(currentPosition + " found at index " +middle);
+//                Log.d(getClass().getSimpleName(),currentPosition + " found at index " +middle);
                 break;
             }
             else
@@ -54,8 +54,8 @@ public class Utility {
             }
             middle = (first + last)/2;
         }
-        if ( first > last )
-            System.out.println(currentPosition + " is not found. Middle " + middle +"\n");
+//        if ( first > last )
+           //Log.d(getClass().getSimpleName(),currentPosition + " is not found. Middle " + middle);
         return middle;
     }
 

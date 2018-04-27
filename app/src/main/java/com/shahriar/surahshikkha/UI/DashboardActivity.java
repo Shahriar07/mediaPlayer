@@ -74,7 +74,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     void initComponent(Context context){
 
-
         setContentView(R.layout.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

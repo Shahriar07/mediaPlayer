@@ -15,7 +15,7 @@ public class SurahAdDuha extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 5700,7030,11200,16500,21000,26200,31300,39000,45000,51600,56300,64100,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6280,8230,11200,15900,21350,26500,32000,39550,46000,51000,57500,64100,Integer.MAX_VALUE};
 
     public SurahAdDuha(Context context) {
         super(context);

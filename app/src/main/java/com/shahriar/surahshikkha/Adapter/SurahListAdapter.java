@@ -36,7 +36,7 @@ public class SurahListAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.dashboard_surah_list_item, parent, false);
         SurahHolder vh = new SurahHolder(v);
-        Log.d(getClass().getSimpleName(),"onCreateViewHolder");
+        //Log.d(getClass().getSimpleName(),"onCreateViewHolder");
         return vh;
     }
 

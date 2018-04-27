@@ -22,7 +22,7 @@ public class Constants {
 
     // Language
     public static final String LANGUAGE_ENGLISH = "English";
-    public static final String LANGUAGE_BANGLA = "বাংলা";
+    public static final String LANGUAGE_BANGLA = "Bangla";
     public static final int LANGUAGE_ENGLISH_VALUE = 0;
     public static final int LANGUAGE_BANGLA_VALUE = 1;
     public static final String[] LANGUAGE_LIST = {LANGUAGE_ENGLISH,LANGUAGE_BANGLA};

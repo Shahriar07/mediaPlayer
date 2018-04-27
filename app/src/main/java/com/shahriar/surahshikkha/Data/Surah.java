@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Constants;
+import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 
 import java.util.ArrayList;
 
@@ -102,8 +103,11 @@ public abstract class  Surah {
         if ( context ==null){
             throw new NullPointerException("Need to set ApplicationContext in contextManager");
         }
+        SharedPreferenceController controller = new SharedPreferenceController(context);
+        int language = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
         String arabicVerseName = "a_bismillah";
-        String secondLanguageVerseName = "b_bismillah";
+        String languageInitial = (language == Constants.LANGUAGE_ENGLISH_VALUE) ?"e":"b";
+        String secondLanguageVerseName = languageInitial+"_bismillah";
         int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
         int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
         Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
@@ -111,7 +115,7 @@ public abstract class  Surah {
         int verseCount = getVerseCount();
         for (int i =1; i <= verseCount ; i++){
             arabicVerseName = "a"+getSurahNumber()+""+(i);
-            secondLanguageVerseName = "b"+getSurahNumber()+""+(i);
+            secondLanguageVerseName = languageInitial+getSurahNumber()+""+(i); // b+114+1 -> b1141  or e+114+1 -> e1141
             arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
             secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
             v = new Verse(i, arabicVerseId, secondLanguageVerseId);
