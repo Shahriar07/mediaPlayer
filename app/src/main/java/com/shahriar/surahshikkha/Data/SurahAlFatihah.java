@@ -22,7 +22,7 @@ public class SurahAlFatihah extends Surah {
         this.setSurahName(context.getString(R.string.surah_al_fatihah));
         this.setSurahNumber(1);
         this.setMadani(false);
-        this.setResourceId(R.raw.surah_al_fatiha_1);
+        this.setResourceId(R.raw.s_1);
         prepareSuraVerses();
         setsurahDurationFromRaw();
         setVerseCount(getVerses().size());

@@ -24,7 +24,7 @@ public class SurahAnNas extends Surah {
         this.setSurahName(context.getString(R.string.surah_an_nas));
         this.setSurahNumber(114);
         this.setMadani(false);
-        this.setResourceId(R.raw.surah_an_nas_114);
+        this.setResourceId(R.raw.s_114);
         prepareSuraVerses();
         setsurahDurationFromRaw();
         setVerseCount(getVerses().size());

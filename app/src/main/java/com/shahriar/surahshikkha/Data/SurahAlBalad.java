@@ -28,7 +28,7 @@ public class SurahAlBalad extends Surah {
         this.setSurahName(context.getString(R.string.surah_al_balad));
         this.setSurahNumber(90);
         this.setMadani(false);
-        this.setResourceId(R.raw.surah_al_balad_90);
+        this.setResourceId(R.raw.s_90);
         prepareSuraVerses();
         setsurahDurationFromRaw();
         setVerseCount(getVerses().size());

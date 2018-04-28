@@ -23,6 +23,10 @@ import java.util.Locale;
 
 public class SurahListAdapter extends RecyclerView.Adapter {
 
+    public void setSurahList(ArrayList<SurahInfo> surahList) {
+        this.surahList = surahList;
+    }
+
     private ArrayList<SurahInfo> surahList = new ArrayList<>();
     Context context;
     LayoutInflater inflater;

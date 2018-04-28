@@ -22,7 +22,7 @@ public class SurahAdDuha extends Surah {
         this.setSurahName(context.getString(R.string.surah_ad_duha));
         this.setSurahNumber(93);
         this.setMadani(false);
-        this.setResourceId(R.raw.ad_duha_093);
+        this.setResourceId(R.raw.s_93);
         prepareSuraVerses();
         setsurahDurationFromRaw();
         setVerseCount(getVerses().size());

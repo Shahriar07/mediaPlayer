@@ -18,10 +18,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,8 @@ import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by H. M. Shahriar on 3/3/2018.
@@ -51,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     // list to show surah
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private SurahListAdapter mAdapter;
     private RecyclerView surahListView;
 
     private SwitchCompat menuRepeatSwitch;
@@ -113,8 +118,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList();
-
+        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
+        sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList,context);
+
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
         dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
         surahListView.addItemDecoration(dividerItemDecoration);
@@ -180,6 +187,49 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mAdapter.notifyDataSetChanged();
     }
 
+
+    void sortList(int type){
+        Log.d(getClass().getSimpleName()," Sort List "+ type);
+
+        if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
+            Collections.sort(surahInfoList,comparatorByNumber);
+        else if (type == Constants.SURAH_VERSE_SORT_BY_DURATION)
+            Collections.sort(surahInfoList,comparatorByDuration);
+        else if (type == Constants.SURAH_VERSE_SORT_BY_VERSE_NUMBER)
+            Collections.sort(surahInfoList,comparatorByVerseNumber);
+        else
+            Collections.sort(surahInfoList,comparatorByNumber);
+
+        if (mAdapter != null) {
+            mAdapter.setSurahList(surahInfoList);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    Comparator<SurahInfo> comparatorByNumber = new Comparator<SurahInfo>() {
+        @Override
+        public int compare(SurahInfo lhs, SurahInfo rhs) {
+            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+            return lhs.getSurahNumber() > rhs.getSurahNumber() ? 1 : (lhs.getSurahNumber() < rhs.getSurahNumber() ) ? -1 : 0;
+        }
+    };
+
+    Comparator<SurahInfo> comparatorByVerseNumber = new Comparator<SurahInfo>() {
+        @Override
+        public int compare(SurahInfo lhs, SurahInfo rhs) {
+            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+            return lhs.getVerseCount() > rhs.getVerseCount() ? 1 : (lhs.getVerseCount() < rhs.getVerseCount() ) ? -1 : 0;
+        }
+    };
+    Comparator<SurahInfo> comparatorByDuration = new Comparator<SurahInfo>() {
+        @Override
+        public int compare(SurahInfo lhs, SurahInfo rhs) {
+            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+            return lhs.getSurahDuration() > rhs.getSurahDuration() ? 1 : (lhs.getSurahDuration() < rhs.getSurahDuration() ) ? -1 : 0;
+        }
+    };
+
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleManager.onAttach(newBase));
@@ -197,15 +247,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -296,5 +338,58 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         surahList.add(new SurahInfo(getString(R.string.surah_ad_duha), 93, false,65000,11));
         surahList.add(new SurahInfo(getString(R.string.surah_an_nas), 114, false,50015,6));
         return surahList;
+    }
+
+
+    /*
+     * Create and set menu items for action bar
+     */
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        android.view.MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.dashboard_activity_action_bar_items, menu);
+        MenuItem repeatItem = menu.findItem(R.id.actionSort);
+        int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
+        //setRepeatIcon(isRepeatOn,repeatItem);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionSort:
+                showSortSelectDialog();
+                return true;
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void showSortSelectDialog() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        builderSingle.setTitle(getString(R.string.sort));
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
+        arrayAdapter.addAll(getResources().getStringArray(R.array.sort_array)); // TODO: Need to get from single source
+
+        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        final SharedPreferenceController controller = new SharedPreferenceController(this);
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sortList(which);
+                controller.writeIntWithKey(Constants.SURAH_SORT_CONTROL,which);
+            }
+        });
+        builderSingle.create().show();
     }
 }

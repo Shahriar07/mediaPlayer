@@ -27,4 +27,12 @@
     <string name="translated_verse">Translated Verse</string>
     <string name="cancel">Cancel</string>
     <string name="language_control">Select Language</string>
+
+    <string name="sort">Sort By</string>
+    <string-array name="sort_array">
+        <item>Surah number</item>
+        <item>Surah duration</item>
+        <item>Verse count</item>
+    </string-array>
+
 </resources>

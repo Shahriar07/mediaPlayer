@@ -47,7 +47,12 @@ public class SharedPreferenceController {
             return sharedPref.getInt(key, defaultValue);
         return defaultValue;
     }
-
+    public int readIntWithKey(String key, int defaultValue){
+        SharedPreferences sharedPref = getSharedPreferences(appContext);
+        if (key!=null)
+            return sharedPref.getInt(key, defaultValue);
+        return defaultValue;
+    }
     public boolean writeIntWithKey(String key, int value){
         if (key == null) return false;
         SharedPreferences sharedPref = getSharedPreferences(appContext);
@@ -55,6 +60,7 @@ public class SharedPreferenceController {
         editor.putInt(key, value);
         return editor.commit();
     }
+
 
     public String readStringWithKey(String key){
         SharedPreferences sharedPref = getSharedPreferences(appContext);
