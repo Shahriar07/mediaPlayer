@@ -322,7 +322,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
             if (maxLoopCount > 0 && isRepeatOn) {
                 // This is the last play of loop Need to set the next loop
-                if (loopCount == maxLoopCount) {
+                if (loopCount >= maxLoopCount) {
                     Log.d(getClass().getSimpleName(), "Set Next Loop Count");
                     setNextLoop();
                 }
