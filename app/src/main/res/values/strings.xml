@@ -11,10 +11,36 @@
     <string name="surah_name">Surah: </string>
 
     // Surah names
-    <string name="surah_an_nas">Surah-an-nas</string>
-    <string name="surah_al_balad">Surah-al-balad</string>
-    <string name="surah_ad_duha">Surah-ad-duha</string>
     <string name="surah_al_fatihah">Surah-al-fatihah</string>
+    <string name="surah_at_tariq">Surah-at-tariq</string>
+    <string name="surah_al_ala">Surah-al-a`la</string>
+    <string name="surah_al_ghashiyah">Surah-al-ghashiyah</string>
+    <string name="surah_al_fajr">Surah-al-fajr</string>
+    <string name="surah_al_balad">Surah-al-balad</string>
+    <string name="surah_ash_shams">Surah-ash-shams</string>
+    <string name="surah_al_layl">Surah-al-layl</string>
+    <string name="surah_ad_duha">Surah-ad-duha</string>
+    <string name="surah_as_sharh">Surah-as-sharh</string>
+    <string name="surah_at_tin">Surah-at-tin</string>
+    <string name="surah_al_alaq">Surah-al-`alaq</string>
+    <string name="surah_al_qadr">Surah-al-qadr</string>
+    <string name="surah_al_bayyinah">Surah-al-bayyinah</string>
+    <string name="surah_az_zilzalah">Surah-az-zilzalah</string>
+    <string name="surah_al_adiyat">Surah-al-`adiyat</string>
+    <string name="surah_al_qariah">Surah-al-qari`ah</string>
+    <string name="surah_at_takathur">Surah-at-takathur</string>
+    <string name="surah_al_asr">Surah-al-`asr</string>
+    <string name="surah_al_humazah">Surah-al-humazah</string>
+    <string name="surah_al_fil">Surah-al-fil</string>
+    <string name="surah_quraysh">Surah-quraysh</string>
+    <string name="surah_al_maun">Surah-al-ma`un</string>
+    <string name="surah_al_kawthar">Surah-al-kawthar</string>
+    <string name="surah_al_kafirun">Surah-al-kafirun</string>
+    <string name="surah_an_nasr">Surah-an-nasr</string>
+    <string name="surah_al_masad">Surah-al-masad</string>
+    <string name="surah_al_ikhlas">Surah-al-ikhlas</string>
+    <string name="surah_al_falaq">Surah-al-falaq</string>
+    <string name="surah_an_nas">Surah-an-nas</string>
 
 
     // Menu

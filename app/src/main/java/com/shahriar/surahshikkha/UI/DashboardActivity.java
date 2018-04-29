@@ -23,8 +23,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -334,9 +332,35 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private ArrayList<SurahInfo> getSurahInfoList (){
         ArrayList<SurahInfo> surahList = new ArrayList<>();
         surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah), 1, false,51015,7));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_balad), 90, false,120015,20));
-        surahList.add(new SurahInfo(getString(R.string.surah_ad_duha), 93, false,65000,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_an_nas), 114, false,50015,6));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_tariq), 86, false,100440,17));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ala), 87, false,108000,19));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ghashiyah), 88, false,134352,26));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fajr), 89, false,213192,30));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_balad), 90, false,120240,20));
+        surahList.add(new SurahInfo(getString(R.string.surah_ash_shams), 91, false,84600,15));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_layl), 92, false,111816,21));
+        surahList.add(new SurahInfo(getString(R.string.surah_ad_duha), 93, false,65304,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_as_sharh), 94, false,43200,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_tin), 95, false,65160,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_alaq), 96, false,95328,19));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_qadr), 97, false,45360,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah), 98, true,33264,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_az_zilzalah), 99, true,60192,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_adiyat), 100, false,70272,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_qariah), 101, false,62784,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_takathur), 102, false,62856,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_asr), 103, false,27648,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_humazah), 104, false,58248,9));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fil), 105, false,48960,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_quraysh), 106, false,42768,4));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_maun), 107, false,57744,7));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_kawthar), 108, false,24768,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_kafirun), 109, false,54504,6));
+        surahList.add(new SurahInfo(getString(R.string.surah_an_nasr), 110, true,35136,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_masad), 111, false,41760,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ikhlas), 112, false,21888,4));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_falaq), 113, false,33264,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_an_nas), 114, false,50256,6));
         return surahList;
     }
 
