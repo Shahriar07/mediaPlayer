@@ -15,11 +15,11 @@ public class SurahAlQuraysh extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7250,11000,14754,20154,26400,32000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 7050,11900,21054,27254,41000,Integer.MAX_VALUE};
 
     public SurahAlQuraysh(Context context) {
         super(context);
-        this.setSurahName(context.getString(R.string.surah_al_qariah));
+        this.setSurahName(context.getString(R.string.surah_quraysh));
         this.setSurahNumber(106);
         this.setMadani(false);
         this.setResourceId(R.raw.s_106);

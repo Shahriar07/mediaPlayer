@@ -364,7 +364,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         return surahList;
     }
 
-
     /*
      * Create and set menu items for action bar
      */

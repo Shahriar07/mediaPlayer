@@ -15,7 +15,7 @@ public class SurahAlKafirun extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7250,11000,14754,20154,26400,32000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6950,15000,22954,31554,38400,47300,53200,Integer.MAX_VALUE};
 
     public SurahAlKafirun(Context context) {
         super(context);

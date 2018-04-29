@@ -320,7 +320,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         @Override
         public void run() {
             boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-            if (maxLoopCount > 0 && isRepeatOn) {
+            if (maxLoopCount > 1 && isRepeatOn) {
                 // This is the last play of loop Need to set the next loop
                 if (loopCount >= maxLoopCount) {
                     Log.d(getClass().getSimpleName(), "Set Next Loop Count");
@@ -557,7 +557,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showMaxLoopCountPopup() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         builderSingle.setTitle(getString(R.string.max_repeat_count));
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
