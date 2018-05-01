@@ -15,7 +15,7 @@ public class SurahAlFajr extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7250,11000,14754,20154,26400,32000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6647,8000,10522,13163,15978,20564,26892,31404,38560,46180,51650,57320,62655,69616,76176,92038,105607,113154,123210,129161,136141,143571,151437,168968,174816,181942,187631,196150,204336,207571,212000,Integer.MAX_VALUE};
 
     public SurahAlFajr(Context context) {
         super(context);
