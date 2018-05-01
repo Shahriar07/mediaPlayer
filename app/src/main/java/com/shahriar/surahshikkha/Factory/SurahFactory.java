@@ -9,6 +9,7 @@ import com.shahriar.surahshikkha.Data.SurahAlAla;
 import com.shahriar.surahshikkha.Data.SurahAlAlaq;
 import com.shahriar.surahshikkha.Data.SurahAlAsr;
 import com.shahriar.surahshikkha.Data.SurahAlBalad;
+import com.shahriar.surahshikkha.Data.SurahAlBayyinah;
 import com.shahriar.surahshikkha.Data.SurahAlFajr;
 import com.shahriar.surahshikkha.Data.SurahAlFatihah;
 import com.shahriar.surahshikkha.Data.SurahAlFalaq;
@@ -109,7 +110,7 @@ public class SurahFactory {
             }
             case "98":
             {
-                return new SurahAlFalaq(applicationContext);
+                return new SurahAlBayyinah(applicationContext);
             }
             case "99":
             {

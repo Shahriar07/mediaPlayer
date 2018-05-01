@@ -15,7 +15,7 @@ public class SurahAzZilzalah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6800,11800,16354,21954,27800,32800,42000,49500,59100,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6800,11800,16354,21954,27700,32800,42000,49500,59100,Integer.MAX_VALUE};
 
     public SurahAzZilzalah(Context context) {
         super(context);
