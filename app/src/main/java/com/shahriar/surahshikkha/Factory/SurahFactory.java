@@ -100,10 +100,10 @@ public class SurahFactory {
             {
                 return new SurahAtTin(applicationContext);
             }
-            case "96":
-            {
-                return new SurahAlAlaq(applicationContext);
-            }
+//            case "96":
+//            {
+//                return new SurahAlAlaq(applicationContext);
+//            }
             case "97":
             {
                 return new SurahAlQadr(applicationContext);

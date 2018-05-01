@@ -15,7 +15,8 @@ public class SurahAlAla extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7050,11000,14854,18300,23900,29370,33790,47000,50280,55550,60250,64800,70150,76900,81600,86100,90800,95950,101200,107000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 7050,11000,14854,18300,23900,29370,33790,47000,50280,55550,
+            60250,64800,70150,76900,81600,86100,90800,95950,101400,107100,Integer.MAX_VALUE};
 
     public SurahAlAla(Context context) {
         super(context);

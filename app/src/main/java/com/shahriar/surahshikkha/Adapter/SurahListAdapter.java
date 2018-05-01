@@ -78,7 +78,8 @@ class SurahHolder extends RecyclerView.ViewHolder {
         Context context = ApplicationContextManager.getInstance(null).getAppContext();
         String number = Utility.getLocalizedInteger(surahInfo.getSurahNumber(),null);
 //        +context.getString(context.getResources().getIdentifier("s"+,"id",context.getPackageName()))
-        surahNo.setText(context.getString(R.string.surah_number) + " " +number);
+//        surahNo.setText(context.getString(R.string.surah_number) + " " +number);
+        surahNo.setText("# " +number);
         surahName.setText(surahInfo.getSurahName());
         Locale current = Utility.getCurrentLocale(null);
         surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current));
