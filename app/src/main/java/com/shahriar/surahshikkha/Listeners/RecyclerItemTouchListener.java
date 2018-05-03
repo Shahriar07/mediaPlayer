@@ -12,7 +12,7 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
  * Created by H. M. Shahriar on 3/26/2018.
  */
 
-public class SurahItemTouchListener implements RecyclerView.OnItemTouchListener {
+public class RecyclerItemTouchListener implements RecyclerView.OnItemTouchListener {
     private GestureDetector gestureDetector;
     private OnRecycleViewClicked clickListener;
 
@@ -36,7 +36,7 @@ public class SurahItemTouchListener implements RecyclerView.OnItemTouchListener 
 
     }
 
-    public SurahItemTouchListener(Context context, final RecyclerView recyclerView, final OnRecycleViewClicked clickListener) {
+    public RecyclerItemTouchListener(Context context, final RecyclerView recyclerView, final OnRecycleViewClicked clickListener) {
         this.clickListener = clickListener;
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override

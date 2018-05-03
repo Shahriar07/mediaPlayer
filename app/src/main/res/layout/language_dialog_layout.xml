@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    android:layout_width = "wrap_content"
+    android:layout_height = "210dp"
+    android:background="@color/window_background">
+    <!-- The Title Bar -->
+    <TextView
+        android:id="@+id/id_dialog_title"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:padding="24dp"
+        android:text = "Title"
+        android:textStyle="bold"
+        android:textColor="@color/actionMenuTextColor"
+        android:layout_gravity = "center_vertical|center_horizontal"
+        android:gravity="center_horizontal"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentTop="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id = "@+id/dlg_list_items"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:paddingTop="8dp"
+        android:layout_below="@+id/id_dialog_title"
+        android:background = "@color/window_background">
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/dlg_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAllCaps="true"
+        android:background="@android:color/transparent"
+        android:text="@string/cancel"
+        android:textColor="@color/colorAccent"
+        android:layout_below="@id/dlg_list_items"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

@@ -2,6 +2,8 @@ package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,6 +89,8 @@ public class SurahAdapter extends RecyclerView.Adapter {
         public VerseHolder(View v) {
             super(v);
             verseNo = (TextView) v.findViewById(R.id.verse_no);
+            Typeface typeface = ResourcesCompat.getFont(context, R.font.solaimanlipi);
+            verseNo.setTypeface(typeface);
             surahVersesArabic = (ImageView) v.findViewById(R.id.arabic_verse);
             surahVersesTranslated = (ImageView) v.findViewById(R.id.second_language_verse);
             Log.d(getClass().getSimpleName(), "VerseHolder");

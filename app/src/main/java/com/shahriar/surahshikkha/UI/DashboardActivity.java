@@ -1,7 +1,6 @@
 package com.shahriar.surahshikkha.UI;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,17 +20,19 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.Window;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
 import com.shahriar.surahshikkha.Data.SurahInfo;
 import com.shahriar.surahshikkha.Dialog.LanguageDialog;
-import com.shahriar.surahshikkha.Interfaces.LanguageDialogInterface;
+import com.shahriar.surahshikkha.Dialog.ListItemDialog;
+import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
+import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
-import com.shahriar.surahshikkha.Listeners.SurahItemTouchListener;
+import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Constants;
@@ -41,6 +41,7 @@ import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -126,7 +127,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         surahListView.setAdapter(mAdapter);
 
-        surahListView.addOnItemTouchListener(new SurahItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
+        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
                 SurahInfo info = surahInfoList.get(position);
@@ -286,47 +287,37 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showLanguageDialog() {
-        LanguageDialog languageDialog = new LanguageDialog();
-        AlertDialog languageAlertDialog = languageDialog.createLanguageDialog(this, null, new LanguageDialogInterface() {
+        final ArrayList<String> itemList = new ArrayList<>();
+        for (int i = 0; i < Constants.LANGUAGE_LIST.length; i++) {
+            itemList.add(Constants.LANGUAGE_LIST[i]); // TODO: Need to get from single source
+        }
+        LanguageDialog dialog = new LanguageDialog(this,getString(R.string.language_control),itemList, new DialogItemTouchListener() {
             @Override
-            public void selectedLanguageIndex(int index) {
-                controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, index);
-                drawerSelectedLanguage.setText(Utility.getLanguageText(index));
-                //Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
-                //Toast.makeText(getApplicationContext(), "selectedLanguageIndex "+ index +" is selected!", Toast.LENGTH_SHORT).show();
-                //updateLanguage(context);
-                //recreate();
-
+            public void onDialogItemSelected(int position) {
+                controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, position);
+                drawerSelectedLanguage.setText(Utility.getLanguageText(position));
             }
         });
-        if (languageAlertDialog != null){
-            languageAlertDialog.show();
-        }
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
     }
 
     private void showMaxLoopCountPopup() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builderSingle.setTitle(getString(R.string.max_repeat_count));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
+        final ArrayList<String> itemList = new ArrayList<>();
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
-            arrayAdapter.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
+            itemList.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
         }
-        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+
+        RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, new DialogItemTouchListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        final SharedPreferenceController controller = new SharedPreferenceController(this);
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int maxRepeatCount = Integer.parseInt(arrayAdapter.getItem(which));
+            public void onDialogItemSelected(int position) {
+                int maxRepeatCount = Integer.parseInt(itemList.get(position));
                 controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxRepeatCount);
                 drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,null));
             }
         });
-        builderSingle.create().show();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
     }
 
     private ArrayList<SurahInfo> getSurahInfoList (){
@@ -394,25 +385,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showSortSelectDialog() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this, R.style.MyDialogTheme);
-        builderSingle.setTitle(getString(R.string.sort));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
-        arrayAdapter.addAll(getResources().getStringArray(R.array.sort_array)); // TODO: Need to get from single source
-
-        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.sort_array))), new DialogItemTouchListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+            public void onDialogItemSelected(int position) {
+                sortList(position);
+                controller.writeIntWithKey(Constants.SURAH_SORT_CONTROL,position);
             }
         });
-        final SharedPreferenceController controller = new SharedPreferenceController(this);
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                sortList(which);
-                controller.writeIntWithKey(Constants.SURAH_SORT_CONTROL,which);
-            }
-        });
-        builderSingle.create().show();
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
     }
 }

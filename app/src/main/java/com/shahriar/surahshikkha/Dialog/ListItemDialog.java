@@ -22,7 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by H. M. Shahriar on 5/3/2018.
  */
-public class LanguageDialog extends Dialog {
+public class ListItemDialog extends Dialog {
 
 
     private Context context;
@@ -33,7 +33,7 @@ public class LanguageDialog extends Dialog {
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public LanguageDialog(@NonNull Context context, String title, ArrayList<String> itemList, DialogItemTouchListener listener) {
+    public ListItemDialog(@NonNull Context context, String title,ArrayList<String> itemList, DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
@@ -41,7 +41,7 @@ public class LanguageDialog extends Dialog {
         this.itemList = itemList;
     }
 
-    public LanguageDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
+    public ListItemDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
         super(context, themeResId);
         this.context = context;
         this.listener = listener;
@@ -52,7 +52,7 @@ public class LanguageDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.language_dialog_layout);
+        this.setContentView(R.layout.sort_dialog_layout);
         dlg_priority_lvw = (RecyclerView) findViewById(R.id.dlg_list_items);
         if (title != null){
             titleView = (TextView) findViewById(R.id.id_dialog_title);

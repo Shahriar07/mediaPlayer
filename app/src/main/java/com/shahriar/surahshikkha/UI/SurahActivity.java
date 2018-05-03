@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,7 +33,9 @@ import com.shahriar.surahshikkha.Adapter.SurahAdapter;
 import com.shahriar.surahshikkha.CustomComponents.CustomSpinner;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
+import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
 import com.shahriar.surahshikkha.Factory.SurahFactory;
+import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.VerseTouchListener;
@@ -43,6 +46,7 @@ import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -557,29 +561,24 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showMaxLoopCountPopup() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        builderSingle.setTitle(getString(R.string.max_repeat_count));
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item);
-        for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
-            arrayAdapter.add(Utility.getLocalizedInteger(i,null));
-        }
-        builderSingle.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+
+
+            final ArrayList<String> itemList = new ArrayList<>();
+            for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
+                itemList.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
             }
-        });
-        final SharedPreferenceController controller = new SharedPreferenceController(this);
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int newMaxRepeatCount = Integer.parseInt(arrayAdapter.getItem(which));
-                controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,newMaxRepeatCount);
-                maxLoopCount = newMaxRepeatCount;
-                maxRepeatController.setText(Integer.toString(newMaxRepeatCount));
-            }
-        });
-        builderSingle.create().show();
+
+            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, new DialogItemTouchListener() {
+                @Override
+                public void onDialogItemSelected(int position) {
+                    int newMaxRepeatCount = Integer.parseInt(itemList.get(position));
+                    controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,newMaxRepeatCount);
+                    maxLoopCount = newMaxRepeatCount;
+                    maxRepeatController.setText(Integer.toString(newMaxRepeatCount));
+                }
+            });
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.show();
     }
 
     @Override

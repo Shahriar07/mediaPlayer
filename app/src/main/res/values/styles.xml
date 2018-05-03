@@ -43,4 +43,8 @@
     <style name="SpinnerEndTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/bg_loop_b</item>
     </style>
+
+    <style name="dlg_sort" parent="Theme.AppCompat.Dialog">
+        <item name = "android:windowNoTitle">true</item>
+    </style>
 </resources>
