@@ -415,7 +415,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d(SurahActivity.this.getClass().getSimpleName(),"Start ID is "+ id);
-                setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
+            if (parent != null)
+            setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
         }
 
         @Override
@@ -460,6 +461,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             Log.d(SurahActivity.this.getClass().getSimpleName(),"End ID is "+ id);
+            if (parent != null)
             setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString())+1);
         }
 
