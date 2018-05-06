@@ -2,25 +2,42 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/loop_control_switch"
-            android:icon="@drawable/repeat"
-            android:checkable="false"
-            app:itemBackground = "@drawable/menu_item_background"
-            app:actionLayout="@layout/repeat_controller_switch"
-            android:title="@string/loop_control" />
-        <item android:id="@+id/max_loop_count_control"
-            android:icon="@drawable/menu_max_repeat_count"
-            app:actionLayout="@layout/menu_max_repeat_count"
-            app:itemBackground = "@drawable/menu_item_background"
-            android:checkable="false"
-            android:title="@string/max_repeat_count" />
+        <item android:title="@string/menu_control">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item android:id="@+id/loop_control_switch"
+                        android:icon="@drawable/repeat"
+                        android:checkable="false"
+                        app:itemBackground = "@drawable/menu_item_background"
+                        app:actionLayout="@layout/repeat_controller_switch"
+                        android:title="@string/loop_control" />
+                    <item android:id="@+id/max_loop_count_control"
+                        android:icon="@drawable/menu_max_repeat_count"
+                        app:actionLayout="@layout/menu_max_repeat_count"
+                        app:itemBackground = "@drawable/menu_item_background"
+                        android:checkable="false"
+                        android:title="@string/max_repeat_count" />
+                </group>
+            </menu>
+        </item>
     </group>
+    <group>
+        <item android:title="@string/menu_communicate">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item android:id="@+id/rateUs"
+                        android:icon="@drawable/rate_us"
+                        android:checkable="false"
+                        app:itemBackground = "@drawable/menu_item_background"
+                        android:title="@string/rate_us"
+                        />
+                    <!--item
+                        android:id="@+id/menu_item_share"
+                        android:title="@string/menu_share"
+                        app:actionProviderClass="android..support.v4.ShareActionProvider" /-->
 
-    <group android:checkableBehavior="single">
-        <item android:id="@+id/language_control_switch"
-            android:icon="@drawable/language"
-            android:checkable="false"
-            app:itemBackground = "@drawable/menu_item_background"
-            app:actionLayout="@layout/drawer_language_control"/>
+                </group>
+            </menu>
+        </item>
     </group>
 </menu>

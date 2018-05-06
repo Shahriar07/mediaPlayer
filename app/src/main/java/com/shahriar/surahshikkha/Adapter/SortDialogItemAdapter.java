@@ -1,6 +1,8 @@
 package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -52,7 +54,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return itemList.size();
     }
-}
+
 
 
 class ItemHolder extends RecyclerView.ViewHolder {
@@ -61,10 +63,12 @@ class ItemHolder extends RecyclerView.ViewHolder {
     public ItemHolder(View v) {
         super(v);
         itemTextView = (TextView) v.findViewById(R.id.dialog_list_item);
+        Typeface typeface = ResourcesCompat.getFont(context, R.font.bangla_font);
+        itemTextView.setTypeface(typeface);
     }
 
     public void bindItem(String item){
         itemTextView.setText(item);
     }
 }
-
+}

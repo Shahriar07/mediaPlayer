@@ -1,6 +1,9 @@
 package com.shahriar.surahshikkha.Utility;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import java.text.NumberFormat;
@@ -144,5 +147,24 @@ public class Utility {
             current = context.getResources().getConfiguration().locale;
         }
         return current;
+    }
+
+
+    public void rateUs(Context context){
+        if (context == null)
+            return;
+        Uri uri = Uri.parse("market://details?id=" + context.getApplicationContext().getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            context.startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName())));
+        }
     }
 }

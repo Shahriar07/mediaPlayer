@@ -31,8 +31,7 @@ public class CustomSpinner extends android.support.v7.widget.AppCompatSpinner {
             }
         }
 
-        @Override public void
-        setSelection(int position)
+        @Override public void setSelection(int position)
         {
             boolean sameSelected = position == getSelectedItemPosition();
             super.setSelection(position);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
+import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Constants;
 import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
@@ -105,21 +106,40 @@ public abstract class  Surah {
         }
         SharedPreferenceController controller = new SharedPreferenceController(context);
         int language = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
+
         String arabicVerseName = "a_bismillah";
-        String languageInitial = (language == Constants.LANGUAGE_ENGLISH_VALUE) ?"e":"b";
-        String secondLanguageVerseName = languageInitial+"_bismillah";
+      //  String languageInitial = (language == Constants.LANGUAGE_ENGLISH_VALUE) ?"e":"b";
+      //  String secondLanguageVerseName = languageInitial+"_bismillah";
         int arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
-        int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
-        Verse v = new Verse(0, arabicVerseId, secondLanguageVerseId );
-        this.getVerses().add(v);
+        //int secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
+
+        // Get bangla verse transliteration
+        int banglaTransliterationId = context.getResources().getIdentifier("s"+getSurahNumber(),"array",context.getPackageName());
+        String[] banglaTransliterationList = context.getResources().getStringArray(banglaTransliterationId);
+
+        // Get english verse transliteration
+        int englishTransliterationId = context.getResources().getIdentifier("se"+getSurahNumber(),"array",context.getPackageName());
+        String[] englishTransliterationList = context.getResources().getStringArray(englishTransliterationId);
+
+        Verse v;
+        if (banglaTransliterationList.length >0) {
+            v = new Verse(0, arabicVerseId, context.getString(R.string.bismillah_bangla), context.getString(R.string.bismillah_english));
+            this.verses.add(v);
+        }
         int verseCount = getVerseCount();
+
         for (int i =1; i <= verseCount ; i++){
             arabicVerseName = "a"+getSurahNumber()+""+(i);
-            secondLanguageVerseName = languageInitial+getSurahNumber()+""+(i); // b+114+1 -> b1141  or e+114+1 -> e1141
+           // secondLanguageVerseName = languageInitial+getSurahNumber()+""+(i); // b+114+1 -> b1141  or e+114+1 -> e1141
             arabicVerseId = context.getResources().getIdentifier(arabicVerseName,"drawable",context.getPackageName());
-            secondLanguageVerseId = context.getResources().getIdentifier(secondLanguageVerseName,"drawable",context.getPackageName());
-            v = new Verse(i, arabicVerseId, secondLanguageVerseId);
-            this.getVerses().add(v);
+            if (banglaTransliterationList.length > 0) {
+                v = new Verse(i, arabicVerseId, banglaTransliterationList[i-1], englishTransliterationList[i-1]);
+                this.verses.add(v);
+            }
+            else{
+                v = new Verse(i, arabicVerseId, " "," ");
+                this.verses.add(v);
+            }
         }
     }
 }

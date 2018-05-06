@@ -17,6 +17,8 @@ import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.Utility;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
@@ -84,15 +86,23 @@ public class SurahAdapter extends RecyclerView.Adapter {
     class VerseHolder extends RecyclerView.ViewHolder {
         public TextView verseNo;
         public ImageView surahVersesArabic;
-        public ImageView surahVersesTranslated;
+        //public TextView banglaTransliteration;
+        public TextView banglaTranslation;
+        public TextView englishTranslation;
 
         public VerseHolder(View v) {
             super(v);
             verseNo = (TextView) v.findViewById(R.id.verse_no);
             Typeface typeface = ResourcesCompat.getFont(context, R.font.solaimanlipi);
             verseNo.setTypeface(typeface);
+            //banglaTransliteration = (TextView) v.findViewById(R.id.verse_transliteration_in_bangla);
+            // banglaTransliteration.setTypeface(typeface);
+            banglaTranslation = (TextView) v.findViewById(R.id.verse_translation_in_bangla);
+            banglaTranslation.setTypeface(typeface);
+
+            englishTranslation = (TextView) v.findViewById(R.id.verse_translation_in_english);
+
             surahVersesArabic = (ImageView) v.findViewById(R.id.arabic_verse);
-            surahVersesTranslated = (ImageView) v.findViewById(R.id.second_language_verse);
             Log.d(getClass().getSimpleName(), "VerseHolder");
         }
 
@@ -100,7 +110,9 @@ public class SurahAdapter extends RecyclerView.Adapter {
             String text = verseNo.getContext().getString(R.string.surah_and_verse) + " " + Utility.getLocalizedInteger(verse.getVerseNo(),null);
             verseNo.setText(text);
             surahVersesArabic.setImageResource(verse.getSurahVersesArabicResourceId());
-            surahVersesTranslated.setImageResource(verse.getSurahVersesTranslatedResourceId());
+//            banglaTransliteration.setText(verse.getVerseTransliterationInBangla());
+            banglaTranslation.setText(verse.getVerseTranslationInBangla());
+            englishTranslation.setText(verse.getVerseTranslationInEnglish());
         }
     }
 }

@@ -242,7 +242,15 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             if(fromUser){
                 isActivityInitialized = true;
-                int index = utility.getIndexForLoop(progress,durationArray);
+                int index = utility.getIndexForLoop(progress, durationArray);
+                Log.i(getClass().getSimpleName(), "Find index " + index + " Progress " + progress + " verseCount " + surah.getVerseCount());
+                // If seekbar is selected at max value (at the end) we need to decrement the index by one to match versecount.
+                // as the last index value of duration array is smaller than the actual value.
+                int totalVerseCount = surah.getVerseCount();
+                if (index > totalVerseCount) {
+                    index = totalVerseCount;
+                }
+//                    currentLoopIndex = index;
                 endSpinner.setSelection(index);
                 startSpinner.setSelection(index);
                 scrollListToPosition(index);
@@ -394,9 +402,13 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        Toast.makeText(getApplicationContext(), " On Completion called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), " On Completion called", Toast.LENGTH_SHORT).show();
         if (!mediaPlayer.isPlaying())
             changePlayPauseButton();
+
+        loopStartTime = 0;
+        currentLoopIndex = 0; // as currentloopindex crossed the max index of verse, we need to reset it
+        loopEndTime = mediaDuration;
     }
 
     AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {
@@ -435,6 +447,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             changePlayPauseButton();
         }
 
+        // Update loop end time if smaller than selected index
         if (loopEndTime < durationArray[index]){
             loopEndTime = durationArray[index];
             endSpinner.setSelection(index);
@@ -461,10 +474,19 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         //It will prevent select the index 2 as end where start index is 3
         if (durationArray[index]<=loopStartTime){
-            // Show a dialog to choose large number than the start index
-            Toast.makeText(getApplicationContext(), " Choose a large number than start", Toast.LENGTH_SHORT).show();
+            // last verse has already played and currentLoopIndex is set to finish the surah.
+            // at that time last verse is selected, we need to select the new index.
+            if (currentLoopIndex > surah.getVerseCount()){
+                currentLoopIndex--;
+                loopStartTime = durationArray[index-1];
+            }
+            else {
+                // Show a dialog to choose large number than the start index
+                Toast.makeText(getApplicationContext(), " Choose a large number than start", Toast.LENGTH_SHORT).show();
+            }
             loopEndTime = durationArray[currentLoopIndex];
             endSpinner.setSelection(currentLoopIndex);
+
         }
         else {
             loopEndTime = durationArray[index];
@@ -548,7 +570,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             item.setIcon(R.drawable.ic_repeat_white_24dp);
         }
         else {
-            item.setIcon(R.drawable.repeat);
+            item.setIcon(R.drawable.repeat_off);
         }
     }
 

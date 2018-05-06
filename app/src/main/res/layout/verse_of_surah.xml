@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
     android:layout_marginTop="4dp"
+    android:clickable="true"
     android:layout_marginBottom="4dp"
     android:orientation="vertical">
 
@@ -12,8 +13,8 @@
         android:id="@+id/verse_no"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginBottom="4dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginBottom="8dp"
         android:paddingStart="4dp"
         android:paddingLeft="4dp"
         android:textStyle="bold"
@@ -24,18 +25,49 @@
         android:layout_width="wrap_content"
         android:contentDescription="test"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/a11"
         android:layout_gravity="center_vertical|end"/>
 
-    <ImageView
-        android:id="@+id/second_language_verse"
+    <!--TextView
+        android:id="@+id/verse_transliteration_in_bangla"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="4dp"
         android:paddingLeft="4dp"
-        android:src="@drawable/b11"
-        android:layout_gravity="center_vertical|start" />
+        android:layout_marginBottom="4dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/bangla_font"
+        android:textStyle="bold"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center_vertical|center"
+        android:text="test"/-->
+
+    <TextView
+        android:id="@+id/verse_translation_in_bangla"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@android:color/black"
+        android:fontFamily="@font/bangla_font"
+        android:textStyle="bold"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center_vertical"/>
+
+    <TextView
+        android:id="@+id/verse_translation_in_english"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="@android:color/black"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center_vertical"/>
+
 </LinearLayout>

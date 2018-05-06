@@ -64,6 +64,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<SurahInfo> surahInfoList;
     SharedPreferenceController controller;
+//    private ShareActionProvider mShareActionProvider;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -168,17 +170,24 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
         drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,null));
 
-        menuItem = menu.findItem(R.id.language_control_switch);
-        menuItem.setTitle(R.string.language_control);
+//        // Set the language of application
+//        menuItem = menu.findItem(R.id.language_control_switch);
+//        menuItem.setTitle(R.string.language_control);
+//        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+//        drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
+//        int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
+//        if (selectedLanguage == -1) {
+//            controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_ENGLISH_VALUE);
+//            selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
+//        }
+//        drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
+//        drawerSelectedLanguage.setOnClickListener(this);
+
+        // set rate us
+        menuItem = menu.findItem(R.id.rateUs);
+        menuItem.setTitle(R.string.rate_us);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-        drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
-        int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
-        if (selectedLanguage == -1) {
-            controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_ENGLISH_VALUE);
-            selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
-        }
-        drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
-        drawerSelectedLanguage.setOnClickListener(this);
+     //   drawerSelectedLanguage.setOnClickListener(this);
     }
 
     private void updateLanguage(Context localizedContext){
@@ -202,7 +211,15 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         if (mAdapter != null) {
             mAdapter.setSurahList(surahInfoList);
             mAdapter.notifyDataSetChanged();
+            scrollListToPosition(0);
         }
+    }
+
+    /*
+     * Scroll List to position
+     */
+    private  void scrollListToPosition(int index){
+        mLayoutManager.scrollToPosition(index);
     }
 
     Comparator<SurahInfo> comparatorByNumber = new Comparator<SurahInfo>() {
@@ -277,9 +294,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 }
                 break;
             }
-            case R.id.language_control_switch:
+            case R.id.rateUs:
             {
-                showLanguageDialog();
+                Utility utility = new Utility();
+                utility.rateUs(DashboardActivity.this);
                 break;
             }
         }
@@ -287,6 +305,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showLanguageDialog() {
+
+//        final ArrayList<String> itemList = new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.s114)));
         final ArrayList<String> itemList = new ArrayList<>();
         for (int i = 0; i < Constants.LANGUAGE_LIST.length; i++) {
             itemList.add(Constants.LANGUAGE_LIST[i]); // TODO: Need to get from single source
@@ -365,8 +385,28 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         MenuItem repeatItem = menu.findItem(R.id.actionSort);
         int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
         //setRepeatIcon(isRepeatOn,repeatItem);
+
+        /*
+        //MenuItem item = menu.findItem(R.id.menu_item_share);
+        // Fetch and store ShareActionProvider
+//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+
+
+         Intent shareIntent = new Intent(Intent.ACTION_SEND);
+         shareIntent.setAction(Intent.ACTION_SEND);
+         shareIntent.setType("text/plain");
+         shareIntent.putExtra(Intent.EXTRA_TEXT, "Hello jimmy");
+         shareactionprovider.setShareIntent(shareIntent);
+         */
+
         return true;
     }
+
+//    private void setShareIntent(Intent shareIntent) {
+//        if (mShareActionProvider != null) {
+//            mShareActionProvider.setShareIntent(shareIntent);
+//        }
+//    }
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {

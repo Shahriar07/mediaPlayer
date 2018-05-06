@@ -7,35 +7,35 @@ package com.shahriar.surahshikkha.Data;
 public class Verse {
     private int verseNo;
     private int surahVersesArabicResourceId;
-    private int surahVersesTranslatedResourceId;
+//    private String verseTransliterationInBangla;
+    private String verseTranslationInBangla;
+    private String verseTranslationInEnglish;
 
-    public Verse(int verseNo, int surahVersesArabicResourceId, int surahVersesTranslated) {
+    public Verse(int verseNo, int surahVersesArabicResourceId,String verseTranslationInBangla, String verseTranslationInEnglish) {
         this.verseNo = verseNo;
         this.surahVersesArabicResourceId = surahVersesArabicResourceId;
-        this.surahVersesTranslatedResourceId = surahVersesTranslated;
+//        this.verseTransliterationInBangla = verseTransliterationInBangla;
+        this.verseTranslationInBangla = verseTranslationInBangla;
+        this.verseTranslationInEnglish = verseTranslationInEnglish;
     }
 
     public int getVerseNo() {
         return verseNo;
     }
 
-    public void setVerseNo(int verseNo) {
-        this.verseNo = verseNo;
-    }
-
     public int getSurahVersesArabicResourceId() {
         return surahVersesArabicResourceId;
     }
 
-    public void setSurahVersesArabicResourceId(int surahVersesArabicResourceId) {
-        this.surahVersesArabicResourceId = surahVersesArabicResourceId;
+//    public String getVerseTransliterationInBangla() {
+//        return verseTransliterationInBangla;
+//    }
+
+    public String getVerseTranslationInBangla() {
+        return verseTranslationInBangla;
     }
 
-    public int getSurahVersesTranslatedResourceId() {
-        return surahVersesTranslatedResourceId;
-    }
-
-    public void setSurahVersesTranslatedResourceId(int surahVersesTranslatedResourceId) {
-        this.surahVersesTranslatedResourceId = surahVersesTranslatedResourceId;
+    public String getVerseTranslationInEnglish() {
+        return verseTranslationInEnglish;
     }
 }
