@@ -13,13 +13,16 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:ignore="HardcodedDebugMode"
         android:name="android.support.multidex.MultiDexApplication" >
-
-        <activity android:name=".UI.DashboardActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".UI.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".UI.DashboardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".UI.SurahActivity"
             android:parentActivityName=".UI.DashboardActivity"

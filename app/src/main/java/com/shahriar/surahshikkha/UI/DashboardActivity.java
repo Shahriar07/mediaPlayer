@@ -70,6 +70,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.drawer_layout);
+        Log.d("TimeTEst","onCreate");
         controller = new SharedPreferenceController(this);
         //int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
        // Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
@@ -79,19 +81,62 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     void initComponent(Context context){
+        Log.d("TimeTEst","initComponent");
 
-        setContentView(R.layout.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        Log.d("TimeTEst","setSupportActionBar");
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.menu);
+        Log.d("TimeTEst","setHomeAsUpIndicator");
+        surahListView = (RecyclerView) findViewById(R.id.surahList);
+        surahListView.setHasFixedSize(true);
+        mLayoutManager = new ScrollingLinearLayoutManager(this,1);
+        surahListView.setLayoutManager(mLayoutManager);
+        surahInfoList = getSurahInfoList();
+        mAdapter = new SurahListAdapter(surahInfoList,context);
+        Log.d("TimeTEst","SurahListAdapter");
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
+        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
+        surahListView.addItemDecoration(dividerItemDecoration);
+        Log.d("TimeTEst","addItemDecoration");
 
+        surahListView.setAdapter(mAdapter);
+        Log.d("TimeTEst","setAdapter");
+        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
+            @Override
+            public void onClick(View view, int position) {
+                SurahInfo info = surahInfoList.get(position);
+                //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
+                Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
+                startActivity(surahIntent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("TimeTEst","onResume");
+        initializeMenuItem();
+        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
+        Log.d("TimeTEst","sortList");
+        sortList(type);
+    }
+
+    private void initializeMenuItem(){
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        Log.d("TimeTEst","initializeMenuItem setNavigationItemSelectedListener");
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
@@ -115,36 +160,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
         );
-        surahListView = (RecyclerView) findViewById(R.id.surahList);
-        mLayoutManager = new ScrollingLinearLayoutManager(this,5);
-        surahListView.setLayoutManager(mLayoutManager);
-        surahInfoList = getSurahInfoList();
-        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
-        sortList(type);
-        mAdapter = new SurahListAdapter(surahInfoList,context);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
-        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
-        surahListView.addItemDecoration(dividerItemDecoration);
-
-        surahListView.setAdapter(mAdapter);
-
-        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
-            @Override
-            public void onClick(View view, int position) {
-                SurahInfo info = surahInfoList.get(position);
-                //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
-                Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
-                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
-                startActivity(surahIntent);
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
+        Log.d("TimeTEst","initComponent Menu");
         Menu menu = navigationView.getMenu();
         MenuItem menuItem;
         View actionView;
@@ -161,6 +177,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //            }
 //        });
 
+        Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
@@ -184,11 +201,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //        drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
 //        drawerSelectedLanguage.setOnClickListener(this);
 
+        Log.d("TimeTEst","rate app st");
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
         menuItem.setTitle(R.string.rate_us);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-     //   drawerSelectedLanguage.setOnClickListener(this);
+        //   drawerSelectedLanguage.setOnClickListener(this);
+        Log.d("TimeTEst","rate app");
     }
 
     private void updateLanguage(Context localizedContext){

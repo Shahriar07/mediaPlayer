@@ -8,11 +8,16 @@
 
         <item name="android:windowBackground">@color/window_background</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="android:windowDisablePreview">true</item>
 
         <item name="actionMenuTextColor">@color/actionMenuTextColor</item>
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item> <!-- used for the back arrow on the action bar -->
     </style>
     <style name="AppTheme" parent="BaseAppTheme" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

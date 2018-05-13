@@ -35,7 +35,7 @@ public class SurahListAdapter extends RecyclerView.Adapter {
     public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context) {
         this.surahList = surahList;
         this.context = context.getApplicationContext();
-        inflater = LayoutInflater.from(this.context);
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
