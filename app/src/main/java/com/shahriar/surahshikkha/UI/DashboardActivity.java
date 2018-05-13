@@ -119,7 +119,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mLayoutManager = new ScrollingLinearLayoutManager(this,5);
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList();
-        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
+        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
         sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList,context);
 
@@ -133,7 +133,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View view, int position) {
                 SurahInfo info = surahInfoList.get(position);
-                Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
                 Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
                 surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
                 startActivity(surahIntent);
@@ -146,19 +146,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }));
 
         Menu menu = navigationView.getMenu();
-
-        MenuItem menuItem = menu.findItem(R.id.loop_control_switch);
-        View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-
-        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-        menuRepeatSwitch.setChecked(isRepeatOn);
-        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
-            }
-        });
+        MenuItem menuItem;
+        View actionView;
+//        menuItem = menu.findItem(R.id.loop_control_switch);
+//        View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+//        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+//
+//        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+//        menuRepeatSwitch.setChecked(isRepeatOn);
+//        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
+//            }
+//        });
 
         menuItem = menu.findItem(R.id.max_loop_count_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
@@ -206,7 +207,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         else if (type == Constants.SURAH_VERSE_SORT_BY_VERSE_NUMBER)
             Collections.sort(surahInfoList,comparatorByVerseNumber);
         else
-            Collections.sort(surahInfoList,comparatorByNumber);
+            Collections.sort(surahInfoList,comparatorByDuration);
 
         if (mAdapter != null) {
             mAdapter.setSurahList(surahInfoList);
@@ -281,19 +282,19 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 showMaxLoopCountPopup();
                 break;
             }
-            case R.id.loop_control_switch:
-            {
-                final SharedPreferenceController controller = new SharedPreferenceController(this);
-                if(menuRepeatSwitch.isChecked()){
-                    menuRepeatSwitch.setChecked(false);
-                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,false);
-                }
-                else{
-                    menuRepeatSwitch.setChecked(true);
-                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,true);
-                }
-                break;
-            }
+//            case R.id.loop_control_switch:
+//            {
+//                final SharedPreferenceController controller = new SharedPreferenceController(this);
+//                if(menuRepeatSwitch.isChecked()){
+//                    menuRepeatSwitch.setChecked(false);
+//                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,false);
+//                }
+//                else{
+//                    menuRepeatSwitch.setChecked(true);
+//                    controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,true);
+//                }
+//                break;
+//            }
             case R.id.rateUs:
             {
                 Utility utility = new Utility();
@@ -311,7 +312,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         for (int i = 0; i < Constants.LANGUAGE_LIST.length; i++) {
             itemList.add(Constants.LANGUAGE_LIST[i]); // TODO: Need to get from single source
         }
-        LanguageDialog dialog = new LanguageDialog(this,getString(R.string.language_control),itemList, new DialogItemTouchListener() {
+        LanguageDialog dialog = new LanguageDialog(this,getString(R.string.language_control),itemList, 1, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, position);
@@ -327,8 +328,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
             itemList.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
         }
-
-        RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, new DialogItemTouchListener() {
+        int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
+        RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, loopCountValue, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 int maxRepeatCount = Integer.parseInt(itemList.get(position));
@@ -338,40 +339,41 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         });
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
+        dialog.scrollToPosition();
     }
 
     private ArrayList<SurahInfo> getSurahInfoList (){
         ArrayList<SurahInfo> surahList = new ArrayList<>();
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah), 1, false,51015,7));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_tariq), 86, false,100440,17));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ala), 87, false,108000,19));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ghashiyah), 88, false,134352,26));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fajr), 89, false,213192,30));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_balad), 90, false,120240,20));
-        surahList.add(new SurahInfo(getString(R.string.surah_ash_shams), 91, false,84600,15));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_layl), 92, false,111816,21));
-        surahList.add(new SurahInfo(getString(R.string.surah_ad_duha), 93, false,65304,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_as_sharh), 94, false,43200,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_tin), 95, false,65160,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah),getString(R.string.bn_surah_al_fatihah), 1, false,51015,7));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_tariq),getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ala),getString(R.string.bn_surah_al_ala), 87, false,108000,19));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ghashiyah),getString(R.string.bn_surah_al_ghashiyah), 88, false,134352,26));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fajr),getString(R.string.bn_surah_al_fajr), 89, false,213192,30));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_balad),getString(R.string.bn_surah_al_balad), 90, false,120240,20));
+        surahList.add(new SurahInfo(getString(R.string.surah_ash_shams),getString(R.string.bn_surah_ash_shams), 91, false,84600,15));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_layl),getString(R.string.bn_surah_al_layl), 92, false,111816,21));
+        surahList.add(new SurahInfo(getString(R.string.surah_ad_duha),getString(R.string.bn_surah_ad_duha), 93, false,65304,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_as_sharh),getString(R.string.bn_surah_as_sharh), 94, false,43200,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_tin),getString(R.string.bn_surah_at_tin), 95, false,65160,8));
 //        surahList.add(new SurahInfo(getString(R.string.surah_al_alaq), 96, false,95328,19));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_qadr), 97, false,45360,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah), 98, true,33264,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_az_zilzalah), 99, true,60192,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_adiyat), 100, false,70272,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_qariah), 101, false,62784,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_takathur), 102, false,62856,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_asr), 103, false,27648,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_humazah), 104, false,58248,9));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fil), 105, false,48960,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_quraysh), 106, false,42768,4));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_maun), 107, false,57744,7));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_kawthar), 108, false,24768,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_kafirun), 109, false,54504,6));
-        surahList.add(new SurahInfo(getString(R.string.surah_an_nasr), 110, true,35136,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_masad), 111, false,41760,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ikhlas), 112, false,21888,4));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_falaq), 113, false,33264,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_an_nas), 114, false,50256,6));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_qadr),getString(R.string.bn_surah_al_qadr), 97, false,45360,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah),getString(R.string.bn_surah_al_bayyinah), 98, true,33264,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_az_zilzalah),getString(R.string.bn_surah_az_zilzalah), 99, true,60192,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_adiyat),getString(R.string.bn_surah_al_adiyat), 100, false,70272,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_qariah),getString(R.string.bn_surah_al_qariah), 101, false,62784,11));
+        surahList.add(new SurahInfo(getString(R.string.surah_at_takathur),getString(R.string.bn_surah_at_takathur), 102, false,62856,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_asr),getString(R.string.bn_surah_al_asr), 103, false,27648,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_humazah),getString(R.string.bn_surah_al_humazah), 104, false,58248,9));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fil),getString(R.string.bn_surah_al_fil), 105, false,48960,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_quraysh),getString(R.string.bn_surah_quraysh), 106, false,42768,4));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_maun),getString(R.string.bn_surah_al_maun), 107, false,57744,7));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_kawthar),getString(R.string.bn_surah_al_kawthar), 108, false,24768,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_kafirun),getString(R.string.bn_surah_al_kafirun), 109, false,54504,6));
+        surahList.add(new SurahInfo(getString(R.string.surah_an_nasr),getString(R.string.bn_surah_an_nasr), 110, true,35136,3));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_masad),getString(R.string.bn_surah_al_masad), 111, false,41760,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_ikhlas),getString(R.string.bn_surah_al_ikhlas), 112, false,21888,4));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_falaq),getString(R.string.bn_surah_al_falaq), 113, false,33264,5));
+        surahList.add(new SurahInfo(getString(R.string.surah_an_nas),getString(R.string.bn_surah_an_nas), 114, false,50256,6));
         return surahList;
     }
 
@@ -425,7 +427,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showSortSelectDialog() {
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.sort_array))), new DialogItemTouchListener() {
+        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 sortList(position);

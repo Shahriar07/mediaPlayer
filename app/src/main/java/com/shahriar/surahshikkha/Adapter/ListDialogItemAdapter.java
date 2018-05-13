@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Constants;
 
 import java.util.ArrayList;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
  * Created by H. M. Shahriar on 2/24/2018.
  */
 
-public class SortDialogItemAdapter extends RecyclerView.Adapter {
+public class ListDialogItemAdapter extends RecyclerView.Adapter {
 
     public void setItem(ArrayList<String> itemList) {
         this.itemList = itemList;
@@ -30,7 +29,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     Context context;
     int selectedItem;
     LayoutInflater inflater;
-    public SortDialogItemAdapter( Context context, ArrayList<String> itemList, int selectedItem) {
+    public ListDialogItemAdapter(Context context, ArrayList<String> itemList, int selectedItem) {
         Log.d(getClass().getSimpleName(), " Item List Size "+itemList.size());
         this.itemList = itemList;
         this.context = context.getApplicationContext();
@@ -73,7 +72,7 @@ class ItemHolder extends RecyclerView.ViewHolder {
     public void bindItem(String item, int position){
 
         itemTextView.setText(item);
-        if (position + Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER == selectedItem){
+        if (position == selectedItem){
             itemTextView.setBackgroundResource(R.color.selected_verse_background);
         }
         else {

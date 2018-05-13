@@ -20,6 +20,7 @@ public class SurahAlAlaq extends Surah {
     public SurahAlAlaq(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_alaq));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_alaq));
         this.setSurahNumber(96);
         this.setMadani(false);
         this.setResourceId(R.raw.s_96);

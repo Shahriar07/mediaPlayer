@@ -20,6 +20,7 @@ public class SurahAzZilzalah extends Surah {
     public SurahAzZilzalah(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_az_zilzalah));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_az_zilzalah));
         this.setSurahNumber(99);
         this.setMadani(false);
         this.setResourceId(R.raw.s_99);

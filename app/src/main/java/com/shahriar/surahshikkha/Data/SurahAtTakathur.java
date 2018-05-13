@@ -20,6 +20,7 @@ public class SurahAtTakathur extends Surah {
     public SurahAtTakathur(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_at_takathur));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_at_takathur));
         this.setSurahNumber(102);
         this.setMadani(false);
         this.setResourceId(R.raw.s_102);

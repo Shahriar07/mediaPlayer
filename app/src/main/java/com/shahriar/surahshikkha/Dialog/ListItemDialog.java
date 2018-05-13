@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.shahriar.surahshikkha.Adapter.ListDialogItemAdapter;
 import com.shahriar.surahshikkha.Adapter.SortDialogItemAdapter;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
@@ -29,16 +30,18 @@ public class ListItemDialog extends Dialog {
     private RecyclerView dlg_priority_lvw = null;
     private TextView titleView;
     String title;
+    int selectedItem;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public ListItemDialog(@NonNull Context context, String title,ArrayList<String> itemList, DialogItemTouchListener listener) {
+    public ListItemDialog(@NonNull Context context, String title,ArrayList<String> itemList, int selectedItem,DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
         this.title = title;
         this.itemList = itemList;
+        this.selectedItem = selectedItem;
     }
 
     public ListItemDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
@@ -61,7 +64,7 @@ public class ListItemDialog extends Dialog {
         mLayoutManager = new ScrollingLinearLayoutManager(context,5);
         // ListView
         dlg_priority_lvw.setLayoutManager(mLayoutManager);
-        SortDialogItemAdapter adapter = new SortDialogItemAdapter(itemList,context);
+        ListDialogItemAdapter adapter = new ListDialogItemAdapter(context,itemList,selectedItem);
         dlg_priority_lvw.setAdapter(adapter);
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
 //        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
@@ -95,4 +98,20 @@ public class ListItemDialog extends Dialog {
         });
 
     }
+
+    public void scrollToPosition(){
+        if (mLayoutManager != null){
+            if (selectedItem < 4)
+                mLayoutManager.scrollToPosition(0);
+            else if (selectedItem > dlg_priority_lvw.getAdapter().getItemCount() - 3){
+                mLayoutManager.scrollToPosition(dlg_priority_lvw.getAdapter().getItemCount()-1);
+            }
+            else
+                mLayoutManager.scrollToPosition(selectedItem - 3);
+        }
+        else {
+            Log.d("","mLayoutManager is null");
+        }
+    }
+
 }

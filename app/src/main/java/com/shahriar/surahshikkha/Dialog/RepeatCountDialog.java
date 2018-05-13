@@ -16,6 +16,7 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
+import com.shahriar.surahshikkha.Utility.Constants;
 
 import java.util.ArrayList;
 
@@ -29,15 +30,17 @@ public class RepeatCountDialog extends Dialog {
     private RecyclerView dlg_priority_lvw = null;
     private TextView titleView;
     String title;
+    int selectedItem;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public RepeatCountDialog(@NonNull Context context, String title, ArrayList<String> itemList, DialogItemTouchListener listener) {
+    public RepeatCountDialog(@NonNull Context context, String title, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
         super(context);
         this.context = context;
-        this.listener = listener;
         this.title = title;
+        this.selectedItem = selectedItem;
+        this.listener = listener;
         this.itemList = itemList;
     }
 
@@ -52,16 +55,16 @@ public class RepeatCountDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
+        SortDialogItemAdapter adapter = new SortDialogItemAdapter(context,itemList,selectedItem);
         this.setContentView(R.layout.repeat_count_dialog_layout);
         dlg_priority_lvw = (RecyclerView) findViewById(R.id.dlg_list_items);
         if (title != null){
             titleView = (TextView) findViewById(R.id.id_dialog_title);
             titleView.setText(title);
         }
-        mLayoutManager = new ScrollingLinearLayoutManager(context,5);
+        mLayoutManager = new ScrollingLinearLayoutManager(context,1);
         // ListView
         dlg_priority_lvw.setLayoutManager(mLayoutManager);
-        SortDialogItemAdapter adapter = new SortDialogItemAdapter(itemList,context);
         dlg_priority_lvw.setAdapter(adapter);
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
 //        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
@@ -93,6 +96,20 @@ public class RepeatCountDialog extends Dialog {
                 dismiss();
             }
         });
+    }
 
+    public void scrollToPosition(){
+        if (mLayoutManager != null){
+            if (selectedItem < 4)
+            mLayoutManager.scrollToPosition(0);
+            else if (selectedItem > dlg_priority_lvw.getAdapter().getItemCount() - 3){
+                mLayoutManager.scrollToPosition(dlg_priority_lvw.getAdapter().getItemCount()-1);
+            }
+            else
+                mLayoutManager.scrollToPosition(selectedItem - 3);
+        }
+        else {
+            Log.d("","mLayoutManager is null");
+        }
     }
 }

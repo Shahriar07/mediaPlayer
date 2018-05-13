@@ -20,6 +20,7 @@ public class SurahAlBayyinah extends Surah {
     public SurahAlBayyinah(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_bayyinah));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_bayyinah));
         this.setSurahNumber(98);
         this.setMadani(false);
         this.setResourceId(R.raw.s_98);

@@ -20,6 +20,7 @@ public class SurahAlFatihah extends Surah {
     public SurahAlFatihah(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_fatihah));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_fatihah));
         this.setSurahNumber(1);
         this.setMadani(false);
         this.setResourceId(R.raw.s_1);

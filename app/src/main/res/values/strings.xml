@@ -9,6 +9,13 @@
     <string name="arabic_verse">Arabic Verse</string>
     <string name="surah_number">Surah No: </string>
     <string name="surah_name">Surah: </string>
+    <string name="verses"> Verses </string>
+    <string name="duration"> Duration </string>
+
+    <string name="reset_loop_text"> Repeat verse selection canceled </string>
+
+    <string name="selected_verse_no">Verse number </string>
+
 
     // Surah names
     <string name="surah_al_fatihah">Surah-al-fatihah</string>
@@ -41,6 +48,38 @@
     <string name="surah_al_ikhlas">Surah-al-ikhlas</string>
     <string name="surah_al_falaq">Surah-al-falaq</string>
     <string name="surah_an_nas">Surah-an-nas</string>
+
+    // Surah names
+    <string name="bn_surah_al_fatihah">সূরা আল ফাতিহা</string>
+    <string name="bn_surah_at_tariq">সূরা আত্ব-তারিক্ব</string>
+    <string name="bn_surah_al_ala">সূরা আল আ’লা</string>
+    <string name="bn_surah_al_ghashiyah">সূরা আল গাশিয়াহ</string>
+    <string name="bn_surah_al_fajr">সূরা আল ফজর</string>
+    <string name="bn_surah_al_balad">সূরা আল বালাদ</string>
+    <string name="bn_surah_ash_shams">সূরা আশ-শামস</string>
+    <string name="bn_surah_al_layl">সূরা আল লায়ল</string>
+    <string name="bn_surah_ad_duha">সূরা আদ্ব-দ্বোহা</string>
+    <string name="bn_surah_as_sharh">সূরা আল ইনশিরাহ</string>
+    <string name="bn_surah_at_tin">সূরা আত-ত্বীন</string>
+    <string name="bn_surah_al_alaq">সূরা আল-আলাক</string>
+    <string name="bn_surah_al_qadr">সূরা আল কদর</string>
+    <string name="bn_surah_al_bayyinah">সূরা আল বাইয়্যিনাহ</string>
+    <string name="bn_surah_az_zilzalah">সূরা যিলযাল</string>
+    <string name="bn_surah_al_adiyat">সূরা আদিয়াত</string>
+    <string name="bn_surah_al_qariah">সূরা আল ক্বারি’আ</string>
+    <string name="bn_surah_at_takathur">সূরা আত-তাকাসূর</string>
+    <string name="bn_surah_al_asr"> সূরা আল আছর</string>
+    <string name="bn_surah_al_humazah">সূরা আল হুমাযাহ</string>
+    <string name="bn_surah_al_fil">সূরা আল ফীল</string>
+    <string name="bn_surah_quraysh">সূরা কোরাইশ</string>
+    <string name="bn_surah_al_maun">সূরা আল মাউন</string>
+    <string name="bn_surah_al_kawthar">সূরা আল কাওসার</string>
+    <string name="bn_surah_al_kafirun">সূরা আল কাফিরুন</string>
+    <string name="bn_surah_an_nasr"> সূরা আন নছর</string>
+    <string name="bn_surah_al_masad">সূরা আল লাহাব</string>
+    <string name="bn_surah_al_ikhlas">সূরা আল ইখলাছ</string>
+    <string name="bn_surah_al_falaq">সূরা আল ফালাক</string>
+    <string name="bn_surah_an_nas">সূরা আন নাস</string>
 
 
     // Menu

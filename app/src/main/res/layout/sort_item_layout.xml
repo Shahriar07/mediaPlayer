@@ -4,18 +4,14 @@ android:orientation = "horizontal"
 android:layout_width = "fill_parent"
     android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
-android:layout_height = "50dp">
+    android:layout_height = "50dp">
 
     <TextView
         android:id="@+id/dialog_list_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center_vertical|center_horizontal|center"
         android:fontFamily="@font/bangla_font"
         android:gravity="center_horizontal|center"
-        android:paddingEnd="24dp"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:paddingStart="24dp"
         android:textColor="@android:color/black"/>
 </LinearLayout>

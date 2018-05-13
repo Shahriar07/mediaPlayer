@@ -29,16 +29,18 @@ public class LanguageDialog extends Dialog {
     private RecyclerView dlg_priority_lvw = null;
     private TextView titleView;
     String title;
+    int selectedItem;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public LanguageDialog(@NonNull Context context, String title, ArrayList<String> itemList, DialogItemTouchListener listener) {
+    public LanguageDialog(@NonNull Context context, String title, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
         this.title = title;
         this.itemList = itemList;
+        this.selectedItem = selectedItem;
     }
 
     public LanguageDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
@@ -61,7 +63,7 @@ public class LanguageDialog extends Dialog {
         mLayoutManager = new ScrollingLinearLayoutManager(context,5);
         // ListView
         dlg_priority_lvw.setLayoutManager(mLayoutManager);
-        SortDialogItemAdapter adapter = new SortDialogItemAdapter(itemList,context);
+        SortDialogItemAdapter adapter = new SortDialogItemAdapter(context,itemList,selectedItem);
         dlg_priority_lvw.setAdapter(adapter);
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
 //        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
@@ -93,6 +95,5 @@ public class LanguageDialog extends Dialog {
                 dismiss();
             }
         });
-
     }
 }

@@ -20,6 +20,7 @@ public class SurahAlAsr extends Surah {
     public SurahAlAsr(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_asr));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_asr));
         this.setSurahNumber(103);
         this.setMadani(false);
         this.setResourceId(R.raw.s_103);

@@ -20,6 +20,7 @@ public class SurahAlKafirun extends Surah {
     public SurahAlKafirun(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_kafirun));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_kafirun));
         this.setSurahNumber(109);
         this.setMadani(false);
         this.setResourceId(R.raw.s_109);

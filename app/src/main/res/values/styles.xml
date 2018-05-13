@@ -40,10 +40,12 @@
 
     <style name="SpinnerStartTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/bg_loop_a</item>
+        <!--item name="android:background">@android:color/transparent</item-->
     </style>
 
     <style name="SpinnerEndTheme" parent="android:Widget.Spinner">
         <item name="android:background">@drawable/bg_loop_b</item>
+        <!--item name="android:background">@android:color/transparent</item-->
     </style>
 
     <style name="dlg_sort" parent="Theme.AppCompat.Dialog">

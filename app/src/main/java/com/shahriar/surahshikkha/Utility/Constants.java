@@ -19,7 +19,7 @@ public class Constants {
 
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 10;
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER = 15;
-    public static final int SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER = 5;
+    public static final int SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER = 1;
 
     // Sort
     public static final int SURAH_VERSE_SORT_BY_NUMBER = 0;

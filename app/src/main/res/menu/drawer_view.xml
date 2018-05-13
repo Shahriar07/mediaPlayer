@@ -5,14 +5,14 @@
         <item android:title="@string/menu_control">
             <menu>
                 <group android:checkableBehavior="single">
-                    <item android:id="@+id/loop_control_switch"
+                    <!--item android:id="@+id/loop_control_switch"
                         android:icon="@drawable/repeat"
                         android:checkable="false"
                         app:itemBackground = "@drawable/menu_item_background"
                         app:actionLayout="@layout/repeat_controller_switch"
-                        android:title="@string/loop_control" />
+                        android:title="@string/loop_control" /-->
                     <item android:id="@+id/max_loop_count_control"
-                        android:icon="@drawable/menu_max_repeat_count"
+                        android:icon="@drawable/repeat"
                         app:actionLayout="@layout/menu_max_repeat_count"
                         app:itemBackground = "@drawable/menu_item_background"
                         android:checkable="false"

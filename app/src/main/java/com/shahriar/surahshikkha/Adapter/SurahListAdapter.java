@@ -1,6 +1,8 @@
 package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,35 +57,55 @@ public class SurahListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return surahList.size();
     }
-}
+
 
 
 class SurahHolder extends RecyclerView.ViewHolder {
     public TextView surahNo;
     public TextView surahName;
+    public TextView surahNameSecondary;
     public TextView surahDuration;
     public TextView verseCount;
     Utility utility = new Utility();
+    String surahNumberHeader;
+    String durationTextHeader;
+    String verseTextHeader;
 
     public SurahHolder(View v) {
         super(v);
+        Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.solaimanlipi);
         surahNo = (TextView) v.findViewById(R.id.surahListSurahNumber);
         surahName = (TextView) v.findViewById(R.id.surahListSurahName);
+        surahName.setTypeface(typeface);
+        surahNameSecondary = (TextView) v.findViewById(R.id.surahListSurahNameSecondary);
+        surahNameSecondary.setTypeface(typeface);
         surahDuration = (TextView) v.findViewById(R.id.surahDuration);
         verseCount = (TextView) v.findViewById(R.id.verseCount);
+        surahNumberHeader = v.getContext().getString(R.string.surah_number);
+        verseTextHeader = v.getContext().getString(R.string.verses);
+        durationTextHeader = v.getContext().getString(R.string.duration);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 
     public void bindSurah(SurahInfo surahInfo){
-        Context context = ApplicationContextManager.getInstance(null).getAppContext();
-        String number = Utility.getLocalizedInteger(surahInfo.getSurahNumber(),null);
-//        +context.getString(context.getResources().getIdentifier("s"+,"id",context.getPackageName()))
-//        surahNo.setText(context.getString(R.string.surah_number) + " " +number);
-        surahNo.setText("# " +number);
-        surahName.setText(surahInfo.getSurahName());
-        Locale current = Utility.getCurrentLocale(null);
-        surahDuration.setText(utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current));
-        verseCount.setText(Utility.getLocalizedInteger(surahInfo.getVerseCount(),null));
+        String number = surahNumberHeader + " " +Utility.getLocalizedInteger(surahInfo.getSurahNumber(),null);
+        surahNo.setText(number);
+        Locale locale = Utility.getCurrentLocale(context);
+        if (Locale.ENGLISH == locale || locale.getLanguage().equals("en")){
+            surahName.setText(surahInfo.getSurahName());
+            String secondaryName = "(" + surahInfo.getSurahNameSecondary() + ")";
+            surahNameSecondary.setText(secondaryName);
+        }
+        else {
+            surahName.setText(surahInfo.getSurahNameSecondary());
+            String secondaryName = "(" + surahInfo.getSurahName() + ")";
+            surahNameSecondary.setText(secondaryName);
+        }
+        Locale current = Utility.getCurrentLocale(null); // Null will return english locale
+        String durationtext = durationTextHeader + " - " + utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current);
+        surahDuration.setText(durationtext);
+        String verseText =  verseTextHeader + " " +Utility.getLocalizedInteger(surahInfo.getVerseCount(),null);
+        verseCount.setText(verseText);
     }
 }
-
+}

@@ -4,6 +4,10 @@
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#4DB6AC</color>
 
+
+    <color name="colorAccentSecondary">#046ea7</color>
+
+
     <color name="seekbar">#26A69A</color>
 
     <color name="decorationDivider">#4DB6AC</color>

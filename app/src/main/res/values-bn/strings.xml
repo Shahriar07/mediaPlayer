@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">সুরা শিক্ষা</string>
+    <string name="app_name">সূরা শিক্ষা</string>
+    <string name="start_button">শুরু</string>
+    <string name="pause_button">থামুন</string>
+    <string name="start_loop">লুপ শুরু</string>
+    <string name="stop_loop">লুপ শেষ</string>
+    <string name="reset_loop">লুপ অপসারণ</string>
+    <string name="surah_and_verse">আয়াত: </string>
+    <string name="arabic_verse">আরবি আয়াত</string>
+    <string name="surah_number">সূরা নং: </string>
+    <string name="surah_name">সূরা: </string>
+    <string name="verses">আয়াত</string>
+    <string name="duration">সময়</string>
+
+    <string name="selected_verse_no">আয়াত নম্বর</string>
+
+    <string name="reset_loop_text">আয়াত নির্বাচন বাতিল করা হল </string>
+
+
+    // Menu
+    <string name="loop_count">লুপ সংখ্যা</string>
+    <string name="loop_control">আয়াত পুনরাবৃত্তি</string>
+    <string name="max_repeat_count">পুনরাবৃত্তি সংখ্যা</string>
+    <string name="verse_auto_scroll">অটো স্ক্রল</string>
+    <string name="verse_auto_repeat">অটো পুনরাবৃত্তি</string>
+
+    <string name="translated_verse">অনূদিত আয়াত</string>
+    <string name="cancel">বাতিল</string>
+    <string name="language_control">ভাষা নির্বাচন</string>
+
+    <string name="sort">ক্রমানুসার</string>
+    <string-array name="sort_array">
+        <item>সূরা নম্বর</item>
+        <item>সূরার সময়কাল</item>
+        <item>আয়াত সংখ্যা</item>
+    </string-array>
+
+    <string name="rate_us">রেট দিন</string>
+    <string name="menu_share">শেয়ার করুন</string>
+    <string name="menu_control">নিয়ন্ত্রণ</string>
+    <string name="menu_communicate">যোগাযোগ</string>
+
 </resources>

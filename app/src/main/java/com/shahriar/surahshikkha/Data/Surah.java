@@ -43,12 +43,6 @@ public abstract class  Surah {
         this.verses = verses;
     }
 
-    public Surah(String surahName, ArrayList<Verse> verses, int surahNumber, boolean madani, int verseCount) {
-        context = ApplicationContextManager.getInstance(null).getAppContext();
-        this.surahInfo = new SurahInfo(surahName,surahNumber,madani,0, verseCount);
-        this.verses = verses;
-    }
-
     public Surah(Context context) {
         this.context = ApplicationContextManager.getInstance(context).getAppContext();
         this.surahInfo = new SurahInfo();
@@ -96,6 +90,14 @@ public abstract class  Surah {
 
     public void setVerseCount(int verseCount) {
         this.surahInfo.setVerseCount(verseCount);
+    }
+
+    public String getSurahNameSecondary() {
+        return  this.surahInfo.getSurahNameSecondary();
+    }
+
+    public void setSurahNameSecondary(String surahNameSecondary) {
+        this.surahInfo.setSurahNameSecondary(surahNameSecondary);
     }
 
     public void prepareSuraVerses() {

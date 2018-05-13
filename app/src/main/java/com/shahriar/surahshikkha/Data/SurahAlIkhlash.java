@@ -20,6 +20,7 @@ public class SurahAlIkhlash extends Surah {
     public SurahAlIkhlash(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_ikhlas));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_ikhlas));
         this.setSurahNumber(112);
         this.setMadani(false);
         this.setResourceId(R.raw.s_112);

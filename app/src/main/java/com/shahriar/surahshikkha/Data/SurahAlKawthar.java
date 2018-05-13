@@ -20,6 +20,7 @@ public class SurahAlKawthar extends Surah {
     public SurahAlKawthar(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_kawthar));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_kawthar));
         this.setSurahNumber(108);
         this.setMadani(false);
         this.setResourceId(R.raw.s_108);

@@ -205,7 +205,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             public void onClick(View view, int position) {
                 isActivityInitialized = true;
                 Verse verse = surah.getVerses().get(position);
-                Toast.makeText(getApplicationContext(), verse.getVerseNo() + " is selected!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.selected_verse_no) + " " + verse.getVerseNo(), Toast.LENGTH_SHORT).show();
                 endSpinner.setSelection(position);
                 scrollListToPosition(position);
                 setCurrentSelectedIndex(position);
@@ -331,8 +331,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     Runnable run = new Runnable() {
         @Override
         public void run() {
-            boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-            if (maxLoopCount > 1 && isRepeatOn) {
+           // boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+            if (maxLoopCount > 1) {
                 // This is the last play of loop Need to set the next loop
                 if (loopCount >= maxLoopCount) {
                     Log.d(getClass().getSimpleName(), "Set Next Loop Count");
@@ -394,7 +394,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             case R.id.reset_loop:{
                 loopStartTime = 0;
                 loopEndTime = mediaDuration;
+                endSpinner.setSelection(endSpinner.getAdapter().getCount()-1);
                 loopCount = 1;
+                Toast.makeText(getApplicationContext(), getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
                 break;
             }
         }
@@ -508,9 +510,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.surah_activity_action_bar_items, menu);
-        MenuItem repeatItem = menu.findItem(R.id.action_repeat_control);
-        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-        setRepeatIcon(isRepeatOn,repeatItem);
+//        MenuItem repeatItem = menu.findItem(R.id.action_repeat_control);
+//        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+//        setRepeatIcon(isRepeatOn,repeatItem);
 
         final MenuItem repeatCount = menu.findItem(R.id.action_max_repeat_count);
         RelativeLayout rootView = (RelativeLayout)repeatCount.getActionView();
@@ -524,7 +526,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         });
         maxRepeatController = (TextView) rootView.findViewById(R.id.actionBarRepeatCountText);
         SharedPreferenceController controller = new SharedPreferenceController(this);
-        maxRepeatController.setText(""+controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT));
+        int loopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
+        maxRepeatController.setText(String.valueOf(loopCount));
         maxRepeatController.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -551,10 +554,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 showMaxLoopCountPopup();
                 return true;
 
-            case R.id.action_repeat_control:
-                boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-                updateRepeatStateandImage(isRepeatOn, item);
-                return true;
+//            case R.id.action_repeat_control:
+//                boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
+//                updateRepeatStateandImage(isRepeatOn, item);
+//                return true;
 
             default:
                 // If we got here, the user's action was not recognized.
@@ -567,32 +570,31 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     /*
      * Update action menu bar icon
      */
-    private void setRepeatIcon(boolean isOn, android.view.MenuItem item){
-        if (isOn){
-            item.setIcon(R.drawable.ic_repeat_white_24dp);
-        }
-        else {
-            item.setIcon(R.drawable.repeat_off);
-        }
-    }
+//    private void setRepeatIcon(boolean isOn, android.view.MenuItem item){
+//      if (item != null) {
+//          if (isOn) {
+//              item.setIcon(R.drawable.ic_repeat_white_24dp);
+//          } else {
+//              item.setIcon(R.drawable.repeat_off);
+//          }
+//      }
+//    }
 
     /*
      * Update Repeat state in preference and change action menu bar icon
      */
-    private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item){
-        controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,!isOn);
-        setRepeatIcon(!isOn,item);
-    }
+//    private void updateRepeatStateandImage(boolean isOn, android.view.MenuItem item){
+//        controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,!isOn);
+//        setRepeatIcon(!isOn,item);
+//    }
 
     private void showMaxLoopCountPopup() {
-
-
             final ArrayList<String> itemList = new ArrayList<>();
             for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
                 itemList.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
             }
-
-            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, new DialogItemTouchListener() {
+        int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
+            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
                 @Override
                 public void onDialogItemSelected(int position) {
                     int newMaxRepeatCount = Integer.parseInt(itemList.get(position));
@@ -603,6 +605,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             });
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.show();
+            dialog.scrollToPosition();
     }
 
     @Override

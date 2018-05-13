@@ -20,6 +20,7 @@ public class SurahAlGhashiyah extends Surah {
     public SurahAlGhashiyah(Context context) {
         super(context);
         this.setSurahName(context.getString(R.string.surah_al_ghashiyah));
+        this.setSurahNameSecondary(context.getString(R.string.bn_surah_al_ghashiyah));
         this.setSurahNumber(88);
         this.setMadani(false);
         this.setResourceId(R.raw.s_88);

@@ -6,13 +6,15 @@ package com.shahriar.surahshikkha.Data;
 
 public class SurahInfo {
     private String surahName;
+    private String surahNameSecondary;
     private int surahNumber;
     private boolean madani;
     private int surahDuration;
     private int verseCount;
 
-    public SurahInfo(String surahName, int surahNumber, boolean madani,int surahDuration, int verseCount) {
+    public SurahInfo(String surahName, String surahNameSecondary, int surahNumber, boolean madani, int surahDuration, int verseCount) {
         this.surahName = surahName;
+        this.surahNameSecondary = surahNameSecondary;
         this.surahNumber = surahNumber;
         this.madani = madani;
         this.surahDuration = surahDuration;
@@ -61,5 +63,13 @@ public class SurahInfo {
 
     public void setVerseCount(int verseCount) {
         this.verseCount = verseCount;
+    }
+
+    public String getSurahNameSecondary() {
+        return surahNameSecondary;
+    }
+
+    public void setSurahNameSecondary(String surahNameSecondary) {
+        this.surahNameSecondary = surahNameSecondary;
     }
 }
