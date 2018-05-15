@@ -8,7 +8,7 @@
 
         <item name="android:windowBackground">@color/window_background</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="android:windowDisablePreview">true</item>
+        <!--item name="android:windowDisablePreview">true</item   Make the start screen black-->
 
         <item name="actionMenuTextColor">@color/actionMenuTextColor</item>
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item> <!-- used for the back arrow on the action bar -->

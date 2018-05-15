@@ -95,6 +95,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mLayoutManager = new ScrollingLinearLayoutManager(this,1);
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList();
+        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
+        Log.d("TimeTEst","sortList");
+        sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList,context);
         Log.d("TimeTEst","SurahListAdapter");
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
@@ -127,9 +130,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         super.onResume();
         Log.d("TimeTEst","onResume");
         initializeMenuItem();
-        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
-        Log.d("TimeTEst","sortList");
-        sortList(type);
     }
 
     private void initializeMenuItem(){
@@ -363,7 +363,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<SurahInfo> getSurahInfoList (){
         ArrayList<SurahInfo> surahList = new ArrayList<>();
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah),getString(R.string.bn_surah_al_fatihah), 1, false,51015,7));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah),getString(R.string.bn_surah_al_fatihah), 1, false,52088,7));
         surahList.add(new SurahInfo(getString(R.string.surah_at_tariq),getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
         surahList.add(new SurahInfo(getString(R.string.surah_al_ala),getString(R.string.bn_surah_al_ala), 87, false,108000,19));
         surahList.add(new SurahInfo(getString(R.string.surah_al_ghashiyah),getString(R.string.bn_surah_al_ghashiyah), 88, false,134352,26));
@@ -376,7 +376,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         surahList.add(new SurahInfo(getString(R.string.surah_at_tin),getString(R.string.bn_surah_at_tin), 95, false,65160,8));
 //        surahList.add(new SurahInfo(getString(R.string.surah_al_alaq), 96, false,95328,19));
         surahList.add(new SurahInfo(getString(R.string.surah_al_qadr),getString(R.string.bn_surah_al_qadr), 97, false,45360,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah),getString(R.string.bn_surah_al_bayyinah), 98, true,33264,8));
+        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah),getString(R.string.bn_surah_al_bayyinah), 98, true,126648,8));
         surahList.add(new SurahInfo(getString(R.string.surah_az_zilzalah),getString(R.string.bn_surah_az_zilzalah), 99, true,60192,8));
         surahList.add(new SurahInfo(getString(R.string.surah_al_adiyat),getString(R.string.bn_surah_al_adiyat), 100, false,70272,11));
         surahList.add(new SurahInfo(getString(R.string.surah_al_qariah),getString(R.string.bn_surah_al_qariah), 101, false,62784,11));

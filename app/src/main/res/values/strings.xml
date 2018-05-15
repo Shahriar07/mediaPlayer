@@ -7,14 +7,17 @@
     <string name="reset_loop">Reset</string>
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>
-    <string name="surah_number">Surah No: </string>
+    <string name="surah_number">Surah No:</string>
     <string name="surah_name">Surah: </string>
-    <string name="verses"> Verses </string>
-    <string name="duration"> Duration </string>
+    <string name="verses"> Verses:</string>
+    <string name="duration"> Duration:</string>
 
     <string name="reset_loop_text"> Repeat verse selection canceled </string>
 
     <string name="selected_verse_no">Verse number </string>
+
+    <string name="splash_text">Sometimes listening of surah may lead to wrong pronunciation</string>
+    <string name="splash_text1">We request to read the Arabic verses to make pronunciation correct.</string>
 
 
     // Surah names

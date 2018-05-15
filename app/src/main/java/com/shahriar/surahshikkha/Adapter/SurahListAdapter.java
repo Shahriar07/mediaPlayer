@@ -102,7 +102,7 @@ class SurahHolder extends RecyclerView.ViewHolder {
             surahNameSecondary.setText(secondaryName);
         }
         Locale current = Utility.getCurrentLocale(null); // Null will return english locale
-        String durationtext = durationTextHeader + " - " + utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current);
+        String durationtext = durationTextHeader + " " + utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current);
         surahDuration.setText(durationtext);
         String verseText =  verseTextHeader + " " +Utility.getLocalizedInteger(surahInfo.getVerseCount(),null);
         verseCount.setText(verseText);
