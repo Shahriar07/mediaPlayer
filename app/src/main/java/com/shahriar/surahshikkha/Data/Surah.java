@@ -30,6 +30,7 @@ public abstract class  Surah {
         int duration = mp.getDuration();
         Log.i(getClass().getSimpleName(),"Duration :"+duration);
         setSurahDuration(duration);
+        mp.release();
     }
     public int getVerseCount(){
         return getDurationList().length - Constants.EXTRA_SURAH_VERSE_IN_DURATION;

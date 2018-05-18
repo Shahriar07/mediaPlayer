@@ -403,8 +403,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dashboard_activity_action_bar_items, menu);
-        MenuItem repeatItem = menu.findItem(R.id.actionSort);
-        int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
+        //MenuItem repeatItem = menu.findItem(R.id.actionSort);
+        // int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
         //setRepeatIcon(isRepeatOn,repeatItem);
 
         /*
