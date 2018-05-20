@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import java.text.NumberFormat;
@@ -134,8 +135,13 @@ public class Utility {
     public static Locale getCurrentLocale(Context context)
     {
         Locale current = Locale.ENGLISH;
-        if (context != null){
-            current = context.getResources().getConfiguration().locale;
+        if (context != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                return context.getResources().getConfiguration().getLocales().get(0);
+            } else {
+                //noinspection deprecation
+                return context.getResources().getConfiguration().locale;
+            }
         }
         return current;
     }

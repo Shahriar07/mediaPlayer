@@ -184,7 +184,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
 //            }
 //        });
-        Locale locale = Utility.getCurrentLocale(DashboardActivity.this);
+        Locale locale = Utility.getCurrentLocale(this);
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
