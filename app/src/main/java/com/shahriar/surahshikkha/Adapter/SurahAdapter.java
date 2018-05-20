@@ -21,6 +21,7 @@ import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by H. M. Shahriar on 2/24/2018.
@@ -107,7 +108,8 @@ public class SurahAdapter extends RecyclerView.Adapter {
         }
 
         public void bindVerse(Verse verse) {
-            String text = verseNo.getContext().getString(R.string.surah_and_verse) + " " + Utility.getLocalizedInteger(verse.getVerseNo(),null);
+            Locale currentLocale = Utility.getCurrentLocale(context);
+            String text = verseNo.getContext().getString(R.string.surah_and_verse) + " " + Utility.getLocalizedInteger(verse.getVerseNo(),currentLocale);
             verseNo.setText(text);
             surahVersesArabic.setImageResource(verse.getSurahVersesArabicResourceId());
 //            banglaTransliteration.setText(verse.getVerseTransliterationInBangla());

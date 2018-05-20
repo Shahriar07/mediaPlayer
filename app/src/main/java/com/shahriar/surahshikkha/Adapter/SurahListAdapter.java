@@ -88,23 +88,18 @@ class SurahHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindSurah(SurahInfo surahInfo){
-        String number = surahNumberHeader + " " +Utility.getLocalizedInteger(surahInfo.getSurahNumber(),null);
+        Locale current = Utility.getCurrentLocale(context); // Null will return english locale
+        //Locale current = Utility.getCurrentLocale(null); // Null will return english locale
+        String number = surahNumberHeader + " " +Utility.getLocalizedInteger(surahInfo.getSurahNumber(),current);
         surahNo.setText(number);
-        Locale locale = Utility.getCurrentLocale(context);
-        if (Locale.ENGLISH == locale || locale.getLanguage().equals("en")){
-            surahName.setText(surahInfo.getSurahName());
-            String secondaryName = "(" + surahInfo.getSurahNameSecondary() + ")";
-            surahNameSecondary.setText(secondaryName);
-        }
-        else {
-            surahName.setText(surahInfo.getSurahNameSecondary());
-            String secondaryName = "(" + surahInfo.getSurahName() + ")";
-            surahNameSecondary.setText(secondaryName);
-        }
-        Locale current = Utility.getCurrentLocale(null); // Null will return english locale
+        surahName.setText(surahInfo.getSurahName());
+        String secondaryName = "(" + surahInfo.getSurahNameSecondary() + ")";
+        surahNameSecondary.setText(secondaryName);
+
+
         String durationtext = durationTextHeader + " " + utility.getFormatedTimeFromMilisecond(surahInfo.getSurahDuration(),current);
         surahDuration.setText(durationtext);
-        String verseText =  verseTextHeader + " " +Utility.getLocalizedInteger(surahInfo.getVerseCount(),null);
+        String verseText =  verseTextHeader + " " +Utility.getLocalizedInteger(surahInfo.getVerseCount(),current);
         verseCount.setText(verseText);
     }
 }

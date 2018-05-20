@@ -78,34 +78,25 @@ public class Utility {
         }
         return intArray;
     }
-    public String[] getStringArray(int startRange, int endRange, boolean localized){
+    public String[] getStringArray(int startRange, int endRange, Locale locale){
         int duration = Math.abs(endRange-startRange);
         Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
         String[] intArray = new String[duration+1];
         if (endRange > startRange){
-            if (localized){
-                for (int i = 0;i <= duration; ++i,++startRange){
-                    intArray[i] = NumberFormat.getInstance().format(startRange);
-                }
+            if (locale == null){
+                locale = Locale.ENGLISH;
             }
-            else {
-                for (int i = 0;i <= duration; ++i,++startRange){
-                    intArray[i] = ""+startRange;
-                }
+            for (int i = 0;i <= duration; ++i,++startRange){
+                intArray[i] = NumberFormat.getInstance(locale).format(startRange);
             }
         }
         else {
-            if (localized){
-                for (int i = 0;i <= duration; ++i,--startRange){
-                    intArray[i] = NumberFormat.getInstance().format(startRange);
-                }
+            if (locale == null){
+                locale = Locale.ENGLISH;
             }
-            else {
-                for (int i = 0;i <= duration; ++i,--startRange){
-                    intArray[i] = ""+startRange;
-                }
+            for (int i = 0;i <= duration; ++i,--startRange){
+                intArray[i] = NumberFormat.getInstance(locale).format(startRange);
             }
-
         }
         return intArray;
     }

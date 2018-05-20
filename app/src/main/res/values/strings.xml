@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Surah Shikkha</string>
+    <string name="app_name">Surah Shiksha</string>
     <string name="start_button">Start</string>
     <string name="pause_button">Pause</string>
     <string name="start_loop">Loop Start</string>
@@ -16,9 +16,8 @@
 
     <string name="selected_verse_no">Verse number </string>
 
-    <string name="splash_text">Sometimes listening of surah may lead to wrong pronunciation</string>
-    <string name="splash_text1">We request to read the Arabic verses to make pronunciation correct.</string>
-
+    <string name="splash_text">Sometimes listening of surah may lead to wrong pronunciation, We request to read the Arabic verses to make pronunciation correct.</string>
+    <string name="end_index_smaller_text"> Choose a large verse number than start</string>
 
     // Surah names
     <string name="surah_al_fatihah">Surah-al-fatihah</string>
@@ -94,6 +93,8 @@
 
     <string name="translated_verse">Translated Verse</string>
     <string name="cancel">Cancel</string>
+    <string name="exit">Exit</string>
+    <string name="exit_text">Do you really want to exit?</string>
     <string name="language_control">Select Language</string>
 
     <string name="sort">Sort By</string>

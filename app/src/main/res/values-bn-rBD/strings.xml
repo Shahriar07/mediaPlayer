@@ -47,6 +47,7 @@
     <string name="splash_text">কখনও কখনও সূরা শোনার শব্দে ভুল হতে পারে, আমরা সঠিক শব্দের জন্য আরবি আয়াত পড়ার অনুরোধ করছি।</string>
     <string name="end_index_smaller_text">শুরু আয়াত থেকে একটি বড় আয়াত সংখ্যা নির্বাচন করুন</string>
 
+
     // Surah names
     <string name="bn_surah_al_fatihah">Surah-al-fatihah</string>
     <string name="bn_surah_at_tariq">Surah-at-tariq</string>

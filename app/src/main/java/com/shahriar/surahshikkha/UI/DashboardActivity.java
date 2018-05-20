@@ -1,7 +1,12 @@
 package com.shahriar.surahshikkha.UI;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,9 +31,11 @@ import android.widget.Toast;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
 import com.shahriar.surahshikkha.Data.SurahInfo;
+import com.shahriar.surahshikkha.Dialog.ExitDialog;
 import com.shahriar.surahshikkha.Dialog.LanguageDialog;
 import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
+import com.shahriar.surahshikkha.Interfaces.AlertDialogCommandInterface;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
@@ -44,6 +51,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * Created by H. M. Shahriar on 3/3/2018.
@@ -176,7 +184,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
 //            }
 //        });
-
+        Locale locale = Utility.getCurrentLocale(DashboardActivity.this);
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
@@ -186,7 +194,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT, Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
             maxRepeatCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
         }
-        drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,null));
+        drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,locale));
 
 //        // Set the language of application
 //        menuItem = menu.findItem(R.id.language_control_switch);
@@ -343,9 +351,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showMaxLoopCountPopup() {
+        final Locale locale = Utility.getCurrentLocale(DashboardActivity.this);
         final ArrayList<String> itemList = new ArrayList<>();
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i<= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
-            itemList.add(Utility.getLocalizedInteger(i,null)); // TODO: Need to get from single source
+            itemList.add(Utility.getLocalizedInteger(i,locale)); // TODO: Need to get from single source
         }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
         RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, loopCountValue, new DialogItemTouchListener() {
@@ -353,7 +362,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void onDialogItemSelected(int position) {
                 int maxRepeatCount = Integer.parseInt(itemList.get(position));
                 controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxRepeatCount);
-                drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,null));
+
+                drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,locale));
             }
         });
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -457,4 +467,48 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)){
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
+        alertDialogBuilder.setMessage(R.string.exit_text);
+        alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.setPositiveButton(R.string.exit,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                               finish();
+                            }
+                        });
+
+        alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alertDialogBuilder.create().show();
+
+//
+//        ExitDialog dialog = new ExitDialog(this, exitDialogInterface);
+//        dialog.show();
+    }
+
+//    AlertDialogCommandInterface exitDialogInterface = new AlertDialogCommandInterface() {
+//        @Override
+//        public void onPositiveButtonClicked() {
+//            finish();
+//        }
+//
+//        @Override
+//        public void onNegativeButtonClicked() {
+//
+//        }
+//    };
 }
