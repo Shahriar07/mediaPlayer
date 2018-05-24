@@ -1,47 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/window_background"
-    android:orientation="vertical">
+    android:background="@color/window_background">
+
     <TextView
         android:id="@+id/exit_dialog_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:textColor="@android:color/black"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="@string/exit_text"
-        android:layout_marginTop="24dp"/>
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="52dp">
+        android:layout_height="52dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/exit_dialog_content">
+
         <Button
             android:id="@+id/exit_dialog_btn_ok"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:textAllCaps="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:text="@string/exit"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            android:text="@string/exit"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent" />
 
         <Button
             android:id="@+id/exit_dialog_btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:background="@android:color/transparent"
-            android:textAllCaps="true"
+            android:layout_marginTop="8dp"
             android:layout_toLeftOf="@id/exit_dialog_btn_ok"
             android:layout_toStartOf="@id/exit_dialog_btn_ok"
-            android:text="@string/cancel"/>
+            android:background="@android:color/transparent"
+            android:text="@string/cancel"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent" />
     </RelativeLayout>
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

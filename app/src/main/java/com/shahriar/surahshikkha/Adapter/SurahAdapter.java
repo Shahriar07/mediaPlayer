@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.R;
+import com.shahriar.surahshikkha.Utility.Constants;
+import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
 import org.w3c.dom.Text;
@@ -90,6 +92,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
         //public TextView banglaTransliteration;
         public TextView banglaTranslation;
         public TextView englishTranslation;
+        SharedPreferenceController controller;
 
         public VerseHolder(View v) {
             super(v);
@@ -98,23 +101,39 @@ public class SurahAdapter extends RecyclerView.Adapter {
             verseNo.setTypeface(typeface);
             //banglaTransliteration = (TextView) v.findViewById(R.id.verse_transliteration_in_bangla);
             // banglaTransliteration.setTypeface(typeface);
+
+            controller = new SharedPreferenceController(context);
             banglaTranslation = (TextView) v.findViewById(R.id.verse_translation_in_bangla);
             banglaTranslation.setTypeface(typeface);
-
             englishTranslation = (TextView) v.findViewById(R.id.verse_translation_in_english);
-
             surahVersesArabic = (ImageView) v.findViewById(R.id.arabic_verse);
             Log.d(getClass().getSimpleName(), "VerseHolder");
         }
 
         public void bindVerse(Verse verse) {
+            banglaTranslation.setText(verse.getVerseTranslationInBangla());
             Locale currentLocale = Utility.getCurrentLocale(context);
             String text = verseNo.getContext().getString(R.string.surah_and_verse) + " " + Utility.getLocalizedInteger(verse.getVerseNo(),currentLocale);
             verseNo.setText(text);
             surahVersesArabic.setImageResource(verse.getSurahVersesArabicResourceId());
 //            banglaTransliteration.setText(verse.getVerseTransliterationInBangla());
-            banglaTranslation.setText(verse.getVerseTranslationInBangla());
-            englishTranslation.setText(verse.getVerseTranslationInEnglish());
+
+            if(controller.readBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION)){
+                englishTranslation.setText(verse.getVerseTranslationInEnglish());
+                englishTranslation.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                englishTranslation.setVisibility(View.GONE);
+            }
+            if(controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION)){
+                banglaTranslation.setText(verse.getVerseTranslationInBangla());
+                banglaTranslation.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                banglaTranslation.setVisibility(View.GONE);
+            }
         }
     }
 }

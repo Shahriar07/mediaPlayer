@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,7 +26,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -137,7 +141,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     protected void onResume() {
         super.onResume();
         Log.d("TimeTEst","onResume");
-        initializeMenuItem();
+
     }
 
     private void initializeMenuItem(){
@@ -171,20 +175,37 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Log.d("TimeTEst","initComponent Menu");
         Menu menu = navigationView.getMenu();
         MenuItem menuItem;
+
+
         View actionView;
-//        menuItem = menu.findItem(R.id.loop_control_switch);
-//        View actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-//        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-//
-//        boolean isRepeatOn = controller.readBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL);
-//        menuRepeatSwitch.setChecked(isRepeatOn);
-//        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                controller.writeBooleanWithKey(Constants.SURAH_VERSE_REPEAT_CONTROL,menuRepeatSwitch.isChecked());
-//            }
-//        });
-        Locale locale = Utility.getCurrentLocale(this);
+        menuItem = menu.findItem(R.id.english_verse_translation);
+        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+
+        boolean isEnglishTranslationOn = controller.readBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION);
+        menuRepeatSwitch.setChecked(isEnglishTranslationOn);
+        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.writeBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION,menuRepeatSwitch.isChecked());
+            }
+        });
+
+        menuItem = menu.findItem(R.id.bangla_verse_translation);
+        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
+        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+
+        boolean isBanglaTranslation = controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION);
+        menuRepeatSwitch.setChecked(isBanglaTranslation);
+        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                controller.writeBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION,menuRepeatSwitch.isChecked());
+            }
+        });
+
+
+        Locale locale = Utility.getCurrentLocale(this.getApplicationContext());
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
@@ -195,6 +216,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             maxRepeatCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
         }
         drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,locale));
+
 
 //        // Set the language of application
 //        menuItem = menu.findItem(R.id.language_control_switch);
@@ -212,7 +234,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Log.d("TimeTEst","rate app st");
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
-        menuItem.setTitle(R.string.rate_us);
+        menuItem.setTitle(getApplicationContext().getString(R.string.rate_us));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         //   drawerSelectedLanguage.setOnClickListener(this);
         Log.d("TimeTEst","rate app");
@@ -328,9 +350,64 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 utility.rateUs(DashboardActivity.this);
                 break;
             }
+
+            case R.id.userGuide:
+            {
+                showUserGuide();
+                break;
+            }
         }
         return true;
     }
+
+    private void showUserGuide ()
+    {
+
+
+
+//LinearLayOut Setup
+//        LinearLayout linearLayout= new LinearLayout(this);
+//        linearLayout.setOrientation(LinearLayout.VERTICAL);
+//
+//        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+//                LayoutParams.MATCH_PARENT));
+//
+////ImageView Setup
+//        ImageView imageView = new ImageView(this);
+//
+////setting image resource
+//        imageView.setImageResource(R.drawable.play);
+//
+////setting image position
+//        imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+//                LayoutParams.WRAP_CONTENT));
+//
+////adding view to layout
+//        linearLayout.addView(imageView);
+////make visible to program
+//        setContentView(linearLayout);
+
+
+        Dialog builder = new Dialog(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
+        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        builder.getWindow().setBackgroundDrawable(
+                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                //nothing;
+            }
+        });
+
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.small_help);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
+        builder.show();
+    }
+
 
     private void showLanguageDialog() {
 
@@ -372,37 +449,38 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private ArrayList<SurahInfo> getSurahInfoList (){
+        Context context = this.getApplicationContext();
         ArrayList<SurahInfo> surahList = new ArrayList<>();
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fatihah),getString(R.string.bn_surah_al_fatihah), 1, false,52088,7));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_tariq),getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ala),getString(R.string.bn_surah_al_ala), 87, false,108000,19));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ghashiyah),getString(R.string.bn_surah_al_ghashiyah), 88, false,134352,26));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fajr),getString(R.string.bn_surah_al_fajr), 89, false,213192,30));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_balad),getString(R.string.bn_surah_al_balad), 90, false,120240,20));
-        surahList.add(new SurahInfo(getString(R.string.surah_ash_shams),getString(R.string.bn_surah_ash_shams), 91, false,84600,15));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_layl),getString(R.string.bn_surah_al_layl), 92, false,111816,21));
-        surahList.add(new SurahInfo(getString(R.string.surah_ad_duha),getString(R.string.bn_surah_ad_duha), 93, false,65304,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_as_sharh),getString(R.string.bn_surah_as_sharh), 94, false,43200,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_tin),getString(R.string.bn_surah_at_tin), 95, false,65160,8));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fatihah),context.getString(R.string.bn_surah_al_fatihah), 1, false,52088,7));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_at_tariq),context.getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ala),context.getString(R.string.bn_surah_al_ala), 87, false,108000,19));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ghashiyah),context.getString(R.string.bn_surah_al_ghashiyah), 88, false,134352,26));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fajr),context.getString(R.string.bn_surah_al_fajr), 89, false,213192,30));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_balad),context.getString(R.string.bn_surah_al_balad), 90, false,120240,20));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_ash_shams),context.getString(R.string.bn_surah_ash_shams), 91, false,84600,15));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_layl),context.getString(R.string.bn_surah_al_layl), 92, false,111816,21));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_ad_duha),context.getString(R.string.bn_surah_ad_duha), 93, false,65304,11));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_as_sharh),context.getString(R.string.bn_surah_as_sharh), 94, false,43200,8));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_at_tin),context.getString(R.string.bn_surah_at_tin), 95, false,65160,8));
 //        surahList.add(new SurahInfo(getString(R.string.surah_al_alaq), 96, false,95328,19));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_qadr),getString(R.string.bn_surah_al_qadr), 97, false,45360,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_bayyinah),getString(R.string.bn_surah_al_bayyinah), 98, true,126648,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_az_zilzalah),getString(R.string.bn_surah_az_zilzalah), 99, true,60192,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_adiyat),getString(R.string.bn_surah_al_adiyat), 100, false,70272,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_qariah),getString(R.string.bn_surah_al_qariah), 101, false,62784,11));
-        surahList.add(new SurahInfo(getString(R.string.surah_at_takathur),getString(R.string.bn_surah_at_takathur), 102, false,62856,8));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_asr),getString(R.string.bn_surah_al_asr), 103, false,27648,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_humazah),getString(R.string.bn_surah_al_humazah), 104, false,58248,9));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_fil),getString(R.string.bn_surah_al_fil), 105, false,48960,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_quraysh),getString(R.string.bn_surah_quraysh), 106, false,42768,4));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_maun),getString(R.string.bn_surah_al_maun), 107, false,57744,7));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_kawthar),getString(R.string.bn_surah_al_kawthar), 108, false,24768,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_kafirun),getString(R.string.bn_surah_al_kafirun), 109, false,54504,6));
-        surahList.add(new SurahInfo(getString(R.string.surah_an_nasr),getString(R.string.bn_surah_an_nasr), 110, true,35136,3));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_masad),getString(R.string.bn_surah_al_masad), 111, false,41760,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_ikhlas),getString(R.string.bn_surah_al_ikhlas), 112, false,21888,4));
-        surahList.add(new SurahInfo(getString(R.string.surah_al_falaq),getString(R.string.bn_surah_al_falaq), 113, false,33264,5));
-        surahList.add(new SurahInfo(getString(R.string.surah_an_nas),getString(R.string.bn_surah_an_nas), 114, false,50256,6));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_qadr),context.getString(R.string.bn_surah_al_qadr), 97, false,45360,5));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_bayyinah),context.getString(R.string.bn_surah_al_bayyinah), 98, true,126648,8));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_az_zilzalah),context.getString(R.string.bn_surah_az_zilzalah), 99, true,60192,8));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_adiyat),context.getString(R.string.bn_surah_al_adiyat), 100, false,70272,11));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_qariah),context.getString(R.string.bn_surah_al_qariah), 101, false,62784,11));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_at_takathur),context.getString(R.string.bn_surah_at_takathur), 102, false,62856,8));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_asr),context.getString(R.string.bn_surah_al_asr), 103, false,27648,3));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_humazah),context.getString(R.string.bn_surah_al_humazah), 104, false,58248,9));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fil),context.getString(R.string.bn_surah_al_fil), 105, false,48960,5));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_quraysh),context.getString(R.string.bn_surah_quraysh), 106, false,42768,4));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_maun),context.getString(R.string.bn_surah_al_maun), 107, false,57744,7));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_kawthar),context.getString(R.string.bn_surah_al_kawthar), 108, false,24768,3));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_kafirun),context.getString(R.string.bn_surah_al_kafirun), 109, false,54504,6));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_an_nasr),context.getString(R.string.bn_surah_an_nasr), 110, true,35136,3));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_masad),context.getString(R.string.bn_surah_al_masad), 111, false,41760,5));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ikhlas),context.getString(R.string.bn_surah_al_ikhlas), 112, false,21888,4));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_falaq),context.getString(R.string.bn_surah_al_falaq), 113, false,33264,5));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_an_nas),context.getString(R.string.bn_surah_an_nas), 114, false,50256,6));
         return surahList;
     }
 
@@ -413,6 +491,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dashboard_activity_action_bar_items, menu);
+
+        initializeMenuItem();
         //MenuItem repeatItem = menu.findItem(R.id.actionSort);
         // int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
         //setRepeatIcon(isRepeatOn,repeatItem);
@@ -457,7 +537,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void showSortSelectDialog() {
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getApplicationContext().getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getApplicationContext().getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 sortList(position);
@@ -475,40 +555,19 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             mDrawerLayout.closeDrawers();
             return;
         }
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
-        alertDialogBuilder.setMessage(R.string.exit_text);
-        alertDialogBuilder.setCancelable(false);
-                alertDialogBuilder.setPositiveButton(R.string.exit,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                               finish();
-                            }
-                        });
-
-        alertDialogBuilder.setNegativeButton(R.string.cancel,new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        alertDialogBuilder.create().show();
-
-//
-//        ExitDialog dialog = new ExitDialog(this, exitDialogInterface);
-//        dialog.show();
+        ExitDialog dialog = new ExitDialog(this, exitDialogInterface);
+        dialog.show();
     }
 
-//    AlertDialogCommandInterface exitDialogInterface = new AlertDialogCommandInterface() {
-//        @Override
-//        public void onPositiveButtonClicked() {
-//            finish();
-//        }
-//
-//        @Override
-//        public void onNegativeButtonClicked() {
-//
-//        }
-//    };
+    AlertDialogCommandInterface exitDialogInterface = new AlertDialogCommandInterface() {
+        @Override
+        public void onPositiveButtonClicked() {
+            finish();
+        }
+
+        @Override
+        public void onNegativeButtonClicked() {
+
+        }
+    };
 }

@@ -137,10 +137,10 @@ public class Utility {
         Locale current = Locale.ENGLISH;
         if (context != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return context.getResources().getConfiguration().getLocales().get(0);
+                return context.getApplicationContext().getResources().getConfiguration().getLocales().get(0);
             } else {
                 //noinspection deprecation
-                return context.getResources().getConfiguration().locale;
+                return context.getApplicationContext().getResources().getConfiguration().locale;
             }
         }
         return current;

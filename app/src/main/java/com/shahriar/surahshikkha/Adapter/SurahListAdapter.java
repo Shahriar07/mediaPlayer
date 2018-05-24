@@ -81,9 +81,9 @@ class SurahHolder extends RecyclerView.ViewHolder {
         surahNameSecondary.setTypeface(typeface);
         surahDuration = (TextView) v.findViewById(R.id.surahDuration);
         verseCount = (TextView) v.findViewById(R.id.verseCount);
-        surahNumberHeader = v.getContext().getString(R.string.surah_number);
-        verseTextHeader = v.getContext().getString(R.string.verses);
-        durationTextHeader = v.getContext().getString(R.string.duration);
+        surahNumberHeader =context.getString(R.string.surah_number);
+        verseTextHeader = context.getString(R.string.verses);
+        durationTextHeader = context.getString(R.string.duration);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 

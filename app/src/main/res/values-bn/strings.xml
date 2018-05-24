@@ -24,6 +24,8 @@
     <string name="max_repeat_count">পুনরাবৃত্তি সংখ্যা</string>
     <string name="verse_auto_scroll">অটো স্ক্রল</string>
     <string name="verse_auto_repeat">অটো পুনরাবৃত্তি</string>
+    <string name="menu_bangla_translation">বাংলা অনুবাদ</string>
+    <string name="menu_english_translation">ইংরেজি অনুবাদ</string>
 
     <string name="translated_verse">অনূদিত আয়াত</string>
     <string name="cancel">বাতিল</string>
@@ -39,6 +41,7 @@
     </string-array>
 
     <string name="rate_us">রেট দিন</string>
+    <string name="user_guide">অ্যাপ গাইড</string>
     <string name="menu_share">শেয়ার করুন</string>
     <string name="menu_control">নিয়ন্ত্রণ</string>
     <string name="menu_communicate">যোগাযোগ</string>

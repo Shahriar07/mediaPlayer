@@ -90,6 +90,8 @@
     <string name="max_repeat_count">Repeat Count</string>
     <string name="verse_auto_scroll">Auto Scroll</string>
     <string name="verse_auto_repeat">Auto Repeat</string>
+    <string name="menu_bangla_translation">Bangla Translation</string>
+    <string name="menu_english_translation">English Translation</string>
 
     <string name="translated_verse">Translated Verse</string>
     <string name="cancel">Cancel</string>
@@ -105,6 +107,7 @@
     </string-array>
 
     <string name="rate_us">Rate This App</string>
+    <string name="user_guide">App Guide</string>
     <string name="menu_share">Share This App</string>
     <string name="menu_control">Control</string>
     <string name="menu_communicate">Communicate</string>
