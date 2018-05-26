@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/verse_no"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="4dp"
@@ -21,7 +21,27 @@
         android:paddingStart="8dp"
         android:paddingLeft="8dp"
         android:textStyle="bold"
-        android:text="@string/surah_and_verse" />
+        android:text="@string/surah_and_verse"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <!--CheckBox
+        android:id="@+id/repeatCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingRight="8dp"
+        android:button="@null"
+        android:textColor="@android:color/black"
+        android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
+        android:text="@string/repeat"
+        android:gravity="center_vertical"/-->
 
     <ImageView
         android:id="@+id/arabic_verse"
@@ -32,7 +52,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:src="@drawable/a11"
-        android:layout_gravity="center_vertical|end"/>
+        android:layout_gravity="center_vertical|end"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/verse_no"/>
 
     <!--TextView
         android:id="@+id/verse_transliteration_in_bangla"
@@ -61,7 +84,8 @@
         android:textStyle="bold"
         android:text="Test"
         android:layout_gravity="start|center_vertical"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:layout_below="@id/arabic_verse"/>
 
     <TextView
         android:id="@+id/verse_translation_in_english"
@@ -73,6 +97,7 @@
         android:layout_marginBottom="4dp"
         android:textColor="@android:color/black"
         android:layout_gravity="start|center_vertical"
-        android:gravity="center_vertical"/>
+        android:gravity="center_vertical"
+        android:layout_below="@id/verse_translation_in_bangla"/>
 
-</LinearLayout>
+</RelativeLayout>

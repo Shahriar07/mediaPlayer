@@ -12,6 +12,7 @@
     <string name="surah_name">সূরা: </string>
     <string name="verses">আয়াত:</string>
     <string name="duration">সময়:</string>
+    <string name="repeat">পুনরাবৃত্তি</string>
 
     <string name="selected_verse_no">আয়াত নম্বর</string>
 
