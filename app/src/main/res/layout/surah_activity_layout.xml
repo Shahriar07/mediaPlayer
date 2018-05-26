@@ -15,7 +15,6 @@
         android:weightSum="1"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
-        <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
         <android.support.v7.widget.Toolbar
                 android:id="@+id/surahActivityToolbar"
                 android:layout_width="match_parent"
@@ -108,6 +107,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:elevation="4dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.913" />
 
@@ -116,6 +116,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 style="@style/SpinnerStartTheme"
+                android:elevation="4dp"
                 android:dropDownWidth="60dp"
                 android:layout_weight="1"/>
 
@@ -125,6 +126,7 @@
                 android:dropDownWidth="60dp"
                 style="@style/SpinnerEndTheme"
                 android:layout_height="match_parent"
+                android:elevation="4dp"
                 android:layout_weight="1"/>
 
             <ImageButton
@@ -135,6 +137,7 @@
                 android:scaleType="centerInside"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/bg_reset"
+                android:elevation="4dp"
                 android:contentDescription="@string/reset_loop"
                 android:layout_weight=".8"
                 android:text="@string/reset_loop"

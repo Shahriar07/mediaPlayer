@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Data.SurahInfo;
+import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Utility;
@@ -51,14 +52,13 @@ public class SurahListAdapter extends RecyclerView.Adapter {
         SurahHolder surahHolder = (SurahHolder) holder;
         surahHolder.bindSurah(surahList.get(position));
         Log.d(getClass().getSimpleName(),"onBindViewHolder");
+        holder.itemView.setBackgroundResource(R.drawable.surah_verse_border);
     }
 
     @Override
     public int getItemCount() {
         return surahList.size();
     }
-
-
 
 class SurahHolder extends RecyclerView.ViewHolder {
     public TextView surahNo;

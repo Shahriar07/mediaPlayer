@@ -193,9 +193,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         durationArray = surah.getDurationList();
         mAdapter = new SurahAdapter(surah,this);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
-        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
-        verseListView.addItemDecoration(dividerItemDecoration);
+
+        // Add item separator in surah verses
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+//        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
+//        verseListView.addItemDecoration(dividerItemDecoration);
 
         verseListView.setAdapter(mAdapter);
 

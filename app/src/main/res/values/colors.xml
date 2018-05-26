@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#4DB6AC</color>
 
+    <color name="borderColor">#80CBC4</color>
+
 
     <color name="colorAccentSecondary">#046ea7</color>
 

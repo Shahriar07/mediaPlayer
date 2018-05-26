@@ -114,9 +114,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList,context);
         Log.d("TimeTEst","SurahListAdapter");
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
-        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
-        surahListView.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
+//        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
+//        surahListView.addItemDecoration(dividerItemDecoration);
         Log.d("TimeTEst","addItemDecoration");
 
         surahListView.setAdapter(mAdapter);

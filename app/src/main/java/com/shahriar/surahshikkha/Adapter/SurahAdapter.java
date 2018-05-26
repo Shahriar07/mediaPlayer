@@ -62,10 +62,9 @@ public class SurahAdapter extends RecyclerView.Adapter {
 
         // Here I am just highlighting the background
         if (selected_position == position)
-            holder.itemView.setBackgroundResource(R.color.selected_verse_background);
+            holder.itemView.setBackgroundResource(R.drawable.surah_verse_border_selected);
         else
-            holder.itemView.setBackgroundColor(Color.TRANSPARENT);
-
+            holder.itemView.setBackgroundResource(R.drawable.surah_verse_border);
     }
 
     @Override
