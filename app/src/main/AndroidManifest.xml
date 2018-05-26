@@ -4,15 +4,15 @@
     package="com.shahriar.surahshikkha">
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity
             android:name=".UI.SplashActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|locale|layoutDirection"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -22,12 +22,12 @@
         </activity>
         <activity android:name=".UI.DashboardActivity"
             android:screenOrientation="portrait"
-            android:configChanges="orientation"
+            android:configChanges="orientation|locale|layoutDirection"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity android:name=".UI.SurahActivity"
             android:parentActivityName=".UI.DashboardActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|locale|layoutDirection"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <!-- Parent activity meta-data to support 4.0 and lower -->

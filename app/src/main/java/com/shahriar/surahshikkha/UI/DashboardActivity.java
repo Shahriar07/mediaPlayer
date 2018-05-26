@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -178,9 +179,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Menu menu = navigationView.getMenu();
         MenuItem menuItem;
 
-
+        // Set english translation
         View actionView;
         menuItem = menu.findItem(R.id.english_verse_translation);
+        menuItem.setTitle(getApplicationContext().getString(R.string.menu_english_translation));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuEnTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
 
@@ -193,9 +195,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
+        // Set bangla translation
         menuItem = menu.findItem(R.id.bangla_verse_translation);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuBdTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+        menuItem.setTitle(getApplicationContext().getString(R.string.menu_bangla_translation));
 
         boolean isBanglaTranslation = controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION);
         menuBdTranslationSwitch.setChecked(isBanglaTranslation);
@@ -206,10 +210,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
         });
 
-
+        // Set Max repeat count
         Locale locale = Utility.getCurrentLocale(this.getApplicationContext());
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
+        menuItem.setTitle(getApplicationContext().getString(R.string.max_repeat_count));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
         int maxRepeatCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
@@ -233,13 +238,28 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //        drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
 //        drawerSelectedLanguage.setOnClickListener(this);
 
-        Log.d("TimeTEst","rate app st");
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
         menuItem.setTitle(getApplicationContext().getString(R.string.rate_us));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         //   drawerSelectedLanguage.setOnClickListener(this);
         Log.d("TimeTEst","rate app");
+
+        // set guide
+        menuItem = menu.findItem(R.id.userGuide);
+        menuItem.setTitle(getApplicationContext().getString(R.string.user_guide));
+
+        // set menuItemControl
+        menuItem = menu.findItem(R.id.menu_item_control);
+        menuItem.setTitle(getApplicationContext().getString(R.string.menu_control));
+
+        // set communicate
+        menuItem = menu.findItem(R.id.menu_item_communicate);
+        menuItem.setTitle(getApplicationContext().getString(R.string.menu_communicate));
+
+        ImageView nevHeader = (ImageView)findViewById(R.id.drawer_header_image);
+        nevHeader.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.splash_surah_shiksha));
+
     }
 
     private void updateLanguage(Context localizedContext){
@@ -465,7 +485,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             itemList.add(Utility.getLocalizedInteger(i,locale)); // TODO: Need to get from single source
         }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
-        RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, loopCountValue, new DialogItemTouchListener() {
+        RepeatCountDialog dialog = new RepeatCountDialog(this,getApplicationContext().getString(R.string.max_repeat_count),itemList, loopCountValue, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 int maxRepeatCount = Integer.parseInt(itemList.get(position));

@@ -595,7 +595,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 itemList.add(Utility.getLocalizedInteger(i,currentLocale)); // TODO: Need to get from single source
             }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
-            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
+            RepeatCountDialog dialog = new RepeatCountDialog(this,getApplicationContext().getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
                 @Override
                 public void onDialogItemSelected(int position) {
                     int newMaxRepeatCount = Integer.parseInt(itemList.get(position));

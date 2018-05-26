@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Interfaces.AlertDialogCommandInterface;
 import com.shahriar.surahshikkha.R;
@@ -32,7 +33,11 @@ public class ExitDialog extends Dialog {
 
         Button okButton = (Button)findViewById(R.id.exit_dialog_btn_ok);
         Button cancelButton = (Button)findViewById(R.id.exit_dialog_btn_cancel);
+        cancelButton.setText(getContext().getApplicationContext().getString(R.string.cancel));
+        okButton.setText(getContext().getApplicationContext().getString(R.string.exit));
 
+        TextView exitText = (TextView) findViewById(R.id.exit_dialog_content);
+        exitText.setText(getContext().getApplicationContext().getString(R.string.exit_text));
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

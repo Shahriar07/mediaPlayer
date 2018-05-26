@@ -96,6 +96,7 @@ public class RepeatCountDialog extends Dialog {
                 dismiss();
             }
         });
+        cancelButton.setText(getContext().getApplicationContext().getString(R.string.cancel));
     }
 
     public void scrollToPosition(){
