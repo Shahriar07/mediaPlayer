@@ -71,6 +71,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView surahListView;
 
     private SwitchCompat menuRepeatSwitch;
+    private SwitchCompat menuBdTranslationSwitch;
+    private SwitchCompat menuEnTranslationSwitch;
     private TextView drawerMaxRepeatCount;
     private TextView drawerSelectedLanguage;
 
@@ -180,27 +182,27 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         View actionView;
         menuItem = menu.findItem(R.id.english_verse_translation);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+        menuEnTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
 
         boolean isEnglishTranslationOn = controller.readBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION);
-        menuRepeatSwitch.setChecked(isEnglishTranslationOn);
-        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
+        menuEnTranslationSwitch.setChecked(isEnglishTranslationOn);
+        menuEnTranslationSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.writeBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION,menuRepeatSwitch.isChecked());
+                controller.writeBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION,menuEnTranslationSwitch.isChecked());
             }
         });
 
         menuItem = menu.findItem(R.id.bangla_verse_translation);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
-        menuRepeatSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
+        menuBdTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
 
         boolean isBanglaTranslation = controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION);
-        menuRepeatSwitch.setChecked(isBanglaTranslation);
-        menuRepeatSwitch.setOnClickListener(new View.OnClickListener() {
+        menuBdTranslationSwitch.setChecked(isBanglaTranslation);
+        menuBdTranslationSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                controller.writeBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION,menuRepeatSwitch.isChecked());
+                controller.writeBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION,menuBdTranslationSwitch.isChecked());
             }
         });
 
@@ -313,21 +315,22 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     }
 
-
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+    private void closeDrawer(){
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
         // close drawer when item is tapped
         mDrawerLayout.closeDrawers();
-        int id = item.getItemId();
+    }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
         // Handle navigation view item clicks here.
         switch(id){
             case R.id.max_loop_count_control:
             {
+                closeDrawer();
                 showMaxLoopCountPopup();
                 break;
             }
@@ -346,13 +349,41 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 //            }
             case R.id.rateUs:
             {
+                closeDrawer();
                 Utility utility = new Utility();
                 utility.rateUs(DashboardActivity.this);
+                break;
+            }
+            case R.id.english_verse_translation:
+            {
+                final SharedPreferenceController controller = new SharedPreferenceController(this);
+                if(menuEnTranslationSwitch.isChecked()){
+                    menuEnTranslationSwitch.setChecked(false);
+                    controller.writeBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION,false);
+                }
+                else{
+                    menuEnTranslationSwitch.setChecked(true);
+                    controller.writeBooleanWithKey(Constants.MENU_ENGLISH_TRANSLATION,true);
+                }
+                break;
+            }
+            case R.id.bangla_verse_translation:
+            {
+                final SharedPreferenceController controller = new SharedPreferenceController(this);
+                if(menuBdTranslationSwitch.isChecked()){
+                    menuBdTranslationSwitch.setChecked(false);
+                    controller.writeBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION,false);
+                }
+                else{
+                    menuBdTranslationSwitch.setChecked(true);
+                    controller.writeBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION,true);
+                }
                 break;
             }
 
             case R.id.userGuide:
             {
+                closeDrawer();
                 showUserGuide();
                 break;
             }
