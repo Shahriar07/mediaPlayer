@@ -13,6 +13,8 @@
     <string name="duration"> Duration:</string>
     <string name="repeat">Repeat</string>
 
+    <string name="instruction">1. Set maximum repeat count from the top right corner.\n\n2. To listen a specific verse, tap on it.\n\n3. To listen multiple verses set start and end verse from bottom.</string>
+
     <string name="reset_loop_text"> Repeat verse selection canceled </string>
 
     <string name="selected_verse_no">Verse number </string>
@@ -97,6 +99,7 @@
     <string name="translated_verse">Translated Verse</string>
     <string name="cancel">Cancel</string>
     <string name="exit">Exit</string>
+    <string name="ok">OK</string>
     <string name="exit_text">Do you really want to exit?</string>
     <string name="language_control">Select Language</string>
 
@@ -111,6 +114,7 @@
     <string name="user_guide">App Guide</string>
     <string name="menu_share">Share This App</string>
     <string name="menu_control">Control</string>
+    <string name="help_outlined_title">Help</string>
     <string name="menu_communicate">Communicate</string>
 
 </resources>

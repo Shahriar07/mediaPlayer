@@ -24,7 +24,6 @@
                 android:background="@color/colorPrimary"
                 android:theme="@style/Widget.AppCompat.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/listView"
             android:layout_width="match_parent"

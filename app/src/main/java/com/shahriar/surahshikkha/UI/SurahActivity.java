@@ -33,9 +33,12 @@ import com.shahriar.surahshikkha.Adapter.SurahAdapter;
 import com.shahriar.surahshikkha.CustomComponents.CustomSpinner;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
+import com.shahriar.surahshikkha.Dialog.ExitDialog;
+import com.shahriar.surahshikkha.Dialog.HelpDialog;
 import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
 import com.shahriar.surahshikkha.Factory.SurahFactory;
+import com.shahriar.surahshikkha.Interfaces.AlertDialogCommandInterface;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
@@ -606,11 +609,20 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         return true;
     }
 
+    private void showHelpDialogPopup() {
+        HelpDialog dialog = new HelpDialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
+    }
+
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_max_repeat_count:
                 showMaxLoopCountPopup();
+                return true;
+            case R.id.helpOutlined:
+                showHelpDialogPopup();
                 return true;
 
 //            case R.id.action_repeat_control:

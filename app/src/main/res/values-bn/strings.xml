@@ -18,6 +18,7 @@
 
     <string name="reset_loop_text">আয়াত নির্বাচন বাতিল করা হল </string>
 
+    <string name="instruction">১. উপরের ডান থেকে সর্বোচ্চ পুনরাবৃত্তি সংখ্যা সেট করুন।\n\n২. একটি নির্দিষ্ট আয়াত শোনার জন্য, এটি আলতো চাপুন।\n\n৩. একাধিক আয়াত শোনার জন্য নিচে শুরু এবং শেষ আয়াত নির্বাচন করুন।</string>
 
     // Menu
     <string name="loop_count">লুপ সংখ্যা</string>
@@ -31,6 +32,7 @@
     <string name="translated_verse">অনূদিত আয়াত</string>
     <string name="cancel">বাতিল</string>
     <string name="exit">প্রস্থান</string>
+    <string name="ok">ওকে</string>
     <string name="exit_text">আপনি সত্যিই প্রস্থান করতে চান?</string>
     <string name="language_control">ভাষা নির্বাচন</string>
 
@@ -45,6 +47,7 @@
     <string name="user_guide">অ্যাপ গাইড</string>
     <string name="menu_share">শেয়ার করুন</string>
     <string name="menu_control">নিয়ন্ত্রণ</string>
+    <string name="help_outlined_title">গাইড</string>
     <string name="menu_communicate">যোগাযোগ</string>
 
 
