@@ -2,8 +2,8 @@
     <string name="app_name">Surah Shiksha</string>
     <string name="start_button">Start</string>
     <string name="pause_button">Pause</string>
-    <string name="start_loop">Loop Start</string>
-    <string name="stop_loop">Loop End</string>
+    <string name="start_loop">Start Verse Number</string>
+    <string name="stop_loop">End Verse Number</string>
     <string name="reset_loop">Reset</string>
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>

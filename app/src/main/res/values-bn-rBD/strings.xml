@@ -3,8 +3,8 @@
     <string name="app_name">সূরা শিক্ষা</string>
     <string name="start_button">শুরু</string>
     <string name="pause_button">থামুন</string>
-    <string name="start_loop">লুপ শুরু</string>
-    <string name="stop_loop">লুপ শেষ</string>
+    <string name="start_loop">শুরুর আয়াত নম্বর</string>
+    <string name="stop_loop">শেষ আয়াত নম্বর</string>
     <string name="reset_loop">লুপ অপসারণ</string>
     <string name="surah_and_verse">আয়াত: </string>
     <string name="arabic_verse">আরবি আয়াত</string>

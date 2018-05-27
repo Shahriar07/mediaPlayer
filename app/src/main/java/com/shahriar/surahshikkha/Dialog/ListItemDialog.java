@@ -44,13 +44,6 @@ public class ListItemDialog extends Dialog {
         this.selectedItem = selectedItem;
     }
 
-    public ListItemDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
-        super(context, themeResId);
-        this.context = context;
-        this.listener = listener;
-        this.title = title;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -97,18 +90,18 @@ public class ListItemDialog extends Dialog {
                 dismiss();
             }
         });
-
     }
 
     public void scrollToPosition(){
+        int itemcount = dlg_priority_lvw.getAdapter().getItemCount();
         if (mLayoutManager != null){
-            if (selectedItem < 4)
+            if (selectedItem < 3)
                 mLayoutManager.scrollToPosition(0);
-            else if (selectedItem > dlg_priority_lvw.getAdapter().getItemCount() - 3){
-                mLayoutManager.scrollToPosition(dlg_priority_lvw.getAdapter().getItemCount()-1);
+            else if (selectedItem >=  itemcount - 3){
+                mLayoutManager.scrollToPosition(itemcount-1);
             }
             else
-                mLayoutManager.scrollToPosition(selectedItem - 3);
+                mLayoutManager.scrollToPosition(selectedItem - 1);
         }
         else {
             Log.d("","mLayoutManager is null");
