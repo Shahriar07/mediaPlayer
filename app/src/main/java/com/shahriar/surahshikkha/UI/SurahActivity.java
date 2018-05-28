@@ -197,6 +197,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }));
 
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
+        current_time.setText(utility.getFormatedTimeFromMilisecond(0,currentLocale));
         end_time = (TextView) findViewById(R.id.audio_max_time_text);
         end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration, currentLocale));
 
@@ -229,8 +230,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         loop_reset_button.setOnClickListener(this);
         Log.d(getClass().getSimpleName(), " Media duration is " + mediaDuration);
 
-        loopEndTime = mediaDuration;
         loopStartTime = 0;
+        loopEndTime = durationArray[durationArray.length - 2];
     }
 
     /*
@@ -282,31 +283,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     };
 
     /*
-     * Select only one verse
-     * Set start position as index and end position as index + 1
-     */
-    void setLoopWhenVerseClicked(int index){
-        current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
-        currentLoopIndex = index;
-        if (currentLoopIndex == 0) {
-            loopStartTime = durationArray[0];
-            loopEndTime = durationArray[1];
-        }
-        else {
-            loopStartTime = durationArray[currentLoopIndex];
-            loopEndTime = durationArray[currentLoopIndex+1];
-        }
-        loopCount = 0;
-        player.seekTo(loopStartTime);
-        if (!player.isPlaying()){
-            player.start();
-            seekUpdation();
-            changePlayPauseButton();
-        }
-        Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime + " LoopEndTime " + loopEndTime);
-    }
-
-    /*
     * 1. if verse 2 is running set verse 3
     * 2. if verse 2-4 is running set verse 5
     * 3. if verse 2-4 is the last set 0-4
@@ -352,7 +328,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 }
 
                 // If player continue playing and there is a loop set, go to the start position and play again
-                if (loopEndTime < mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount) {
+                if (loopEndTime <= mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount) {
                     player.seekTo(loopStartTime);
                     Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
                     ++loopCount;
@@ -405,7 +381,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             }
             case R.id.reset_loop:{
                 loopStartTime = 0;
-                loopEndTime = mediaDuration;
+                loopEndTime = durationArray[durationArray.length -2];
                 selectedStartLoopItem = 0;
                 selectedEndLoopItem = surah.getVerseCount();
                 setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);

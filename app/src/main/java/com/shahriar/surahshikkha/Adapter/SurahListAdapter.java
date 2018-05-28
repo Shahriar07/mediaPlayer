@@ -75,12 +75,15 @@ class SurahHolder extends RecyclerView.ViewHolder {
         super(v);
         Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.solaimanlipi);
         surahNo = (TextView) v.findViewById(R.id.surahListSurahNumber);
+        surahNo.setTypeface(typeface);
         surahName = (TextView) v.findViewById(R.id.surahListSurahName);
         surahName.setTypeface(typeface);
         surahNameSecondary = (TextView) v.findViewById(R.id.surahListSurahNameSecondary);
         surahNameSecondary.setTypeface(typeface);
         surahDuration = (TextView) v.findViewById(R.id.surahDuration);
+        surahDuration.setTypeface(typeface);
         verseCount = (TextView) v.findViewById(R.id.verseCount);
+        verseCount.setTypeface(typeface);
         surahNumberHeader =context.getString(R.string.surah_number);
         verseTextHeader = context.getString(R.string.verses);
         durationTextHeader = context.getString(R.string.duration);
@@ -88,7 +91,7 @@ class SurahHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindSurah(SurahInfo surahInfo){
-        Locale current = Utility.getCurrentLocale(context); // Null will return english locale
+        Locale current = Utility.getCurrentLocale(context.getApplicationContext()); // Null will return english locale
         //Locale current = Utility.getCurrentLocale(null); // Null will return english locale
         String number = surahNumberHeader + " " +Utility.getLocalizedInteger(surahInfo.getSurahNumber(),current);
         surahNo.setText(number);

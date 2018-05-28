@@ -41,20 +41,22 @@ public class ExitDialog extends Dialog {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 if (callBack != null){
                     callBack.onPositiveButtonClicked();
                 }
-                dismiss();
+
             }
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 if (callBack != null){
                     callBack.onNegativeButtonClicked();
                 }
-                dismiss();
+
             }
         });
     }
