@@ -16,7 +16,6 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.Utility.Constants;
 
 import java.util.ArrayList;
 

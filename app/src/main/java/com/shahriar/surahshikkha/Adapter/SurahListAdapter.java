@@ -11,12 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Data.SurahInfo;
-import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Utility;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 

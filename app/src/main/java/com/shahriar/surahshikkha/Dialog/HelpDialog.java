@@ -34,7 +34,12 @@ public class HelpDialog extends Dialog {
         dialogTitle.setText(getContext().getApplicationContext().getString(R.string.help_outlined_title));
 
         TextView instructionText = (TextView) findViewById(R.id.helpDialogContent);
-        instructionText.setText(getContext().getApplicationContext().getString(R.string.instruction));
+        TextView textbody = (TextView) findViewById(R.id.helpDialogBody);
+        TextView instructionFooter = (TextView) findViewById(R.id.helpFooterDialogContent);
+
+        instructionText.setText(getContext().getApplicationContext().getString(R.string.instruction1));
+        textbody.setText(getContext().getApplicationContext().getString(R.string.instruction2));
+        instructionFooter.setText(getContext().getApplicationContext().getString(R.string.instruction3));
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.Utility.Constants;
 
 import java.util.ArrayList;
 

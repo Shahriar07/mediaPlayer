@@ -3,4 +3,5 @@
     <dimen name="text_size">8sp</dimen>
 
     <dimen name="surah_info_text_size_in_dashboard">12sp</dimen>
+    <dimen name="start_end_button_padding">10dp</dimen>
 </resources>

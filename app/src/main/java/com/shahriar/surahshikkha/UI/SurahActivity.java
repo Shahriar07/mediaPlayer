@@ -1,27 +1,20 @@
 package com.shahriar.surahshikkha.UI;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.media.AudioManager;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -30,15 +23,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.surahshikkha.Adapter.SurahAdapter;
-import com.shahriar.surahshikkha.CustomComponents.CustomSpinner;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
-import com.shahriar.surahshikkha.Dialog.ExitDialog;
 import com.shahriar.surahshikkha.Dialog.HelpDialog;
 import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
 import com.shahriar.surahshikkha.Factory.SurahFactory;
-import com.shahriar.surahshikkha.Interfaces.AlertDialogCommandInterface;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
@@ -49,7 +39,6 @@ import com.shahriar.surahshikkha.Utility.LocaleManager;
 import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -350,7 +339,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             scrollListToPosition(index);
             setCurrentSelectedIndex(index);
         }
-        seekHandler.postDelayed(run, 200);
+        seekHandler.postDelayed(run, 100);
     }
 
     void changePlayPauseButton(){
@@ -380,14 +369,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 break;
             }
             case R.id.reset_loop:{
-                loopStartTime = 0;
-                loopEndTime = durationArray[durationArray.length -2];
-                selectedStartLoopItem = 0;
-                selectedEndLoopItem = surah.getVerseCount();
-                setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);
-                updateStartVerseText(0);
-                loopCount = 1;
-                Toast.makeText(getApplicationContext(), getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
+                resetPlayer();
                 break;
             }
             case R.id.end_loop:
@@ -403,6 +385,19 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }
     }
 
+
+    private void resetPlayer()
+    {
+        loopStartTime = 0;
+        loopEndTime = durationArray[durationArray.length -2];
+        selectedStartLoopItem = 0;
+        selectedEndLoopItem = surah.getVerseCount();
+        setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);
+        updateStartVerseText(0);
+        loopCount = 1;
+        Toast.makeText(getApplicationContext(), getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
+
+    }
 
     private void showEndLoopSelectionDialog(int selectedItem){
         ListItemDialog dialog = new ListItemDialog(this,getApplicationContext().getString(R.string.stop_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
@@ -433,9 +428,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         if (!mediaPlayer.isPlaying())
             changePlayPauseButton();
 
-        loopStartTime = 0;
         currentLoopIndex = 0; // as currentloopindex crossed the max index of verse, we need to reset it
-        loopEndTime = mediaDuration;
+        resetPlayer();
     }
 
     AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {

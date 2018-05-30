@@ -13,7 +13,9 @@
     <string name="duration"> Duration:</string>
     <string name="repeat">Repeat</string>
 
-    <string name="instruction">1. Set maximum repeat count from the top right corner.\n\n2. To listen a specific verse, tap on it.\n\n3. To listen multiple verses set start and end verse from bottom.</string>
+    <string name="instruction1">* To listen a specific verse, tap on it.</string>
+    <string name="instruction2">* To listen multiple verses set start and end verse from bottom.</string>
+    <string name="instruction3">* Set maximum repeat count from the top right corner.</string>
 
     <string name="reset_loop_text"> Repeat verse selection canceled </string>
     <string name="selected_verse_no">Verse number </string>
