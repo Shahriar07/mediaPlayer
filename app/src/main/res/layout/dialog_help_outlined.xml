@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/help_middle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/helpDialogContent"/>
@@ -70,6 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/help_bottom"
         app:layout_constraintTop_toBottomOf="@id/helpDialogBody"/>
@@ -97,6 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/help_header"
         app:layout_constraintTop_toBottomOf="@id/helpFooterDialogContent"/>
