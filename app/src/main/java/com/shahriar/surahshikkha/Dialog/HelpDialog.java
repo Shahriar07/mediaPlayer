@@ -28,7 +28,7 @@ public class HelpDialog extends Dialog {
         setCancelable(false);
 
         Button okButton = (Button)findViewById(R.id.help_dialog_btn_ok);
-        okButton.setText(getContext().getApplicationContext().getString(R.string.ok));
+        okButton.setText(getContext().getString(R.string.ok));
 
         TextView dialogTitle = (TextView) findViewById(R.id.help_dialog_title);
         dialogTitle.setText(getContext().getApplicationContext().getString(R.string.help_outlined_title));
@@ -37,9 +37,9 @@ public class HelpDialog extends Dialog {
         TextView textbody = (TextView) findViewById(R.id.helpDialogBody);
         TextView instructionFooter = (TextView) findViewById(R.id.helpFooterDialogContent);
 
-        instructionText.setText(getContext().getApplicationContext().getString(R.string.instruction1));
+        instructionText.setText(getContext().getString(R.string.instruction1));
         textbody.setText(getContext().getApplicationContext().getString(R.string.instruction2));
-        instructionFooter.setText(getContext().getApplicationContext().getString(R.string.instruction3));
+        instructionFooter.setText(getContext().getString(R.string.instruction3));
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

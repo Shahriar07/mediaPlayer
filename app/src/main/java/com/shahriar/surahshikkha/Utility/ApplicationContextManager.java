@@ -19,7 +19,7 @@ public class ApplicationContextManager {
             }
         }
         if (context != null)
-            instance.context = context;
+            instance.context = context.getApplicationContext();
         return instance;
     }
 

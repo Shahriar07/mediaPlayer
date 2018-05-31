@@ -32,7 +32,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     public SortDialogItemAdapter( Context context, ArrayList<String> itemList, int selectedItem) {
         Log.d(getClass().getSimpleName(), " Item List Size "+itemList.size());
         this.itemList = itemList;
-        this.context = context.getApplicationContext();
+        this.context = context;
         inflater = LayoutInflater.from(this.context);
         this.selectedItem = selectedItem;
     }

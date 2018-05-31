@@ -82,7 +82,7 @@ public class ListItemDialog extends Dialog {
             }
         }));
         Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
-        cancelButton.setText(context.getApplicationContext().getString(R.string.cancel));
+        cancelButton.setText(context.getString(R.string.cancel));
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -18,7 +18,7 @@
 
     <string name="reset_loop_text">আয়াত নির্বাচন বাতিল করা হল </string>
 
-    <string name="instruction1">* একটি নির্দিষ্ট আয়াত শোনার জন্য, এটি আলতো চাপুন।</string>
+    <string name="instruction1">* একটি নির্দিষ্ট আয়াত শোনার জন্য, আয়াত আলতো চাপুন।</string>
     <string name="instruction2">* একাধিক আয়াত শোনার জন্য নিচে শুরু এবং শেষ আয়াত নির্বাচন করুন।</string>
     <string name="instruction3">* উপরের ডান থেকে সর্বোচ্চ পুনরাবৃত্তি সংখ্যা সেট করুন।</string>
 

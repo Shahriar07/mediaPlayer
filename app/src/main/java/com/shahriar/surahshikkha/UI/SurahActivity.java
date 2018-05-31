@@ -166,12 +166,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 //        dividerItemDecoration.setDrawable(this.getResources().getDrawable(R.drawable.divider_item_decoration));
 //        verseListView.addItemDecoration(dividerItemDecoration);
         verseListView.setAdapter(mAdapter);
-        verseListView.addOnItemTouchListener(new VerseTouchListener(getApplicationContext(), verseListView, new OnRecycleViewClicked(){
+        verseListView.addOnItemTouchListener(new VerseTouchListener(this, verseListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
                 isActivityInitialized = true;
                 Verse verse = surah.getVerses().get(position);
-                Toast.makeText(getApplicationContext(), getString(R.string.selected_verse_no) + " " + verse.getVerseNo(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SurahActivity.this, getString(R.string.selected_verse_no) + " " + verse.getVerseNo(), Toast.LENGTH_SHORT).show();
                 setLoopWhenStartVerseIndexSelected(position);
                 scrollListToPosition(position);
                 setCurrentSelectedIndex(position);
@@ -201,7 +201,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         startSpinner = (Button) findViewById(R.id.startLoop);
         startSpinner.setOnClickListener(this);
         selectedStartLoopItem = 0;
-        startSpinner.setText(Utility.getLocalizedInteger(selectedStartLoopItem,Utility.getCurrentLocale(getApplicationContext())));
+        startSpinner.setText(Utility.getLocalizedInteger(selectedStartLoopItem,Utility.getCurrentLocale(this)));
 //      startSpinner.setForeground(getApplicationContext().getResources().getDrawable(R.drawable.surah_verse_border));
         //startSpinner.setBackgroundResource(R.drawable.surah_verse_border);
 
@@ -395,12 +395,12 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);
         updateStartVerseText(0);
         loopCount = 1;
-        Toast.makeText(getApplicationContext(), getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
 
     }
 
     private void showEndLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getApplicationContext().getString(R.string.stop_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.stop_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenEndVerseIndexSelected(position+1);
@@ -412,7 +412,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showStartLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getApplicationContext().getString(R.string.start_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.start_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenStartVerseIndexSelected(position);
@@ -508,7 +508,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             }
             else {
                 // Show a dialog to choose large number than the start index
-                Toast.makeText(getApplicationContext(), R.string.end_index_smaller_text, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.end_index_smaller_text, Toast.LENGTH_SHORT).show();
             }
             loopEndTime = durationArray[currentLoopIndex];
             selectedEndLoopItem = currentLoopIndex;
@@ -528,11 +528,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void updateStartVerseText(int value){
-        startSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(getApplicationContext())));
+        startSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(this)));
     }
 
     private void updateEndVerseText(int value){
-        endSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(getApplicationContext())));
+        endSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(this)));
     }
 
     /*
@@ -635,7 +635,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 itemList.add(Utility.getLocalizedInteger(i,currentLocale)); // TODO: Need to get from single source
             }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
-            RepeatCountDialog dialog = new RepeatCountDialog(this,getApplicationContext().getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
+            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
                 @Override
                 public void onDialogItemSelected(int position) {
                     int newMaxRepeatCount = Integer.parseInt(itemList.get(position));

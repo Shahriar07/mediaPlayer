@@ -28,8 +28,18 @@ public class LocaleManager {
         }
 
         public static String getLanguage(Context context) {
-            return getPersistedData(context, Locale.getDefault().getLanguage());
+            Locale locale = Utility.getCurrentLocale(context);
+            return locale.getLanguage();
         }
+
+    public static Context setLocale(Context context) {
+        return setNewLocale(context, getLanguage(context));
+    }
+
+    public static Context setNewLocale(Context context, String language){
+           // persist(context,language);
+            return setLocale(context,language);
+    }
 
         public static Context setLocale(Context context, String language) {
             persist(context, language);
@@ -70,7 +80,7 @@ public class LocaleManager {
             Locale locale = new Locale(language);
             Locale.setDefault(locale);
 
-            Resources resources = context.getResources();
+            Resources resources = context.getApplicationContext().getResources();
 
             Configuration configuration = resources.getConfiguration();
             configuration.locale = locale;

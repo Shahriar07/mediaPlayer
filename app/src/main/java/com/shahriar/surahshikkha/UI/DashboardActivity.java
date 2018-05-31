@@ -1,11 +1,9 @@
 package com.shahriar.surahshikkha.UI;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,15 +20,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
 import com.shahriar.surahshikkha.Data.SurahInfo;
 import com.shahriar.surahshikkha.Dialog.ExitDialog;
+import com.shahriar.surahshikkha.Dialog.HelpDialog;
 import com.shahriar.surahshikkha.Dialog.LanguageDialog;
 import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
@@ -40,7 +37,6 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
 import com.shahriar.surahshikkha.Utility.Constants;
 import com.shahriar.surahshikkha.Utility.LocaleManager;
 import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
@@ -65,7 +61,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private SurahListAdapter mAdapter;
     private RecyclerView surahListView;
 
-    private SwitchCompat menuRepeatSwitch;
     private SwitchCompat menuBdTranslationSwitch;
     private SwitchCompat menuEnTranslationSwitch;
     private TextView drawerMaxRepeatCount;
@@ -80,18 +75,23 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
+
         Log.d("TimeTEst","onCreate");
         controller = new SharedPreferenceController(this);
         //int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
        // Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
+        initComponent(this);
+    }
 
-        ApplicationContextManager.getInstance(this);
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
         initComponent(this);
     }
 
     void initComponent(Context context){
         Log.d("TimeTEst","initComponent");
-
+        setTitle(getString(R.string.app_name));
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Log.d("TimeTEst","setSupportActionBar");
@@ -116,7 +116,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         surahListView.setAdapter(mAdapter);
         Log.d("TimeTEst","setAdapter");
-        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(getApplicationContext(), surahListView, new OnRecycleViewClicked(){
+        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(this, surahListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
                 SurahInfo info = surahInfoList.get(position);
@@ -176,7 +176,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         // Set english translation
         View actionView;
         menuItem = menu.findItem(R.id.english_verse_translation);
-        menuItem.setTitle(getApplicationContext().getString(R.string.menu_english_translation));
+        menuItem.setTitle(getString(R.string.menu_english_translation));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuEnTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
 
@@ -193,7 +193,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         menuItem = menu.findItem(R.id.bangla_verse_translation);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuBdTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-        menuItem.setTitle(getApplicationContext().getString(R.string.menu_bangla_translation));
+        menuItem.setTitle(getString(R.string.menu_bangla_translation));
 
         boolean isBanglaTranslation = controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION);
         menuBdTranslationSwitch.setChecked(isBanglaTranslation);
@@ -205,10 +205,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         });
 
         // Set Max repeat count
-        Locale locale = Utility.getCurrentLocale(this.getApplicationContext());
+        Locale locale = Utility.getCurrentLocale(this);
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
-        menuItem.setTitle(getApplicationContext().getString(R.string.max_repeat_count));
+        menuItem.setTitle(getString(R.string.max_repeat_count));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
         Typeface typeface = ResourcesCompat.getFont(this, R.font.solaimanlipi);
@@ -236,25 +236,25 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
-        menuItem.setTitle(getApplicationContext().getString(R.string.rate_us));
+        menuItem.setTitle(getString(R.string.rate_us));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         //   drawerSelectedLanguage.setOnClickListener(this);
         Log.d("TimeTEst","rate app");
 
         // set guide
         menuItem = menu.findItem(R.id.userGuide);
-        menuItem.setTitle(getApplicationContext().getString(R.string.user_guide));
+        menuItem.setTitle(getString(R.string.user_guide));
 
         // set menuItemControl
         menuItem = menu.findItem(R.id.menu_item_control);
-        menuItem.setTitle(getApplicationContext().getString(R.string.menu_control));
+        menuItem.setTitle(getString(R.string.menu_control));
 
         // set communicate
         menuItem = menu.findItem(R.id.menu_item_communicate);
-        menuItem.setTitle(getApplicationContext().getString(R.string.menu_communicate));
+        menuItem.setTitle(getString(R.string.menu_communicate));
 
         ImageView nevHeader = (ImageView)findViewById(R.id.drawer_header_image);
-        nevHeader.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.splash_surah_shiksha));
+        nevHeader.setBackground(this.getResources().getDrawable(R.drawable.splash_surah_shiksha));
 
     }
 
@@ -410,49 +410,28 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private void showUserGuide ()
     {
 
+        HelpDialog dialog = new HelpDialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.show();
 
-
-//LinearLayOut Setup
-//        LinearLayout linearLayout= new LinearLayout(this);
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
+//        Dialog builder = new Dialog(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
+//        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        builder.getWindow().setBackgroundDrawable(
+//                new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialogInterface) {
+//                //nothing;
+//            }
+//        });
 //
-//        linearLayout.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-//                LayoutParams.MATCH_PARENT));
-//
-////ImageView Setup
 //        ImageView imageView = new ImageView(this);
-//
-////setting image resource
-//        imageView.setImageResource(R.drawable.play);
-//
-////setting image position
-//        imageView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-//                LayoutParams.WRAP_CONTENT));
-//
-////adding view to layout
-//        linearLayout.addView(imageView);
-////make visible to program
-//        setContentView(linearLayout);
-
-
-        Dialog builder = new Dialog(this, android.R.style.Theme_DeviceDefault_Dialog_NoActionBar);
-        builder.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        builder.getWindow().setBackgroundDrawable(
-                new ColorDrawable(android.graphics.Color.TRANSPARENT));
-        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialogInterface) {
-                //nothing;
-            }
-        });
-
-        ImageView imageView = new ImageView(this);
-        imageView.setImageResource(R.drawable.small_help);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        builder.show();
+//        imageView.setImageResource(R.drawable.small_help);
+//        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//        builder.addContentView(imageView, new RelativeLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.MATCH_PARENT));
+//        builder.show();
     }
 
 
@@ -496,7 +475,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private ArrayList<SurahInfo> getSurahInfoList (){
-        Context context = this.getApplicationContext();
+        Context context = this;
         ArrayList<SurahInfo> surahList = new ArrayList<>();
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_fatihah),context.getString(R.string.bn_surah_al_fatihah), 1, false,45088,7));
         surahList.add(new SurahInfo(context.getString(R.string.surah_at_tariq),context.getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
@@ -584,7 +563,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void showSortSelectDialog() {
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
-        ListItemDialog dialog = new ListItemDialog(this,getApplicationContext().getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getApplicationContext().getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.sort),new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 sortList(position);
