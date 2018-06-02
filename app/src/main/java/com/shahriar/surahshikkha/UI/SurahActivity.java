@@ -111,6 +111,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         initializeComponents();
         setMaxLoopCountFromSharedPreference();
     //    setAutoScrollFromSharedPreference();
+        Toast.makeText(SurahActivity.this, getString(R.string.splash_text) , Toast.LENGTH_LONG).show();
     }
 
     private void setMaxLoopCountFromSharedPreference(){

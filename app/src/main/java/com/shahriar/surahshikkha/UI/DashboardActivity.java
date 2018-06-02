@@ -68,8 +68,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<SurahInfo> surahInfoList;
     SharedPreferenceController controller;
-//    private ShareActionProvider mShareActionProvider;
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -403,6 +401,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 showUserGuide();
                 break;
             }
+            case R.id.menu_item_share:
+            {
+                closeDrawer();
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_name) + "\n" + getString(R.string.share_text) + "\nhttps://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName());
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_title)));
+                break;
+            }
         }
         return true;
     }
@@ -522,28 +530,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         //MenuItem repeatItem = menu.findItem(R.id.actionSort);
         // int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
         //setRepeatIcon(isRepeatOn,repeatItem);
-
-        /*
-        //MenuItem item = menu.findItem(R.id.menu_item_share);
-        // Fetch and store ShareActionProvider
-//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
-
-
-         Intent shareIntent = new Intent(Intent.ACTION_SEND);
-         shareIntent.setAction(Intent.ACTION_SEND);
-         shareIntent.setType("text/plain");
-         shareIntent.putExtra(Intent.EXTRA_TEXT, "Hello jimmy");
-         shareactionprovider.setShareIntent(shareIntent);
-         */
-
         return true;
     }
-
-//    private void setShareIntent(Intent shareIntent) {
-//        if (mShareActionProvider != null) {
-//            mShareActionProvider.setShareIntent(shareIntent);
-//        }
-//    }
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {

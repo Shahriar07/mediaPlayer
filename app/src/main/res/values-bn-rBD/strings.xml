@@ -51,9 +51,10 @@
     <string name="menu_control">নিয়ন্ত্রণ</string>
     <string name="help_outlined_title">গাইড</string>
     <string name="menu_communicate">যোগাযোগ</string>
+    <string name="share_text">অ্যাপ্লিকেশন ডাউনলোড করুন </string>
+    <string name="share_title">শেয়ার করুন </string>
 
-
-    <string name="splash_text">কখনও কখনও সূরা শোনার শব্দে ভুল হতে পারে, আমরা সঠিক শব্দের জন্য আরবি আয়াত পড়ার অনুরোধ করছি।</string>
+    <string name="splash_text">আমরা সঠিক উচ্চারণের জন্য আরবি আয়াত পড়ার অনুরোধ করছি।</string>
     <string name="end_index_smaller_text">শুরু আয়াত থেকে একটি বড় আয়াত সংখ্যা নির্বাচন করুন</string>
 
 
@@ -120,5 +121,6 @@
     <string name="surah_al_ikhlas">সূরা আল ইখলাছ</string>
     <string name="surah_al_falaq">সূরা আল ফালাক</string>
     <string name="surah_an_nas">সূরা আন নাস</string>
+
 
 </resources>

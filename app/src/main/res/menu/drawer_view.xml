@@ -47,11 +47,12 @@
                         app:itemBackground = "@drawable/menu_item_background"
                         android:title="@string/rate_us"
                         />
-                    <!--item
+                    <item
+                        android:checkable="false"
                         android:id="@+id/menu_item_share"
                         android:title="@string/menu_share"
-                        app:actionProviderClass="android..support.v4.ShareActionProvider" /-->
-
+                        android:icon="@drawable/share"
+                        />
                 </group>
             </menu>
         </item>
