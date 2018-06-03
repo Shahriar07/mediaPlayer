@@ -44,6 +44,11 @@ public class SurahListAdapter extends RecyclerView.Adapter {
         return vh;
     }
 
+    public void setContext(Context context){
+        this.context = context;
+        inflater = LayoutInflater.from(context);
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SurahHolder surahHolder = (SurahHolder) holder;
@@ -81,13 +86,13 @@ class SurahHolder extends RecyclerView.ViewHolder {
         surahDuration.setTypeface(typeface);
         verseCount = (TextView) v.findViewById(R.id.verseCount);
         verseCount.setTypeface(typeface);
-        surahNumberHeader =context.getString(R.string.surah_number);
-        verseTextHeader = context.getString(R.string.verses);
-        durationTextHeader = context.getString(R.string.duration);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 
     public void bindSurah(SurahInfo surahInfo){
+        surahNumberHeader =context.getString(R.string.surah_number);
+        verseTextHeader = context.getString(R.string.verses);
+        durationTextHeader = context.getString(R.string.duration);
         Locale current = Utility.getCurrentLocale(context); // Null will return english locale
         //Locale current = Utility.getCurrentLocale(null); // Null will return english locale
         String number = surahNumberHeader + " " +Utility.getLocalizedInteger(surahInfo.getSurahNumber(),current);

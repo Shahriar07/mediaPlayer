@@ -102,7 +102,7 @@
     <string name="exit">Exit</string>
     <string name="ok">OK</string>
     <string name="exit_text">Do you really want to exit?</string>
-    <string name="language_control">Select Language</string>
+    <string name="language_control">Language</string>
 
     <string name="sort">Sort By</string>
     <string-array name="sort_array">
@@ -118,6 +118,6 @@
     <string name="help_outlined_title">Help</string>
     <string name="menu_communicate">Communicate</string>
     <string name="share_text">Download application from </string>
-    <string name="share_title">Share </string>
+    <string name="share_title">Share</string>
 
 </resources>

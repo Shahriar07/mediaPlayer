@@ -3,10 +3,20 @@ package com.shahriar.surahshikkha.Utility;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+import android.os.LocaleList;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.shahriar.surahshikkha.R;
+import com.shahriar.surahshikkha.UI.SurahActivity;
+
+import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -119,7 +129,39 @@ public class Utility {
         }
     }
 
+    public static String getCountry(int selectedLanguage) {
+        switch (selectedLanguage){
+            case Constants.LANGUAGE_ENGLISH_VALUE:
+            {
+                return Locale.US.getCountry();
+            }
+            case Constants.LANGUAGE_BANGLA_VALUE:
+            {
+                return "BD";
+            }
+            default:{
+                return Locale.ENGLISH.getCountry();
+            }
+        }
+    }
+
+    public static String getLanguage(int selectedLanguage) {
+        switch (selectedLanguage){
+            case Constants.LANGUAGE_ENGLISH_VALUE:
+            {
+                return Locale.US.getLanguage();
+            }
+            case Constants.LANGUAGE_BANGLA_VALUE:
+            {
+                return "bn";
+            }
+            default:{
+                return Locale.ENGLISH.getLanguage();
+            }
+        }
+    }
     public static String getLocalizedInteger(int maxRepeatCount, Locale locale ) {
+//        return  NumberFormat.getInstance(locale).format(maxRepeatCount);
         if (locale != null){
             return NumberFormat.getInstance(locale).format(maxRepeatCount);
         }
@@ -163,5 +205,18 @@ public class Utility {
             context.startActivity(new Intent(Intent.ACTION_VIEW,
                     Uri.parse("http://play.google.com/store/apps/details?id=" + context.getApplicationContext().getPackageName())));
         }
+    }
+
+    public static Typeface getTypeFace(Context context)
+    {
+        return ResourcesCompat.getFont(context, R.font.solaimanlipi);
+    }
+
+    public static void  showCustomToast(Context context, String text, int duration){
+        Toast toast = Toast.makeText(context, text , duration);
+        LinearLayout toastLayout = (LinearLayout) toast.getView();
+        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+        toastTV.setTypeface(Utility.getTypeFace(context));
+        toast.show();
     }
 }

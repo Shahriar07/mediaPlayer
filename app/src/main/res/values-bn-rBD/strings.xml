@@ -36,7 +36,7 @@
     <string name="exit">প্রস্থান</string>
     <string name="ok">ওকে</string>
     <string name="exit_text">আপনি সত্যিই প্রস্থান করতে চান?</string>
-    <string name="language_control">ভাষা নির্বাচন</string>
+    <string name="language_control">ভাষা</string>
 
     <string name="sort">ক্রমানুসার</string>
     <string-array name="sort_array">

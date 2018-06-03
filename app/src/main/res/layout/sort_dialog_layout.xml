@@ -12,7 +12,7 @@
         android:textStyle="bold"
         android:textColor="@color/actionMenuTextColor"
         android:layout_gravity = "center_vertical|center_horizontal"
-        android:gravity="center_horizontal"
+        android:gravity="center_horizontal|center|center_vertical"
         android:background="@color/colorPrimary"
         android:layout_alignParentTop="true"/>
 

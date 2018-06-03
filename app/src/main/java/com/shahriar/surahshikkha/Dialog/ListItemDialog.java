@@ -16,6 +16,7 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
+import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,7 @@ public class ListItemDialog extends Dialog {
         dlg_priority_lvw = (RecyclerView) findViewById(R.id.dlg_list_items);
         if (title != null){
             titleView = (TextView) findViewById(R.id.id_dialog_title);
+            titleView.setTypeface(Utility.getTypeFace(context));
             titleView.setText(title);
         }
         mLayoutManager = new ScrollingLinearLayoutManager(context,5);
@@ -82,6 +84,7 @@ public class ListItemDialog extends Dialog {
             }
         }));
         Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
+        cancelButton.setTypeface(Utility.getTypeFace(context));
         cancelButton.setText(context.getString(R.string.cancel));
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

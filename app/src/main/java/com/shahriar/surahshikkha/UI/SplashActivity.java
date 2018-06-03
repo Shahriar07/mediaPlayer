@@ -20,9 +20,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ApplicationContextManager.getInstance(this);
-        Locale locale = Utility.getCurrentLocale(this);
-        LocaleManager.setLocale(this);
-        Log.d(getClass().getSimpleName(), "Locale " + locale.getLanguage() + " country " + locale.getCountry());
+//        Locale locale = Utility.getCurrentLocale(this);
+//        LocaleManager.setNewLocale(this,locale.getLanguage(), locale.getCountry());
+
        // setContentView(R.layout.splash_activity_layout);
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);

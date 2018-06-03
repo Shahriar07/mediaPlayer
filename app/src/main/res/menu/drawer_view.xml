@@ -25,6 +25,12 @@
                         app:itemBackground = "@drawable/menu_item_background"
                         app:actionLayout="@layout/repeat_controller_switch"
                         android:title="@string/menu_bangla_translation"/>
+                    <item android:id="@+id/languageControl"
+                        android:icon="@drawable/language"
+                        android:checkable="false"
+                        app:itemBackground = "@drawable/menu_item_background"
+                        app:actionLayout="@layout/drawer_language_control"
+                        android:title="@string/language_control"/>
                 </group>
             </menu>
         </item>
@@ -48,9 +54,9 @@
                         android:title="@string/rate_us"
                         />
                     <item
-                        android:checkable="false"
                         android:id="@+id/menu_item_share"
                         android:title="@string/menu_share"
+                        android:checkable="false"
                         android:icon="@drawable/share"
                         />
                 </group>

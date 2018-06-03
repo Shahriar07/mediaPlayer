@@ -16,6 +16,7 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
 import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
+import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.util.ArrayList;
 
@@ -58,12 +59,13 @@ public class LanguageDialog extends Dialog {
         dlg_priority_lvw = (RecyclerView) findViewById(R.id.dlg_list_items);
         if (title != null){
             titleView = (TextView) findViewById(R.id.id_dialog_title);
+            titleView.setTypeface(Utility.getTypeFace(context));
             titleView.setText(title);
         }
         mLayoutManager = new ScrollingLinearLayoutManager(context,5);
         // ListView
         dlg_priority_lvw.setLayoutManager(mLayoutManager);
-        SortDialogItemAdapter adapter = new SortDialogItemAdapter(context,itemList,selectedItem);
+        SortDialogItemAdapter adapter = new SortDialogItemAdapter(context,itemList,selectedItem,0);
         dlg_priority_lvw.setAdapter(adapter);
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
 //        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
@@ -89,6 +91,8 @@ public class LanguageDialog extends Dialog {
             }
         }));
         Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
+        cancelButton.setTypeface(Utility.getTypeFace(context));
+        cancelButton.setText(context.getString(R.string.cancel));
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

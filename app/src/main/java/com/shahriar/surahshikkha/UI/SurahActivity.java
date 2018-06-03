@@ -9,6 +9,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +19,14 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.surahshikkha.Adapter.SurahAdapter;
+import com.shahriar.surahshikkha.CustomComponents.CustomTypeface;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.Dialog.HelpDialog;
@@ -111,7 +115,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         initializeComponents();
         setMaxLoopCountFromSharedPreference();
     //    setAutoScrollFromSharedPreference();
-        Toast.makeText(SurahActivity.this, getString(R.string.splash_text) , Toast.LENGTH_LONG).show();
+        Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_LONG);
     }
 
     private void setMaxLoopCountFromSharedPreference(){
@@ -135,6 +139,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     public void initializeComponents() {
+
         currentLocale = Utility.getCurrentLocale(this);
         seekHandler = new Handler();
         utility = new Utility();
@@ -148,7 +153,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         actionbar.setHomeAsUpIndicator(R.drawable.arrow_back);
 
         surah = SurahFactory.getInstance(this).prepareSurah(""+surahNo);
-        setTitle(surah.getSurahName());
+        SpannableString s = new SpannableString(surah.getSurahName());
+        s.setSpan(new CustomTypeface("",Utility.getTypeFace(this)), 0, s.length(),
+                Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        setTitle(s);
+
         durationArray = surah.getDurationList();
 
         player = MediaPlayer.create(this, surah.getResourceId());
@@ -172,12 +181,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             public void onClick(View view, int position) {
                 isActivityInitialized = true;
                 Verse verse = surah.getVerses().get(position);
-                Toast.makeText(SurahActivity.this, getString(R.string.selected_verse_no) + " " + verse.getVerseNo(), Toast.LENGTH_SHORT).show();
+                Utility.showCustomToast(SurahActivity.this, getString(R.string.selected_verse_no)+ " " + Utility.getLocalizedInteger(verse.getVerseNo(),currentLocale),Toast.LENGTH_SHORT);
                 setLoopWhenStartVerseIndexSelected(position);
                 scrollListToPosition(position);
                 setCurrentSelectedIndex(position);
                 setLoopWhenEndVerseIndexSelected(position+1);
-
             }
 
             @Override
@@ -187,8 +195,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         }));
 
         current_time = (TextView) findViewById(R.id.audio_current_time_text);
+        current_time.setTypeface(Utility.getTypeFace(this));
         current_time.setText(utility.getFormatedTimeFromMilisecond(0,currentLocale));
         end_time = (TextView) findViewById(R.id.audio_max_time_text);
+        end_time.setTypeface(Utility.getTypeFace(this));
         end_time.setText(utility.getFormatedTimeFromMilisecond(mediaDuration, currentLocale));
 
         seek_bar = (SeekBar) findViewById(R.id.seek_bar);
@@ -200,9 +210,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         play_pause_button.setTag(R.drawable.play);
 
         startSpinner = (Button) findViewById(R.id.startLoop);
+        startSpinner.setTypeface(Utility.getTypeFace(this));
         startSpinner.setOnClickListener(this);
         selectedStartLoopItem = 0;
-        startSpinner.setText(Utility.getLocalizedInteger(selectedStartLoopItem,Utility.getCurrentLocale(this)));
+        startSpinner.setText(Utility.getLocalizedInteger(selectedStartLoopItem,currentLocale));
 //      startSpinner.setForeground(getApplicationContext().getResources().getDrawable(R.drawable.surah_verse_border));
         //startSpinner.setBackgroundResource(R.drawable.surah_verse_border);
 
@@ -212,9 +223,10 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 //        startSpinner.setOnItemSelectedListener(startItemSelectedListener);
 
         endSpinner = (Button) findViewById(R.id.end_loop);
+        endSpinner.setTypeface(Utility.getTypeFace(this));
         endSpinner.setOnClickListener(this);
         selectedEndLoopItem = surah.getVerseCount();
-        endSpinner.setText(Utility.getLocalizedInteger(selectedEndLoopItem,Locale.getDefault()));
+        endSpinner.setText(Utility.getLocalizedInteger(selectedEndLoopItem,currentLocale));
 
         loop_reset_button = (ImageButton) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
@@ -396,8 +408,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);
         updateStartVerseText(0);
         loopCount = 1;
-        Toast.makeText(this,getString(R.string.reset_loop_text), Toast.LENGTH_SHORT).show();
-
+        Utility.showCustomToast(this,getString(R.string.reset_loop_text), Toast.LENGTH_SHORT);
     }
 
     private void showEndLoopSelectionDialog(int selectedItem){
@@ -425,7 +436,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-//        Toast.makeText(getApplicationContext(), " On Completion called", Toast.LENGTH_SHORT).show();
         if (!mediaPlayer.isPlaying())
             changePlayPauseButton();
 
@@ -509,7 +519,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             }
             else {
                 // Show a dialog to choose large number than the start index
-                Toast.makeText(this, R.string.end_index_smaller_text, Toast.LENGTH_SHORT).show();
+                Utility.showCustomToast(this,getString(R.string.end_index_smaller_text), Toast.LENGTH_SHORT);
             }
             loopEndTime = durationArray[currentLoopIndex];
             selectedEndLoopItem = currentLoopIndex;
@@ -529,11 +539,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void updateStartVerseText(int value){
-        startSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(this)));
+        startSpinner.setText(Utility.getLocalizedInteger(value,currentLocale));
     }
 
     private void updateEndVerseText(int value){
-        endSpinner.setText(Utility.getLocalizedInteger(value,Utility.getCurrentLocale(this)));
+        endSpinner.setText(Utility.getLocalizedInteger(value,currentLocale));
     }
 
     /*
@@ -558,6 +568,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             }
         });
         maxRepeatController = (TextView) rootView.findViewById(R.id.actionBarRepeatCountText);
+        maxRepeatController.setTypeface(Utility.getTypeFace(this));
         SharedPreferenceController controller = new SharedPreferenceController(this);
         int loopCount = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT);
         maxRepeatController.setText(Utility.getLocalizedInteger(loopCount,currentLocale));

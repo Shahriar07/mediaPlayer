@@ -28,13 +28,15 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     private ArrayList<String> itemList;
     Context context;
     int selectedItem;
+    int offset;
     LayoutInflater inflater;
-    public SortDialogItemAdapter( Context context, ArrayList<String> itemList, int selectedItem) {
+    public SortDialogItemAdapter( Context context, ArrayList<String> itemList, int selectedItem, int offset) {
         Log.d(getClass().getSimpleName(), " Item List Size "+itemList.size());
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
         this.selectedItem = selectedItem;
+        this.offset = offset;
     }
 
     @Override
@@ -72,7 +74,7 @@ class ItemHolder extends RecyclerView.ViewHolder {
     public void bindItem(String item, int position){
 
         itemTextView.setText(item);
-        if (position + Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER == selectedItem){
+        if (position + offset == selectedItem){
             itemTextView.setBackgroundResource(R.color.selected_verse_background);
         }
         else {
