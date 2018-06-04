@@ -137,10 +137,10 @@ public class Utility {
             }
             case Constants.LANGUAGE_BANGLA_VALUE:
             {
-                return "BD";
+                return "";
             }
             default:{
-                return Locale.ENGLISH.getCountry();
+                return Locale.US.getCountry();
             }
         }
     }
@@ -156,7 +156,7 @@ public class Utility {
                 return "bn";
             }
             default:{
-                return Locale.ENGLISH.getLanguage();
+                return Locale.US.getLanguage();
             }
         }
     }

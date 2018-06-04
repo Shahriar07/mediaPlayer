@@ -193,7 +193,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         // Set english translation
         View actionView;
         menuItem = menu.findItem(R.id.english_verse_translation);
-        menuItem.setTitle(getString(R.string.menu_english_translation));
+        menuItem.setTitle(localizedContext.getString(R.string.menu_english_translation));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuEnTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
 
@@ -210,7 +210,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         menuItem = menu.findItem(R.id.bangla_verse_translation);
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         menuBdTranslationSwitch = (SwitchCompat) actionView.findViewById(R.id.switcher);
-        menuItem.setTitle(getString(R.string.menu_bangla_translation));
+        menuItem.setTitle(localizedContext.getString(R.string.menu_bangla_translation));
 
         boolean isBanglaTranslation = controller.readBooleanWithKey(Constants.MENU_BANGLA_TRANSLATION);
         menuBdTranslationSwitch.setChecked(isBanglaTranslation);
@@ -225,7 +225,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Locale locale = Utility.getCurrentLocale(this);
         Log.d("TimeTEst","initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
-        menuItem.setTitle(getString(R.string.max_repeat_count));
+        menuItem.setTitle(localizedContext.getString(R.string.max_repeat_count));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerMaxRepeatCount = (TextView) actionView.findViewById(R.id.menu_max_repeat_count);
         drawerMaxRepeatCount.setTypeface(typeface);
@@ -239,7 +239,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         // Set the language of application
         menuItem = menu.findItem(R.id.languageControl);
-        menuItem.setTitle(R.string.language_control);
+        menuItem.setTitle(localizedContext.getString(R.string.language_control));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
         drawerSelectedLanguage.setTypeface(typeface);
@@ -253,27 +253,26 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
-        menuItem.setTitle(getString(R.string.rate_us));
-        actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem)
+        menuItem.setTitle(localizedContext.getString(R.string.rate_us));
         Log.d("TimeTEst","rate app");
 
         // set guide
         menuItem = menu.findItem(R.id.userGuide);
-        menuItem.setTitle(getString(R.string.user_guide));
+        menuItem.setTitle(localizedContext.getString(R.string.user_guide));
 
         // set share
         menuItem = menu.findItem(R.id.menu_item_share);
-        menuItem.setTitle(getString(R.string.menu_share));
+        menuItem.setTitle(localizedContext.getString(R.string.menu_share));
 
         // set menuItemControl
         menuItem = menu.findItem(R.id.menu_item_control);
-        menuItem.setTitle(getString(R.string.menu_control));
+        menuItem.setTitle(localizedContext.getString(R.string.menu_control));
 
         // set communicate
         menuItem = menu.findItem(R.id.menu_item_communicate);
-        menuItem.setTitle(getString(R.string.menu_communicate));
+        menuItem.setTitle(localizedContext.getString(R.string.menu_communicate));
 
-/*        Menu m = navigationView.getMenu();
+        Menu m = navigationView.getMenu();
         for (int i=0;i<m.size();i++) {
             MenuItem mi = m.getItem(i);
 
@@ -289,9 +288,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             //the method we have create in activity
             applyFontToMenuItem(mi);
         }
-*/
+
         ImageView nevHeader = (ImageView)findViewById(R.id.drawer_header_image);
-        Drawable imageDrawable = this.getResources().getDrawable(R.drawable.splash_surah_shiksha);
+        Drawable imageDrawable = localizedContext.getResources().getDrawable(R.drawable.splash_surah_shiksha);
         if (nevHeader != null && imageDrawable != null) {
             Log.i("DashboardActivity", "Image and header is not null");
             nevHeader.setBackground(imageDrawable);
@@ -310,9 +309,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void updateLanguage(Context localizedContext){
-//        LocaleManager.setLocale(localizedContext);
-
-        //initComponent(localizedContext);
         this.localizedContext = localizedContext;
         typeface = ResourcesCompat.getFont(localizedContext, R.font.solaimanlipi);
         updateListLanguage(localizedContext);
@@ -322,6 +318,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void updateListLanguage(Context localiContext){
         surahInfoList = getSurahInfoList(localiContext);
+        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
+        sortList(selectedOrder);
         mAdapter.setContext(localiContext);
         mAdapter.setSurahList(surahInfoList);
         mAdapter.notifyDataSetChanged();
@@ -488,7 +486,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void showUserGuide ()
     {
-        HelpDialog dialog = new HelpDialog(this);
+        String contents[] = {localizedContext.getString(R.string.instruction1),localizedContext.getString(R.string.instruction2),localizedContext.getString(R.string.instruction3)};
+        HelpDialog dialog = new HelpDialog(this, localizedContext.getString(R.string.help_outlined_title),localizedContext.getString(R.string.ok),contents);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
     }
@@ -501,7 +500,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             itemList.add(Constants.LANGUAGE_LIST[i]); // TODO: Need to get from single source
         }
         int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
-        LanguageDialog dialog = new LanguageDialog(this,context.getString(R.string.language_control),itemList, selectedLanguage, new DialogItemTouchListener() {
+        LanguageDialog dialog = new LanguageDialog(this,localizedContext.getString(R.string.language_control),localizedContext.getString(R.string.cancel),itemList, selectedLanguage, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, position);
@@ -523,7 +522,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             itemList.add(Utility.getLocalizedInteger(i,locale)); // TODO: Need to get from single source
         }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
-        RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList, loopCountValue, new DialogItemTouchListener() {
+        RepeatCountDialog dialog = new RepeatCountDialog(this,localizedContext.getString(R.string.max_repeat_count),localizedContext.getString(R.string.cancel),itemList, loopCountValue, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 int maxRepeatCount = Integer.parseInt(itemList.get(position));
@@ -604,7 +603,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void showSortSelectDialog() {
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
-        ListItemDialog dialog = new ListItemDialog(this,localizedContext.getString(R.string.sort),new ArrayList<String>(Arrays.asList(getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,localizedContext.getString(R.string.sort),localizedContext.getString(R.string.cancel),new ArrayList<String>(Arrays.asList(localizedContext.getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 sortList(position);
@@ -622,7 +621,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             mDrawerLayout.closeDrawers();
             return;
         }
-        ExitDialog dialog = new ExitDialog(this, exitDialogInterface);
+        ExitDialog dialog = new ExitDialog(this, localizedContext.getString(R.string.exit),localizedContext.getString(R.string.cancel),localizedContext.getString(R.string.exit_text),exitDialogInterface);
         dialog.show();
     }
 

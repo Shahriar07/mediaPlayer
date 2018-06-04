@@ -30,16 +30,18 @@ public class ListItemDialog extends Dialog {
     private RecyclerView dlg_priority_lvw = null;
     private TextView titleView;
     String title;
+    String buttonText;
     int selectedItem;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public ListItemDialog(@NonNull Context context, String title,ArrayList<String> itemList, int selectedItem,DialogItemTouchListener listener) {
+    public ListItemDialog(@NonNull Context context, String title,String buttonText,ArrayList<String> itemList, int selectedItem,DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
         this.title = title;
+        this.buttonText = buttonText;
         this.itemList = itemList;
         this.selectedItem = selectedItem;
     }
@@ -85,7 +87,7 @@ public class ListItemDialog extends Dialog {
         }));
         Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
         cancelButton.setTypeface(Utility.getTypeFace(context));
-        cancelButton.setText(context.getString(R.string.cancel));
+        cancelButton.setText(buttonText);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

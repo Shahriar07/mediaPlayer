@@ -19,10 +19,16 @@ import com.shahriar.surahshikkha.R;
 public class HelpDialog extends Dialog {
 
     Context context;
+    String title;
+    String[] contents;
+    String buttonText;
     AlertDialogCommandInterface callBack;
-    public HelpDialog(@NonNull Context context) {
+    public HelpDialog(@NonNull Context context, String title,String buttonText, String []contents) {
         super(context,R.style.AlertDialogTheme);
         this.context = context;
+        this.title = title;
+        this.contents = contents;
+        this.buttonText = buttonText;
     }
 
     @Override
@@ -34,11 +40,11 @@ public class HelpDialog extends Dialog {
         Button okButton = (Button)findViewById(R.id.help_dialog_btn_ok);
         Typeface typeface = ResourcesCompat.getFont(context, R.font.solaimanlipi);
         okButton.setTypeface(typeface);
-        okButton.setText(getContext().getString(R.string.ok));
+        okButton.setText(buttonText);
 
         TextView dialogTitle = (TextView) findViewById(R.id.help_dialog_title);
         dialogTitle.setTypeface(typeface);
-        dialogTitle.setText(getContext().getApplicationContext().getString(R.string.help_outlined_title));
+        dialogTitle.setText(title);
 
         TextView instructionText = (TextView) findViewById(R.id.helpDialogContent);
         TextView textbody = (TextView) findViewById(R.id.helpDialogBody);
@@ -47,9 +53,9 @@ public class HelpDialog extends Dialog {
         textbody.setTypeface(typeface);
         instructionFooter.setTypeface(typeface);
 
-        instructionText.setText(getContext().getString(R.string.instruction1));
-        textbody.setText(getContext().getApplicationContext().getString(R.string.instruction2));
-        instructionFooter.setText(getContext().getString(R.string.instruction3));
+        instructionText.setText(contents[0]);
+        textbody.setText(contents[1]);
+        instructionFooter.setText(contents[2]);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -30,25 +30,20 @@ public class LanguageDialog extends Dialog {
     private RecyclerView dlg_priority_lvw = null;
     private TextView titleView;
     String title;
+    String buttonText;
     int selectedItem;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public LanguageDialog(@NonNull Context context, String title, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
+    public LanguageDialog(@NonNull Context context, String title, String buttonText, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
         this.title = title;
         this.itemList = itemList;
         this.selectedItem = selectedItem;
-    }
-
-    public LanguageDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
-        super(context, themeResId);
-        this.context = context;
-        this.listener = listener;
-        this.title = title;
+        this.buttonText = buttonText;
     }
 
     @Override
@@ -90,9 +85,9 @@ public class LanguageDialog extends Dialog {
                 }
             }
         }));
-        Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
+        Button cancelButton = (Button)findViewById(R.id.lng_dlg_btn_cancel);
         cancelButton.setTypeface(Utility.getTypeFace(context));
-        cancelButton.setText(context.getString(R.string.cancel));
+        cancelButton.setText(buttonText);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

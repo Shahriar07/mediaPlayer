@@ -19,11 +19,17 @@ import com.shahriar.surahshikkha.R;
 public class ExitDialog extends Dialog {
 
     Context context;
+    String exitText;
+    String cancelText;
+    String contentText;
     AlertDialogCommandInterface callBack;
-    public ExitDialog(@NonNull Context context, AlertDialogCommandInterface callBack) {
+    public ExitDialog(@NonNull Context context,String exitText, String cancelText, String contentText, AlertDialogCommandInterface callBack) {
         super(context,R.style.AlertDialogTheme);
         this.callBack = callBack;
         this.context = context;
+        this.cancelText = cancelText;
+        this.exitText = exitText;
+        this.contentText = contentText;
     }
 
     @Override
@@ -37,12 +43,12 @@ public class ExitDialog extends Dialog {
         Typeface typeface = ResourcesCompat.getFont(context, R.font.solaimanlipi);
         cancelButton.setTypeface(typeface);
         okButton.setTypeface(typeface);
-        cancelButton.setText(getContext().getString(R.string.cancel));
-        okButton.setText(getContext().getApplicationContext().getString(R.string.exit));
+        cancelButton.setText(cancelText);
+        okButton.setText(exitText);
 
         TextView exitText = (TextView) findViewById(R.id.exit_dialog_content);
         exitText.setTypeface(typeface);
-        exitText.setText(getContext().getString(R.string.exit_text));
+        exitText.setText(contentText);
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

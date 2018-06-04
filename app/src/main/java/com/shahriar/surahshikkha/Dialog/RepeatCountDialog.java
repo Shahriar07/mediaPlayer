@@ -32,24 +32,19 @@ public class RepeatCountDialog extends Dialog {
     private TextView titleView;
     String title;
     int selectedItem;
+    String localizedTextCancel;
     private RecyclerView.LayoutManager mLayoutManager;
     DialogItemTouchListener listener;
     ArrayList<String> itemList;
 
-    public RepeatCountDialog(@NonNull Context context, String title, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
+    public RepeatCountDialog(@NonNull Context context, String title, String buttonTitle, ArrayList<String> itemList, int selectedItem, DialogItemTouchListener listener) {
         super(context);
         this.context = context;
         this.title = title;
+        this.localizedTextCancel = buttonTitle;
         this.selectedItem = selectedItem;
         this.listener = listener;
         this.itemList = itemList;
-    }
-
-    public RepeatCountDialog(@NonNull Context context, int themeResId, String title, DialogItemTouchListener listener) {
-        super(context, themeResId);
-        this.context = context;
-        this.listener = listener;
-        this.title = title;
     }
 
     @Override
@@ -91,15 +86,15 @@ public class RepeatCountDialog extends Dialog {
                 }
             }
         }));
-        Button cancelButton = (Button)findViewById(R.id.dlg_btn_cancel);
+        Button cancelButton = (Button)findViewById(R.id.lng_dlg_btn_cancel);
         cancelButton.setTypeface(Utility.getTypeFace(context));
+        cancelButton.setText(localizedTextCancel);
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-        cancelButton.setText(getContext().getString(R.string.cancel));
     }
 
     public void scrollToPosition(){

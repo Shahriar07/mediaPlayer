@@ -51,7 +51,7 @@ public class SurahFactory {
             }
         }
         if (context != null)
-            instance.applicationContext = context.getApplicationContext();
+            instance.applicationContext = context;
         return instance;
     }
 

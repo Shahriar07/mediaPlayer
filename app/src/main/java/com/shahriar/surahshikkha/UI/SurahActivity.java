@@ -412,7 +412,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showEndLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.stop_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.stop_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenEndVerseIndexSelected(position+1);
@@ -424,7 +424,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showStartLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.start_loop),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.start_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenStartVerseIndexSelected(position);
@@ -592,7 +592,8 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showHelpDialogPopup() {
-        HelpDialog dialog = new HelpDialog(this);
+        String contents[] = {getString(R.string.instruction1),getString(R.string.instruction2),getString(R.string.instruction3)};
+        HelpDialog dialog = new HelpDialog(this, getString(R.string.help_outlined_title),getString(R.string.ok),contents);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
     }
@@ -647,7 +648,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 itemList.add(Utility.getLocalizedInteger(i,currentLocale)); // TODO: Need to get from single source
             }
         int loopCountValue = controller.readIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT);
-            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),itemList,loopCountValue, new DialogItemTouchListener() {
+            RepeatCountDialog dialog = new RepeatCountDialog(this,getString(R.string.max_repeat_count),getString(R.string.cancel),itemList,loopCountValue, new DialogItemTouchListener() {
                 @Override
                 public void onDialogItemSelected(int position) {
                     int newMaxRepeatCount = Integer.parseInt(itemList.get(position));
