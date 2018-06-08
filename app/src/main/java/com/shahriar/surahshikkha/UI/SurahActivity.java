@@ -114,8 +114,14 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         Log.d(getLocalClassName(),"Surah number "+ surahNo);
         initializeComponents();
         setMaxLoopCountFromSharedPreference();
+        boolean showGuide = controller.readBooleanWithKey(Constants.ACTIVITY_SHOW_GUIDE,false);
+        if(!showGuide){
+            showHelpDialogPopup();
+        }
+        else {
+            Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_LONG);
+        }
     //    setAutoScrollFromSharedPreference();
-        Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_LONG);
     }
 
     private void setMaxLoopCountFromSharedPreference(){
@@ -382,6 +388,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 break;
             }
             case R.id.reset_loop:{
+                Utility.showCustomToast(this,getString(R.string.reset_loop_text), Toast.LENGTH_SHORT);
                 resetPlayer();
                 break;
             }
@@ -408,7 +415,6 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         setLoopWhenEndVerseIndexSelected(surah.getVerseCount()+1);
         updateStartVerseText(0);
         loopCount = 1;
-        Utility.showCustomToast(this,getString(R.string.reset_loop_text), Toast.LENGTH_SHORT);
     }
 
     private void showEndLoopSelectionDialog(int selectedItem){
@@ -596,6 +602,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         HelpDialog dialog = new HelpDialog(this, getString(R.string.help_outlined_title),getString(R.string.ok),contents);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.show();
+        controller.writeBooleanWithKey(Constants.ACTIVITY_SHOW_GUIDE,true);
     }
 
     @Override

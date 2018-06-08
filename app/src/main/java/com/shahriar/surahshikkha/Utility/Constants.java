@@ -18,6 +18,7 @@ public class Constants {
     public static final String SURAH_SORT_CONTROL = "sort";
     public static final String MENU_ENGLISH_TRANSLATION = "english_translation";
     public static final String MENU_BANGLA_TRANSLATION = "bangla_translation";
+    public static final String ACTIVITY_SHOW_GUIDE = "show_guide";
 
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 10;
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER = 15;

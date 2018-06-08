@@ -1,13 +1,17 @@
 package com.shahriar.surahshikkha.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
 
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.ApplicationContextManager;
+import com.shahriar.surahshikkha.Utility.Constants;
 import com.shahriar.surahshikkha.Utility.LocaleManager;
+import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
 
 import java.util.Locale;
@@ -20,10 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ApplicationContextManager.getInstance(this);
-//        Locale locale = Utility.getCurrentLocale(this);
-//        LocaleManager.setNewLocale(this,locale.getLanguage(), locale.getCountry());
 
-       // setContentView(R.layout.splash_activity_layout);
         Intent intent = new Intent(this, DashboardActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -34,5 +35,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+    }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleManager.onAttach(newBase));
     }
 }

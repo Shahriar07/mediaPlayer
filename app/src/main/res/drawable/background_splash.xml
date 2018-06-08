@@ -5,7 +5,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/splash_surah_shiksha">
+            android:src="@drawable/splash_activity_background">
         </bitmap>
     </item>
 </layer-list>

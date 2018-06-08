@@ -238,15 +238,21 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
 
         // Set the language of application
-        menuItem = menu.findItem(R.id.languageControl);
+       menuItem = menu.findItem(R.id.languageControl);
         menuItem.setTitle(localizedContext.getString(R.string.language_control));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
         drawerSelectedLanguage = (TextView) actionView.findViewById(R.id.language_control);
         drawerSelectedLanguage.setTypeface(typeface);
         int selectedLanguage = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
         if (selectedLanguage == -1) {
-            controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_ENGLISH_VALUE);
-            selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
+            if ( "bn".equals(locale.getLanguage())) {
+                controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_BANGLA_VALUE);
+                selectedLanguage = Constants.LANGUAGE_BANGLA_VALUE;
+            }
+            else {
+                controller.writeIntWithKey(Constants.SELECTED_LANGUAGE, Constants.LANGUAGE_ENGLISH_VALUE);
+                selectedLanguage = Constants.LANGUAGE_ENGLISH_VALUE;
+            }
         }
         drawerSelectedLanguage.setText(Utility.getLanguageText(selectedLanguage));
         drawerSelectedLanguage.setOnClickListener(this);
@@ -538,14 +544,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private ArrayList<SurahInfo> getSurahInfoList (Context context){
         ArrayList<SurahInfo> surahList = new ArrayList<>();
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fatihah),context.getString(R.string.bn_surah_al_fatihah), 1, false,45088,7));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_at_tariq),context.getString(R.string.bn_surah_at_tariq), 86, false,100440,17));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ala),context.getString(R.string.bn_surah_al_ala), 87, false,108000,19));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ghashiyah),context.getString(R.string.bn_surah_al_ghashiyah), 88, false,134352,26));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fajr),context.getString(R.string.bn_surah_al_fajr), 89, false,213192,30));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_balad),context.getString(R.string.bn_surah_al_balad), 90, false,120240,20));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_ash_shams),context.getString(R.string.bn_surah_ash_shams), 91, false,84600,15));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_layl),context.getString(R.string.bn_surah_al_layl), 92, false,111816,21));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fatihah),context.getString(R.string.bn_surah_al_fatihah), 1, false,45871,7));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_at_tariq),context.getString(R.string.bn_surah_at_tariq), 86, false,100656,17));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ala),context.getString(R.string.bn_surah_al_ala), 87, false,108216,19));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ghashiyah),context.getString(R.string.bn_surah_al_ghashiyah), 88, false,134568,26));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fajr),context.getString(R.string.bn_surah_al_fajr), 89, false,213408,30));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_balad),context.getString(R.string.bn_surah_al_balad), 90, false,120456,20));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_ash_shams),context.getString(R.string.bn_surah_ash_shams), 91, false,84816,15));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_layl),context.getString(R.string.bn_surah_al_layl), 92, false,112032,21));
         surahList.add(new SurahInfo(context.getString(R.string.surah_ad_duha),context.getString(R.string.bn_surah_ad_duha), 93, false,65304,11));
         surahList.add(new SurahInfo(context.getString(R.string.surah_as_sharh),context.getString(R.string.bn_surah_as_sharh), 94, false,43200,8));
         surahList.add(new SurahInfo(context.getString(R.string.surah_at_tin),context.getString(R.string.bn_surah_at_tin), 95, false,65160,8));
@@ -558,14 +564,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         surahList.add(new SurahInfo(context.getString(R.string.surah_at_takathur),context.getString(R.string.bn_surah_at_takathur), 102, false,62856,8));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_asr),context.getString(R.string.bn_surah_al_asr), 103, false,27648,3));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_humazah),context.getString(R.string.bn_surah_al_humazah), 104, false,58248,9));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fil),context.getString(R.string.bn_surah_al_fil), 105, false,48960,5));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_fil),context.getString(R.string.bn_surah_al_fil), 105, false,49176,5));
         surahList.add(new SurahInfo(context.getString(R.string.surah_quraysh),context.getString(R.string.bn_surah_quraysh), 106, false,42768,4));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_maun),context.getString(R.string.bn_surah_al_maun), 107, false,57744,7));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_kawthar),context.getString(R.string.bn_surah_al_kawthar), 108, false,24768,3));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_kafirun),context.getString(R.string.bn_surah_al_kafirun), 109, false,54504,6));
         surahList.add(new SurahInfo(context.getString(R.string.surah_an_nasr),context.getString(R.string.bn_surah_an_nasr), 110, true,35136,3));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_masad),context.getString(R.string.bn_surah_al_masad), 111, false,41760,5));
-        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ikhlas),context.getString(R.string.bn_surah_al_ikhlas), 112, false,21888,4));
+        surahList.add(new SurahInfo(context.getString(R.string.surah_al_ikhlas),context.getString(R.string.bn_surah_al_ikhlas), 112, false,22104,4));
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_falaq),context.getString(R.string.bn_surah_al_falaq), 113, false,33264,5));
         surahList.add(new SurahInfo(context.getString(R.string.surah_an_nas),context.getString(R.string.bn_surah_an_nas), 114, false,50256,6));
         return surahList;
