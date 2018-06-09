@@ -1,0 +1,37 @@
+Surah Shiksha helps you to learn 30 small Surahs from Holy Quran verse by verse.
+
+'সূরা শিক্ষা' আপনাকে পবিত্র কুরআন শরীফ থেকে ৩০ টি ছোটো সূরাগুলি শিখতে সাহায্য করে।
+
+Learn Surah verse by verse.
+
+This application includes 30 small Surah from Holy Quran.
+It includes recitation, Arabic pronunciation, Bangla and English translation of every verse.
+It offer repetition of every verse automatically, which makes it easy to learn Surah.
+You can set the repetition number from 1-15.
+It also offer back and forth (seek) of audio according to selected verse.
+
+Surah starts from Surah-at-Tariq(#86) to Surah-an-Nas(#114), excluding Surah-al-Alaq(#96) as it contains Sujud (sajdah).
+
+Hope it helps you to learn Surah easily.
+
+* Ads Free
+* Fully Off-line
+* Supports Bangla and English language.
+
+
+
+
+এই অ্যাপ্লিকেশানটিতে পবিত্র কুরআন থেকে ৩০ টি ছোটো সূরা রয়েছে।
+এতে প্রত্যেক আয়াতের আখ্যান, আরবি উচ্চারণ, বাংলা এবং ইংরেজি অনুবাদ অন্তর্ভুক্ত রয়েছে।
+এটি স্বয়ংক্রিয়ভাবে প্রতিটি আয়াত পুনরাবৃত্তি  করে, যা সূরাটি শিখতে আপনার জন্য সহজ করে তোলে।
+এটি স্বয়ংক্রিয়ভাবে প্রতিটি সূরাও পুনরাবৃত্তি  করে।
+নির্বাচিত আয়াত অনুযায়ী এটি্র অডিও সামনে পিছনে  করা যায়।
+
+এতে সূরা-আত-তারিক(#৮৬) থেকে সূরা-আন-নাস(#১১৪) পর্যন্ত সূরা গুলো অন্তরভুক্ত রয়েছে, তবে সূরা-আল-আলাক(#৯৬) বাদ দেওয়া হয়েছে যেহেতু এতে সিজদা রয়েছে।
+এতে সূরা-আল-ফাতিহা ও অন্তরভুক্ত রয়েছে।
+
+আশা করি এটি সহজেই সূরাগুলো শিখতে সাহায্য করবে।
+
+* কোন বিজ্ঞাপন নেই 
+* বাংলা এবং ইংলিশ ভাষা সমর্থন করে
+* সম্পূর্ণ অফলাইন  
