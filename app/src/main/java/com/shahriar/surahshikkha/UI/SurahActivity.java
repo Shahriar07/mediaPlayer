@@ -19,7 +19,6 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -30,8 +29,8 @@ import com.shahriar.surahshikkha.CustomComponents.CustomTypeface;
 import com.shahriar.surahshikkha.Data.Surah;
 import com.shahriar.surahshikkha.Data.Verse;
 import com.shahriar.surahshikkha.Dialog.HelpDialog;
-import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
+import com.shahriar.surahshikkha.Dialog.StartStopSelectionDialog;
 import com.shahriar.surahshikkha.Factory.SurahFactory;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
 import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
@@ -119,7 +118,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             showHelpDialogPopup();
         }
         else {
-            Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_LONG);
+            Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_SHORT);
         }
     //    setAutoScrollFromSharedPreference();
     }
@@ -418,7 +417,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showEndLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.stop_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        StartStopSelectionDialog dialog = new StartStopSelectionDialog(this,getString(R.string.stop_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenEndVerseIndexSelected(position+1);
@@ -430,7 +429,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     }
 
     private void showStartLoopSelectionDialog(int selectedItem){
-        ListItemDialog dialog = new ListItemDialog(this,getString(R.string.start_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
+        StartStopSelectionDialog dialog = new StartStopSelectionDialog(this,getString(R.string.start_loop),getString(R.string.cancel),new ArrayList<String>(Arrays.asList(utility.getStringArray(0,surah.getVerseCount(),currentLocale))),selectedItem, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
                 setLoopWhenStartVerseIndexSelected(position);

@@ -235,6 +235,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             maxRepeatCount = Constants.SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT;
         }
         drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,locale));
+        drawerMaxRepeatCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDrawer();
+                showMaxLoopCountPopup();
+            }
+        });
 
 
         // Set the language of application
@@ -533,7 +540,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             public void onDialogItemSelected(int position) {
                 int maxRepeatCount = Integer.parseInt(itemList.get(position));
                 controller.writeIntWithKey(Constants.SURAH_VERSE_MAX_REPEAT_COUNT,maxRepeatCount);
-
                 drawerMaxRepeatCount.setText(Utility.getLocalizedInteger(maxRepeatCount,locale));
             }
         });

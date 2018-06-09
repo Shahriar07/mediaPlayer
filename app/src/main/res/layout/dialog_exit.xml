@@ -29,30 +29,32 @@
         app:layout_constraintTop_toBottomOf="@id/exit_dialog_content">
 
         <Button
-            android:id="@+id/exit_dialog_btn_ok"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@android:color/transparent"
-            android:text="@string/exit"
-            android:textAllCaps="true"
-            android:textColor="@color/colorAccent" />
-
-        <Button
             android:id="@+id/exit_dialog_btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="36dp"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
-            android:layout_toLeftOf="@id/exit_dialog_btn_ok"
-            android:layout_toStartOf="@id/exit_dialog_btn_ok"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
             android:text="@string/cancel"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent" />
+
+        <Button
+            android:id="@+id/exit_dialog_btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_toLeftOf="@id/exit_dialog_btn_cancel"
+            android:layout_toStartOf="@id/exit_dialog_btn_cancel"
+            android:background="@android:color/transparent"
+            android:text="@string/exit"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent" />
+
+
     </RelativeLayout>
 
 
