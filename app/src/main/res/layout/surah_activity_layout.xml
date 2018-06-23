@@ -29,10 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".83"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_margin="8dp"
             android:scrollbars="vertical" />
 
         <LinearLayout
@@ -86,14 +83,10 @@
             android:layout_height="0dp"
             android:layout_weight=".095"
             android:orientation="horizontal"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
             android:elevation="4dp"
-            android:background="@drawable/border_inner"
-            tools:ignore="MissingConstraints">
+            android:background="@drawable/border_inner">
 
             <ImageButton
                 android:id="@+id/startButton"
@@ -101,18 +94,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/play"
-                android:textAllCaps="false"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_margin="2dp"
                 android:elevation="4dp"
-                android:foreground="@drawable/surah_verse_border"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.913" />
+                android:foreground="@drawable/surah_verse_border"/>
 
             <!--com.shahriar.surahshikkha.CustomComponents.CustomSpinner
                 android:id="@+id/start_loop"
@@ -176,9 +163,7 @@
                 android:elevation="4dp"
                 android:contentDescription="@string/reset_loop"
                 android:layout_weight="1"
-                android:foreground="@drawable/surah_verse_border"
-                android:text="@string/reset_loop"
-                android:textAllCaps="false" />
+                android:foreground="@drawable/surah_verse_border"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -71,6 +71,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private TextView drawerMaxRepeatCount;
     private TextView drawerSelectedLanguage;
 
+    private TextView sortTypeTextView;
+
     Typeface typeface;
     Context localizedContext;
 
@@ -114,6 +116,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
         updateTitleBar(context);
 
+        sortTypeTextView = (TextView)findViewById(R.id.SortText);
         Log.d("TimeTEst","setHomeAsUpIndicator");
         surahListView = (RecyclerView) findViewById(R.id.surahList);
         surahListView.setHasFixedSize(true);
@@ -148,6 +151,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
         }));
 
+    }
+
+    private void setSortText(int type, Context context) {
+        String header = context.getString(R.string.sort);
+        String[] sortArray = localizedContext.getResources().getStringArray(R.array.sort_array);
+        String sortText = header + " : " + sortArray[type];
+        sortTypeTextView.setText(sortText);
     }
 
     @Override
@@ -355,6 +365,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             mAdapter.notifyDataSetChanged();
             scrollListToPosition(0);
         }
+        setSortText(type,localizedContext);
     }
 
     /*

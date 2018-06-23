@@ -37,6 +37,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:elevation="4dp"
             android:text="@string/cancel"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent" />
@@ -50,6 +52,8 @@
             android:layout_toLeftOf="@id/exit_dialog_btn_cancel"
             android:layout_toStartOf="@id/exit_dialog_btn_cancel"
             android:background="@android:color/transparent"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:elevation="4dp"
             android:text="@string/exit"
             android:textAllCaps="true"
             android:textColor="@color/colorAccent" />
