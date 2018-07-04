@@ -5,6 +5,10 @@
     <color name="colorAccent">#4DB6AC</color>
 
     <color name="borderColor">#80CBC4</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorHint">#BDBDBD</color>
+    <color name="colorBlack">#000000</color>
+
 
     <color name="colorAccentSecondary">#046ea7</color>
 

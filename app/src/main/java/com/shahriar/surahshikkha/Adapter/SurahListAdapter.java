@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Data.SurahInfo;
@@ -21,17 +23,23 @@ import java.util.Locale;
  * Created by H. M. Shahriar on 2/24/2018.
  */
 
-public class SurahListAdapter extends RecyclerView.Adapter {
+public class SurahListAdapter extends RecyclerView.Adapter  implements Filterable {
 
     public void setSurahList(ArrayList<SurahInfo> surahList) {
         this.surahList = surahList;
+        this.filteredData = surahList;
     }
 
     private ArrayList<SurahInfo> surahList = new ArrayList<>();
     Context context;
     LayoutInflater inflater;
+    private ArrayList<SurahInfo> filteredData = null;
+
+    private ItemFilter mFilter = new ItemFilter();
+
     public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context) {
         this.surahList = surahList;
+        this.filteredData = surahList;
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
@@ -51,17 +59,63 @@ public class SurahListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         SurahHolder surahHolder = (SurahHolder) holder;
-        surahHolder.bindSurah(surahList.get(position));
+        surahHolder.bindSurah(filteredData.get(position));
         Log.d(getClass().getSimpleName(),"onBindViewHolder");
         holder.itemView.setBackgroundResource(R.drawable.surah_verse_border);
     }
 
     @Override
     public int getItemCount() {
-        return surahList.size();
+        return filteredData.size();
     }
 
-class SurahHolder extends RecyclerView.ViewHolder {
+    public ArrayList<SurahInfo> getFilteredData() {
+        return filteredData;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private class ItemFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+
+            String filterString = constraint.toString().toLowerCase();
+
+            FilterResults results = new FilterResults();
+
+            final ArrayList<SurahInfo> list = surahList;
+
+            int count = list.size();
+            final ArrayList<SurahInfo> nlist = new ArrayList<SurahInfo>(count);
+
+            SurahInfo filterableSurahInfo ;
+
+            for (int i = 0; i < count; i++) {
+                filterableSurahInfo = list.get(i);
+                if (filterableSurahInfo.getSurahName().contains(filterString)|| filterableSurahInfo.getSurahNameSecondary().contains(filterString)) {
+                    nlist.add(filterableSurahInfo);
+                }
+            }
+
+            results.values = nlist;
+            results.count = nlist.size();
+
+            return results;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filteredData = (ArrayList<SurahInfo>) results.values;
+            notifyDataSetChanged();
+        }
+
+    }
+
+    class SurahHolder extends RecyclerView.ViewHolder {
     public TextView surahNo;
     public TextView surahName;
     public TextView surahNameSecondary;

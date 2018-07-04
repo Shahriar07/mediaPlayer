@@ -23,7 +23,13 @@
         <activity android:name=".UI.DashboardActivity"
             android:screenOrientation="portrait"
             android:configChanges="orientation|locale|layoutDirection"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
         </activity>
         <activity android:name=".UI.SurahActivity"
             android:parentActivityName=".UI.DashboardActivity"

@@ -12,6 +12,11 @@
 
         <item name="actionMenuTextColor">@color/actionMenuTextColor</item>
         <item name="actionBarTheme">@style/AppTheme.ActionBarTheme</item> <!-- used for the back arrow on the action bar -->
+
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+
+        <item name="android:actionMenuTextColor">@color/colorBlack</item>
     </style>
     <style name="AppTheme" parent="BaseAppTheme" />
 
@@ -59,6 +64,14 @@
 
     <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/window_background</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!-- Gets rid of the search icon when the SearchView is expanded -->
+        <item name="searchHintIcon">@null</item>
+        <!-- The hint text that appears when the user has not typed anything -->
+        <item name="queryHint">@string/search_hint</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>

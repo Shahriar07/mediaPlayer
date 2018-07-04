@@ -38,6 +38,7 @@
     <string name="exit_text">আপনি সত্যিই প্রস্থান করতে চান?</string>
     <string name="language_control">ভাষা</string>
 
+    <string name="sort_header">ক্রমানুসার</string>
     <string name="sort">ক্রমানুসার</string>
     <string-array name="sort_array">
         <item>সূরা নম্বর</item>
@@ -121,6 +122,7 @@
     <string name="surah_al_ikhlas">সূরা আল ইখলাছ</string>
     <string name="surah_al_falaq">সূরা আল ফালাক</string>
     <string name="surah_an_nas">সূরা আন নাস</string>
+    <string name="search_hint">সূরার নাম</string>
 
 
 </resources>

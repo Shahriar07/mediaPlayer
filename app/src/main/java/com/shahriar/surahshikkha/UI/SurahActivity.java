@@ -357,7 +357,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             scrollListToPosition(index);
             setCurrentSelectedIndex(index);
         }
-        seekHandler.postDelayed(run, 100);
+        seekHandler.postDelayed(run, 50);
     }
 
     void changePlayPauseButton(){

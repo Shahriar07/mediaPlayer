@@ -105,6 +105,7 @@
     <string name="exit_text">Do you really want to exit?</string>
     <string name="language_control">Language</string>
 
+    <string name="sort_header">Sorted By</string>
     <string name="sort">Sort By</string>
     <string-array name="sort_array">
         <item>Surah number</item>
@@ -120,5 +121,6 @@
     <string name="menu_communicate">Communicate</string>
     <string name="share_text">Download application from </string>
     <string name="share_title">Share </string>
+    <string name="search_hint">Surah Name</string>
 
 </resources>

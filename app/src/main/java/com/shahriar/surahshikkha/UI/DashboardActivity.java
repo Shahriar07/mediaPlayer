@@ -1,5 +1,6 @@
 package com.shahriar.surahshikkha.UI;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -15,16 +16,20 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,7 +62,7 @@ import java.util.Locale;
  * Created by H. M. Shahriar on 3/3/2018.
  */
 
-public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener  {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     private DrawerLayout mDrawerLayout;
 
@@ -72,6 +77,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private TextView drawerSelectedLanguage;
 
     private TextView sortTypeTextView;
+    SearchView searchView;
+    MenuItem searchMenuItem;
 
     Typeface typeface;
     Context localizedContext;
@@ -90,8 +97,26 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         //int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
        // Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
         initComponent(localizedContext);
+
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d(getClass().getSimpleName(), "OnCreate "+query);
+        }
+        else
+        {
+            closeSearchBar();
+        }
     }
 
+    private void closeSearchBar()
+    {
+        // close search view if its visible
+        if (searchView != null && searchView.isShown()) {
+            searchMenuItem.collapseActionView();
+            searchView.setQuery("", false);
+        }
+    }
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -104,6 +129,24 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         s.setSpan(new CustomTypeface("",typeface), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         setTitle(s);
+
+        if (searchView != null) {
+
+            int id = context.getResources().getIdentifier("android:id/search_src_text", null, null);
+            SpannableString hint = new SpannableString(context.getString(R.string.search_hint));
+            hint.setSpan(new CustomTypeface("",typeface), 0, hint.length(),
+                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+            searchView.setQueryHint(hint);
+            AutoCompleteTextView textView = (AutoCompleteTextView) searchView.findViewById(id);
+            if (textView!= null) {
+
+                textView.setText(hint);
+            }
+            else
+            {
+                Log.d(getClass().getSimpleName(), " Textview is null ");
+            }
+        }
     }
 
     void initComponent(Context context){
@@ -138,11 +181,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(this, surahListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
-                SurahInfo info = surahInfoList.get(position);
+                SurahInfo info = mAdapter.getFilteredData().get(position);
                 //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
                 Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
                 surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
                 startActivity(surahIntent);
+                closeSearchBar();
             }
 
             @Override
@@ -154,9 +198,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void setSortText(int type, Context context) {
-        String header = context.getString(R.string.sort);
-        String[] sortArray = localizedContext.getResources().getStringArray(R.array.sort_array);
-        String sortText = header + " : " + sortArray[type];
+        String header = context.getString(R.string.sort_header);
+        String sortText = "";
+        if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
+            sortText = header + " : " +context.getString(R.string.surah_number);
+        else if (type == Constants.SURAH_VERSE_SORT_BY_DURATION)
+            sortText = header + " : " +context.getString(R.string.duration);
+        else if (type == Constants.SURAH_VERSE_SORT_BY_VERSE_NUMBER)
+            sortText = header + " : " +context.getString(R.string.verses);
+        else
+            sortText = header + " : " +context.getString(R.string.duration);
+
+        sortText = sortText.substring(0, sortText.length() - 1); // Remove the last ':' from text
         sortTypeTextView.setText(sortText);
     }
 
@@ -328,6 +381,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private void applyFontToMenuItem(MenuItem mi) {
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypeface("" , typeface), 0 , mNewTitle.length(),  Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mNewTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, mNewTitle.length(), 0);
         mi.setTitle(mNewTitle);
     }
 
@@ -335,8 +389,8 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         this.localizedContext = localizedContext;
         typeface = ResourcesCompat.getFont(localizedContext, R.font.solaimanlipi);
         updateListLanguage(localizedContext);
-        updateTitleBar(localizedContext);
         invalidateOptionsMenu();
+        updateTitleBar(localizedContext);
     }
 
     private void updateListLanguage(Context localiContext){
@@ -602,9 +656,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dashboard_activity_action_bar_items, menu);
         initializeMenuItem();
-        //MenuItem repeatItem = menu.findItem(R.id.actionSort);
-        // int sortType = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL);
-        //setRepeatIcon(isRepeatOn,repeatItem);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchMenuItem = menu.findItem(R.id.search);
+        searchView = (SearchView) searchMenuItem.getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        //searchView.setSubmitButtonEnabled(true);
+        searchView.setOnQueryTextListener(this);
         return true;
     }
 
@@ -659,4 +720,25 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         }
     };
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        if (!"".equals(query))
+        {
+            mAdapter.getFilter().filter(query);
+        }
+        // close search view if its visible
+        if (searchView.isShown()) {
+            searchMenuItem.collapseActionView();
+            searchView.setQuery("", false);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        mAdapter.getFilter().filter(newText);
+        return true;
+    }
 }
