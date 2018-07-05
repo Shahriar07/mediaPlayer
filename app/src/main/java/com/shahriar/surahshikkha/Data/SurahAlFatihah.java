@@ -15,7 +15,7 @@ public class SurahAlFatihah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6000,11430,16200,20700,27300,32750,36650,45200,Integer.MAX_VALUE}; //52088
+    protected final int duration[] ={0, 6000,11600,16200,20800,27300,32850,36650,45200,Integer.MAX_VALUE}; //52088
 
     public SurahAlFatihah(Context context) {
         super(context);

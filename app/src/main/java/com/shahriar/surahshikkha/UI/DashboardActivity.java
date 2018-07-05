@@ -19,6 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -129,24 +130,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         s.setSpan(new CustomTypeface("",typeface), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         setTitle(s);
-
-        if (searchView != null) {
-
-            int id = context.getResources().getIdentifier("android:id/search_src_text", null, null);
-            SpannableString hint = new SpannableString(context.getString(R.string.search_hint));
-            hint.setSpan(new CustomTypeface("",typeface), 0, hint.length(),
-                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-            searchView.setQueryHint(hint);
-            AutoCompleteTextView textView = (AutoCompleteTextView) searchView.findViewById(id);
-            if (textView!= null) {
-
-                textView.setText(hint);
-            }
-            else
-            {
-                Log.d(getClass().getSimpleName(), " Textview is null ");
-            }
-        }
     }
 
     void initComponent(Context context){
@@ -662,10 +645,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         searchMenuItem = menu.findItem(R.id.search);
         searchView = (SearchView) searchMenuItem.getActionView();
         // Assumes current activity is the searchable activity
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
         //searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint(localizedContext.getResources().getString(R.string.search_hint));
         return true;
     }
 
@@ -673,6 +657,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         switch (item.getItemId()) {
             case R.id.actionSort:
+                closeSearchBar();
                 showSortSelectDialog();
                 return true;
             case android.R.id.home:
