@@ -77,6 +77,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     private TextView drawerMaxRepeatCount;
     private TextView drawerSelectedLanguage;
 
+    private TextView sortTypeTextHeaderView;
     private TextView sortTypeTextView;
     SearchView searchView;
     MenuItem searchMenuItem;
@@ -142,6 +143,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         actionBar.setHomeAsUpIndicator(R.drawable.menu);
         updateTitleBar(context);
 
+        sortTypeTextHeaderView = (TextView) findViewById(R.id.SortTextHeader);
         sortTypeTextView = (TextView)findViewById(R.id.SortText);
         Log.d("TimeTEst","setHomeAsUpIndicator");
         surahListView = (RecyclerView) findViewById(R.id.surahList);
@@ -149,7 +151,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         mLayoutManager = new ScrollingLinearLayoutManager(this,1);
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList(context);
-        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_DURATION);
+        int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
         Log.d("TimeTEst","sortList");
         sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList,context);
@@ -182,15 +184,16 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void setSortText(int type, Context context) {
         String header = context.getString(R.string.sort_header);
+        sortTypeTextHeaderView.setText(header);
         String sortText = "";
         if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
-            sortText = header + " : " +context.getString(R.string.surah_number);
+            sortText = context.getString(R.string.surah_number);
         else if (type == Constants.SURAH_VERSE_SORT_BY_DURATION)
-            sortText = header + " : " +context.getString(R.string.duration);
+            sortText = context.getString(R.string.duration);
         else if (type == Constants.SURAH_VERSE_SORT_BY_VERSE_NUMBER)
-            sortText = header + " : " +context.getString(R.string.verses);
+            sortText = context.getString(R.string.verses);
         else
-            sortText = header + " : " +context.getString(R.string.duration);
+            sortText = context.getString(R.string.duration);
 
         sortText = sortText.substring(0, sortText.length() - 1); // Remove the last ':' from text
         sortTypeTextView.setText(sortText);

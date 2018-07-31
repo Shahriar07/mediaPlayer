@@ -339,6 +339,15 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                     player.seekTo(loopStartTime);
                     Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
                     ++loopCount;
+                    try {
+                        if (player.isPlaying()) {
+                            player.pause();
+                            Thread.sleep(100);
+                            player.start();
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             if (player.isPlaying()){

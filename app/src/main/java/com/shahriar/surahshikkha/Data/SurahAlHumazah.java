@@ -15,7 +15,7 @@ public class SurahAlHumazah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7550,12400,18154,25054,32200,37400,41100,45600,51600,57100,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 7800,12400,18354,25100,32200,37800,41100,45950,52000,57100,Integer.MAX_VALUE};
 
     public SurahAlHumazah(Context context) {
         super(context);

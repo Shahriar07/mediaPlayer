@@ -15,7 +15,7 @@ public class SurahAlFil extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6950,15000,21900,29000,39150,47000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6950,15000,21900,29300,39150,47000,Integer.MAX_VALUE};
 
     public SurahAlFil(Context context) {
         super(context);

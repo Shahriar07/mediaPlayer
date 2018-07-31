@@ -2,5 +2,8 @@
 <resources>
     <dimen name="text_size">7sp</dimen>
     <dimen name="surah_info_text_size_in_dashboard">11sp</dimen>
+    <dimen name="sort_header">14sp</dimen>
     <dimen name="start_end_button_padding">8dp</dimen>
+
+    <dimen name="start_end_text_size">20dp</dimen>
 </resources>

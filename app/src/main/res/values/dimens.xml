@@ -4,4 +4,6 @@
 
     <dimen name="surah_info_text_size_in_dashboard">12sp</dimen>
     <dimen name="start_end_button_padding">6dp</dimen>
+
+    <dimen name="start_end_text_size">20dp</dimen>
 </resources>
