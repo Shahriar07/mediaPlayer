@@ -105,13 +105,13 @@
                 android:src="@drawable/play"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="@drawable/surah_verse_border"
                 android:layout_marginTop="4dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginBottom="8dp"
                 android:elevation="4dp"
-                android:foreground="@drawable/surah_verse_border"/>
+                android:foreground="?attr/selectableItemBackgroundBorderless"/>
 
             <!--com.shahriar.surahshikkha.CustomComponents.CustomSpinner
                 android:id="@+id/start_loop"
@@ -148,7 +148,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="15"
                 android:textColor="@color/colorBlack"
-                android:foreground="@drawable/surah_verse_border"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:layout_weight="1"/>
 
             <Button
@@ -168,7 +168,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="15"
                 android:textColor="@color/colorBlack"
-                android:foreground="@drawable/surah_verse_border"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:layout_weight="1"/>
 
             <ImageButton
@@ -181,12 +181,12 @@
                 android:layout_marginRight="2dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginBottom="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/bg_reset"
                 android:elevation="4dp"
                 android:contentDescription="@string/reset_loop"
                 android:layout_weight="1"
-                android:foreground="@drawable/surah_verse_border"/>
+                android:background="@drawable/surah_verse_border"/>
         </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
