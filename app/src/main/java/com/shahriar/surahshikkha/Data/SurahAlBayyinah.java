@@ -15,7 +15,7 @@ public class SurahAlBayyinah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6750,20000,27734,31954,44285,66310,85770,98000,125000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6750,20000,27600,32450,44800,66350,86250,98000,125000,Integer.MAX_VALUE};
 
     public SurahAlBayyinah(Context context) {
         super(context);

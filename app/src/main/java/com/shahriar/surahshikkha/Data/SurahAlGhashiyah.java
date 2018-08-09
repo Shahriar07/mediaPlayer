@@ -15,8 +15,8 @@ public class SurahAlGhashiyah extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6050,10200,15600,19800,23600,27650,35500,41854,47900,51150,55250,59950,63950,69000,73150,76150,79900,
-            86400,91750,95450,98960,106139,110300,114950,120300,126500,133000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6050,10200,15600,19800,23600,27650,35500,41854,48600,51550,55500,59950,64000,69000,73150,76450,80000,
+            86400,91850,95650,99250,106300,110300,114950,120300,126500,133300,Integer.MAX_VALUE};
 
     public SurahAlGhashiyah(Context context) {
         super(context);
