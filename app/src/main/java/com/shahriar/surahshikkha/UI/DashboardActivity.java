@@ -674,7 +674,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showSortSelectDialog() {
-        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
+        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
         ListItemDialog dialog = new ListItemDialog(this,localizedContext.getString(R.string.sort),localizedContext.getString(R.string.cancel),new ArrayList<String>(Arrays.asList(localizedContext.getResources().getStringArray(R.array.sort_array))),selectedOrder, new DialogItemTouchListener() {
             @Override
             public void onDialogItemSelected(int position) {
