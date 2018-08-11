@@ -17,7 +17,7 @@ public class SurahAnNas extends Surah {
         return duration;
     }
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 6950,13400,19150,24700,33050,41750,49300,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 6950,13500,19250,24800,33250,41750,49300,Integer.MAX_VALUE};
 
     public SurahAnNas(Context context) {
         super(context);

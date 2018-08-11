@@ -15,7 +15,7 @@ public class SurahAlIkhlash extends Surah {
     }
 
     // [0 , 1, 2, maxInt] - It has only one verse where 0-1 is starting, 1-2 is the verse, 2-maxint is the padding
-    protected final int duration[] ={0, 7250,10000,12754,15854,21000,Integer.MAX_VALUE};
+    protected final int duration[] ={0, 7250,10100,12754,15900,21000,Integer.MAX_VALUE};
 
     public SurahAlIkhlash(Context context) {
         super(context);
