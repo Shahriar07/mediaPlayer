@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
+    android:orientation="horizontal">
+<RelativeLayout
+    android:id="@+id/SurahInformation"
+    android:layout_width="0dp"
+    android:layout_weight="0.85"
+    android:layout_height="80dp"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true">
 
@@ -74,22 +80,47 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         />
-
     <TextView
         android:id="@+id/surahDuration"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="8dp"
-        android:paddingEnd="8dp"
-        android:paddingRight="8dp"
+        android:paddingEnd="4dp"
+        android:paddingRight="4dp"
         android:layout_below="@id/surahListSurahName"
         android:textColor="@color/surah_list_item_color"
         android:textAllCaps="false"
-        android:gravity="center_vertical"
+        android:gravity="center_vertical|right|end"
         android:text="Test"
         android:textSize="@dimen/surah_info_text_size_in_dashboard"
-        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/verseCount"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/progressBar"
+        android:layout_width="0dp"
+        android:layout_weight="0.15"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/playProgressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_margin="4dp"
+            android:max="100"
+            android:progress="80"
+            android:clickable="false"
+            android:indeterminate="false"
+            android:progressDrawable="@drawable/circle"/>
+        <Button
+            android:id="@+id/playPauseButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/rounded_button_background"/>
+    </RelativeLayout>
+</LinearLayout>

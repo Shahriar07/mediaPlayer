@@ -19,7 +19,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -29,9 +28,8 @@ import android.view.MenuItem;
 import android.view.SubMenu;
 import android.view.View;
 import android.view.Window;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
@@ -44,14 +42,14 @@ import com.shahriar.surahshikkha.Dialog.ListItemDialog;
 import com.shahriar.surahshikkha.Dialog.RepeatCountDialog;
 import com.shahriar.surahshikkha.Interfaces.AlertDialogCommandInterface;
 import com.shahriar.surahshikkha.Interfaces.DialogItemTouchListener;
-import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
+import com.shahriar.surahshikkha.Interfaces.DashboardListItemListener;
 import com.shahriar.surahshikkha.LayoutManager.ScrollingLinearLayoutManager;
-import com.shahriar.surahshikkha.Listeners.RecyclerItemTouchListener;
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.Constants;
 import com.shahriar.surahshikkha.Utility.LocaleManager;
 import com.shahriar.surahshikkha.Utility.SharedPreferenceController;
 import com.shahriar.surahshikkha.Utility.Utility;
+import com.shahriar.surahshikkha.manager.MediaManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +61,7 @@ import java.util.Locale;
  * Created by H. M. Shahriar on 3/3/2018.
  */
 
-public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, DashboardListItemListener {
 
     private DrawerLayout mDrawerLayout;
 
@@ -85,8 +83,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     Typeface typeface;
     Context localizedContext;
 
+    ProgressBar progressBar;
+
     private ArrayList<SurahInfo> surahInfoList;
     SharedPreferenceController controller;
+
+    MediaManager mediaManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -154,7 +156,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
         Log.d("TimeTEst","sortList");
         sortList(type);
-        mAdapter = new SurahListAdapter(surahInfoList,context);
+        mAdapter = new SurahListAdapter(surahInfoList,context, this);
         Log.d("TimeTEst","SurahListAdapter");
 //        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
 //        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
@@ -163,15 +165,18 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         surahListView.setAdapter(mAdapter);
         Log.d("TimeTEst","setAdapter");
-        surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(this, surahListView, new OnRecycleViewClicked(){
+       /* surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(this, surahListView, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
-                SurahInfo info = mAdapter.getFilteredData().get(position);
-                //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
-                Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
-                surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO,info.getSurahNumber());
-                startActivity(surahIntent);
-                closeSearchBar();
+                Log.d("View Id ", "View Id " + view.getId() + " R.id.playpauseButton " + R.id.playPauseButton);
+                if (view.getId() != R.id.playPauseButton) {
+                    SurahInfo info = mAdapter.getFilteredData().get(position);
+                    //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
+                    Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+                    surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO, info.getSurahNumber());
+                    startActivity(surahIntent);
+                    closeSearchBar();
+                }
             }
 
             @Override
@@ -179,7 +184,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
             }
         }));
-
+        */
     }
 
     private void setSortText(int type, Context context) {
@@ -381,7 +386,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void updateListLanguage(Context localiContext){
         surahInfoList = getSurahInfoList(localiContext);
-        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,1);
+        int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL,Constants.SURAH_VERSE_SORT_BY_NUMBER);
         sortList(selectedOrder);
         mAdapter.setContext(localiContext);
         mAdapter.setSurahList(surahInfoList);
@@ -728,5 +733,29 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public boolean onQueryTextChange(String newText) {
         mAdapter.getFilter().filter(newText);
         return true;
+    }
+
+    @Override
+    public void playPauseButtonPressed(int surahNumber) {
+        if (mediaManager == null)
+         mediaManager = new MediaManager(this,Utility.getRawFileFromSurahNumber(surahNumber));
+
+        if (mediaManager.isMediaPlaying()) {
+            mediaManager.pauseMedia();
+        }
+        else
+        {
+            mediaManager.startMedia();
+        }
+    }
+
+    @Override
+    public void listItemPressed(int surahNumber) {
+//        SurahInfo info = mAdapter.getFilteredData().get(position);
+        //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
+        Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
+        surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO, surahNumber);
+        startActivity(surahIntent);
+        closeSearchBar();
     }
 }

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
-import android.os.LocaleList;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.surahshikkha.R;
-import com.shahriar.surahshikkha.UI.SurahActivity;
-
-import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -218,5 +214,72 @@ public class Utility {
         TextView toastTV = (TextView) toastLayout.getChildAt(0);
         toastTV.setTypeface(Utility.getTypeFace(context));
         toast.show();
+    }
+
+    public static int getRawFileFromSurahNumber(int number){
+        switch (number)
+        {
+            case 1:
+                return R.raw.s_1;
+            case 86:
+                return R.raw.s_86;
+            case 87:
+                return R.raw.s_87;
+            case 88:
+                return R.raw.s_88;
+            case 89:
+                return R.raw.s_89;
+            case 90:
+                return R.raw.s_90;
+            case 91:
+                return R.raw.s_91;
+            case 92:
+                return R.raw.s_92;
+            case 93:
+                return R.raw.s_93;
+            case 94:
+                return R.raw.s_94;
+            case 95:
+                return R.raw.s_95;
+            case 96:
+                return R.raw.s_96;
+            case 97:
+                return R.raw.s_97;
+            case 98:
+                return R.raw.s_98;
+            case 99:
+                return R.raw.s_99;
+            case 100:
+                return R.raw.s_100;
+            case 101:
+                return R.raw.s_101;
+            case 102:
+                return R.raw.s_102;
+            case 103:
+                return R.raw.s_103;
+            case 104:
+                return R.raw.s_104;
+            case 105:
+                return R.raw.s_105;
+            case 106:
+                return R.raw.s_106;
+            case 107:
+                return R.raw.s_107;
+            case 108:
+                return R.raw.s_108;
+            case 109:
+                return R.raw.s_109;
+            case 110:
+                return R.raw.s_110;
+            case 111:
+                return R.raw.s_111;
+            case 112:
+                return R.raw.s_112;
+            case 113:
+                return R.raw.s_113;
+            case 114:
+                return R.raw.s_114;
+        }
+        return 0;
     }
 }

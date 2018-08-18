@@ -8,11 +8,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Data.SurahInfo;
+import com.shahriar.surahshikkha.Interfaces.DashboardListItemListener;
 import com.shahriar.surahshikkha.R;
 import com.shahriar.surahshikkha.Utility.Utility;
 
@@ -34,14 +38,16 @@ public class SurahListAdapter extends RecyclerView.Adapter  implements Filterabl
     Context context;
     LayoutInflater inflater;
     private ArrayList<SurahInfo> filteredData = null;
+    DashboardListItemListener listItmeListener;
 
     private ItemFilter mFilter = new ItemFilter();
 
-    public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context) {
+    public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context, DashboardListItemListener listItemListener) {
         this.surahList = surahList;
         this.filteredData = surahList;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        listItmeListener = listItemListener;
     }
 
     @Override
@@ -121,10 +127,13 @@ public class SurahListAdapter extends RecyclerView.Adapter  implements Filterabl
     public TextView surahNameSecondary;
     public TextView surahDuration;
     public TextView verseCount;
+    public ProgressBar progressBar;
+    public Button playPauseButton;
     Utility utility = new Utility();
     String surahNumberHeader;
     String durationTextHeader;
     String verseTextHeader;
+    RelativeLayout surahInformation;
 
     public SurahHolder(View v) {
         super(v);
@@ -139,10 +148,13 @@ public class SurahListAdapter extends RecyclerView.Adapter  implements Filterabl
         surahDuration.setTypeface(typeface);
         verseCount = (TextView) v.findViewById(R.id.verseCount);
         verseCount.setTypeface(typeface);
+        progressBar = (ProgressBar) v.findViewById(R.id.playProgressBar);
+        playPauseButton = (Button)v.findViewById(R.id.playPauseButton);
+        surahInformation = (RelativeLayout) v.findViewById(R.id.SurahInformation);
         Log.d(getClass().getSimpleName(),"SurahHolder");
     }
 
-    public void bindSurah(SurahInfo surahInfo){
+    public void bindSurah(final SurahInfo surahInfo){
         surahNumberHeader =context.getString(R.string.surah_number);
         verseTextHeader = context.getString(R.string.verses);
         durationTextHeader = context.getString(R.string.duration);
@@ -159,6 +171,33 @@ public class SurahListAdapter extends RecyclerView.Adapter  implements Filterabl
         surahDuration.setText(durationtext);
         String verseText =  verseTextHeader + " " +Utility.getLocalizedInteger(surahInfo.getVerseCount(),current);
         verseCount.setText(verseText);
+
+        // progressbar
+        progressBar.setMax(100);
+        progressBar.setProgress(80);
+
+        playPauseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setProgress(50);
+                if (listItmeListener != null)
+                {
+                    listItmeListener.playPauseButtonPressed(surahInfo.getSurahNumber());
+                }
+            }
+        });
+        if (surahInformation != null)
+        {
+            surahInformation.setOnClickListener(new View.OnClickListener()
+            {
+
+                @Override
+                public void onClick(View v) {
+                    if (listItmeListener != null)
+                    listItmeListener.listItemPressed(surahInfo.getSurahNumber());
+                }
+            });
+        }
     }
 }
 }
