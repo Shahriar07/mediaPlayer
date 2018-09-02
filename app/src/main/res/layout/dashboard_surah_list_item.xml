@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/list_item_height"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
     android:orientation="horizontal">
-<RelativeLayout
+    <RelativeLayout
     android:id="@+id/SurahInformation"
-    android:layout_width="0dp"
-    android:layout_weight="0.85"
-    android:layout_height="80dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_weight="1"
     android:foreground="?android:attr/selectableItemBackground"
     android:clickable="true">
 
@@ -101,9 +101,9 @@
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/progressBar"
-        android:layout_width="0dp"
-        android:layout_weight="0.15"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/play_pause_width"
+        android:layout_height="match_parent"
+        android:layout_weight="0">
         <ProgressBar
             android:id="@+id/playProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -118,8 +118,8 @@
             android:secondaryProgress="100"/>
         <Button
             android:id="@+id/playPauseButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/play_pause_button_size"
+            android:layout_height="@dimen/play_pause_button_size"
             android:layout_centerInParent="true"
             android:background="@drawable/rounded_play_button_background"/>
     </RelativeLayout>

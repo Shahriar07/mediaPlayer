@@ -22,4 +22,7 @@
 
     <color name="actionMenuTextColor">#FFFFFF</color>
     <color name="surah_list_item_color">#000000</color>
+
+    <color name="pause_button_background">#046ea7</color>
+    <color name="play_button_background">#4DB6AC</color>
 </resources>
