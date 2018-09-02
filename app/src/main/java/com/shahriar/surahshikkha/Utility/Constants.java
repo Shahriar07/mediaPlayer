@@ -20,7 +20,7 @@ public class Constants {
     public static final String MENU_BANGLA_TRANSLATION = "bangla_translation";
     public static final String ACTIVITY_SHOW_GUIDE = "show_guide";
 
-    public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 5;
+    public static final int SURAH_VERSE_MAX_REPEAT_COUNT_DEFAULT = 3;
     public static final int SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER = 15;
     public static final int SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER = 1;
 
