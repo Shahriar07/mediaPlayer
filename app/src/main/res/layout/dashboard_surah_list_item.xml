@@ -103,7 +103,8 @@
         android:id="@+id/progressBar"
         android:layout_width="@dimen/play_pause_width"
         android:layout_height="match_parent"
-        android:layout_weight="0">
+        android:layout_weight="0"
+        android:layout_marginLeft="@dimen/play_pause_padding_left">
         <ProgressBar
             android:id="@+id/playProgressBar"
             style="?android:attr/progressBarStyleHorizontal"

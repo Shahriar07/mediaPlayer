@@ -4,9 +4,10 @@
 
     <dimen name="surah_info_text_size_in_dashboard">13sp</dimen>
     <dimen name="start_end_button_padding">32dp</dimen>
-    <dimen name="play_pause_padding">2dp</dimen>
+    <dimen name="play_pause_padding">3dp</dimen>
 
     <dimen name="list_item_height">90dp</dimen>
-    <dimen name="play_pause_width">60dp</dimen>
-    <dimen name="play_pause_button_size">35dp</dimen>
+    <dimen name="play_pause_width">65dp</dimen>
+    <dimen name="play_pause_button_size">40dp</dimen>
+    <dimen name="play_pause_padding_left" >5dp</dimen>
 </resources>
