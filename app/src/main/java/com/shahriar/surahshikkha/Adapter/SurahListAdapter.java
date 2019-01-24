@@ -29,11 +29,11 @@ import java.util.Locale;
 
 public class SurahListAdapter extends RecyclerView.Adapter implements Filterable {
 
-    Context context;
-    LayoutInflater inflater;
-    DashboardListItemListener listItmeListener;
-    private ArrayList<SurahInfo> surahList = new ArrayList<>();
-    private ArrayList<SurahInfo> filteredData = null;
+    private Context context;
+    private LayoutInflater inflater;
+    private DashboardListItemListener listItmeListener;
+    private ArrayList<SurahInfo> surahList;
+    private ArrayList<SurahInfo> filteredData;
     private ItemFilter mFilter = new ItemFilter();
 
     public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context, DashboardListItemListener listItemListener) {
@@ -53,7 +53,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.dashboard_surah_list_item, parent, false);
         SurahHolder vh = new SurahHolder(v);
-        //Log.d(getClass().getSimpleName(),"onCreateViewHolder");
+        Log.d(getClass().getSimpleName(),"onCreateViewHolder");
         return vh;
     }
 
@@ -120,6 +120,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
 
     }
 
+
     class SurahHolder extends RecyclerView.ViewHolder {
         public TextView surahNo;
         public TextView surahName;
@@ -156,6 +157,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
         }
 
         public void bindSurah(final SurahInfo surahInfo,final int position) {
+            Log.d(getClass().getSimpleName(),"BindSurah called for possition " + position + " surah Info " + surahInfo.getSurahNumber());
             surahNumberHeader = context.getString(R.string.surah_number);
             verseTextHeader = context.getString(R.string.verses);
             durationTextHeader = context.getString(R.string.duration);
@@ -177,10 +179,12 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             progressBar.setMax(100);
             progressBar.setProgress(surahInfo.getAudioPercent());
             if (surahInfo.isPlaying()) {
+                Log.d(getClass().getSimpleName(), "Set Button to pause " + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
                 playingState = true;
             }
             else {
+                Log.d(getClass().getSimpleName(), "Set Button to play" + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
                 playingState = false;
             }
@@ -188,18 +192,8 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             playPauseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listItmeListener != null) {
-                        if (playingState)
-                        {
-                            playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
-                        }
-                        else{
-                            playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
-                        }
-                        playingState = !playingState;
-                        surahInfo.setPlaying(playingState);
-                        listItmeListener.playPauseButtonPressed(surahInfo, position);
-                    }
+                    Log.d(getClass().getSimpleName(), "******************* PlayPause button clicked *********************");
+                    updatePlayPauseButton(surahInfo,position);
                 }
             });
             if (surahInformation != null) {
@@ -213,12 +207,33 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
                 });
             }
         }
+        public void updatePlayPauseButton(final SurahInfo surahInfo,final int possition){
+            if (listItmeListener != null) {
+                Log.d(getClass().getSimpleName(), "Playing State " + playingState + " Surah Number " + surahInfo.getSurahNumber() + " Possition " + possition);
+                if (playingState)
+                {
+                    playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
+                }
+                else{
+                    playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
+                }
+                playingState = !playingState;
+                surahInfo.setPlaying(playingState);
+                listItmeListener.playPauseButtonPressed(surahInfo, possition);
+            }
+        }
     }
 
+    // Update the view of single item from list which holds the surahinfo
     public void refresh(int position, SurahInfo item){
         if (this.filteredData.size() > position) {
             this.filteredData.set(position, item);
+            Log.d(getClass().getSimpleName(), " Refresh list items " + item.isPlaying() + " position " + position);
             notifyItemChanged(position);
         }
+    }
+
+    public void updateRunningMedia(){
+
     }
 }

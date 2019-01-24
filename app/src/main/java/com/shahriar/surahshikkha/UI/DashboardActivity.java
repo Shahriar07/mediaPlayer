@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.database.DatabaseErrorHandler;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
 import com.shahriar.surahshikkha.CustomComponents.CustomTypeface;
+import com.shahriar.surahshikkha.CustomComponents.ExpandableTextView;
 import com.shahriar.surahshikkha.Data.SurahInfo;
 import com.shahriar.surahshikkha.Dialog.ExitDialog;
 import com.shahriar.surahshikkha.Dialog.HelpDialog;
@@ -66,6 +68,7 @@ import java.util.Locale;
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, DashboardListItemListener, AudioControllerListener {
     static SurahInfo surahInfo;
     static int position;
+    static boolean isContinuousPlay = true;
     SearchView searchView;
     MenuItem searchMenuItem;
     Typeface typeface;
@@ -75,6 +78,20 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     // Playing surah information
     int surahNumber;
     Handler mediaHandler;
+
+    private DrawerLayout mDrawerLayout;
+    // list to show surah
+    private RecyclerView.LayoutManager mLayoutManager;
+    private SurahListAdapter mAdapter;
+    private RecyclerView surahListView;
+    private SwitchCompat menuBdTranslationSwitch;
+    private SwitchCompat menuEnTranslationSwitch;
+    private TextView drawerMaxRepeatCount;
+    private TextView drawerSelectedLanguage;
+    private TextView sortTypeTextHeaderView;
+    private TextView sortTypeTextView;
+    private ArrayList<SurahInfo> surahInfoList;
+
     Comparator<SurahInfo> comparatorByNumber = new Comparator<SurahInfo>() {
         @Override
         public int compare(SurahInfo lhs, SurahInfo rhs) {
@@ -108,10 +125,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     };
 
-
-    private DrawerLayout mDrawerLayout;
-    // list to show surah
-    private RecyclerView.LayoutManager mLayoutManager;
     /**
      * Runnable to update progressbar
      */
@@ -123,15 +136,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             }
         }
     };
-    private SurahListAdapter mAdapter;
-    private RecyclerView surahListView;
-    private SwitchCompat menuBdTranslationSwitch;
-    private SwitchCompat menuEnTranslationSwitch;
-    private TextView drawerMaxRepeatCount;
-    private TextView drawerSelectedLanguage;
-    private TextView sortTypeTextHeaderView;
-    private TextView sortTypeTextView;
-    private ArrayList<SurahInfo> surahInfoList;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -183,6 +188,22 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     void initComponent(Context context) {
+
+        String yourText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+                "Ut volutpat interdum interdum. Nulla laoreet lacus diam, vitae " +
+                "sodales sapien commodo faucibus. Vestibulum et feugiat enim. Donec " +
+                "semper mi et euismod tempor. Sed sodales eleifend mi id varius. Nam " +
+                "et ornare enim, sit amet gravida sapien. Quisque gravida et enim vel " +
+                "volutpat. Vivamus egestas ut felis a blandit. Vivamus fringilla " +
+                "dignissim mollis. Maecenas imperdiet interdum hendrerit. Aliquam" +
+                " dictum hendrerit ultrices. Ut vitae vestibulum dolor. Donec auctor ante" +
+                " eget libero molestie porta. Nam tempor fringilla ultricies. Nam sem " +
+                "lectus, feugiat eget ullamcorper vitae, ornare et sem. Fusce dapibus ipsum" +
+                " sed laoreet suscipit. ";
+
+        ExpandableTextView expandableTextView = (ExpandableTextView) findViewById(R.id.headerText);
+        expandableTextView.setText(yourText);
+        expandableTextView.setBackgroundColor(getResources().getColor(R.color.window_background));
         Log.d(getClass().getSimpleName(), "initComponent");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -436,7 +457,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     private void updateListLanguage(Context localiContext) {
         Log.d(getClass().getSimpleName(), "updateListLanguage");
-        stopCurrentMedia();
+        stopCurrentMedia(true);
         surahInfoList = getSurahInfoList(localiContext);
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL, Constants.SURAH_VERSE_SORT_BY_NUMBER);
         sortList(selectedOrder);
@@ -447,7 +468,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     void sortList(int type) {
         Log.d(getClass().getSimpleName(), " Sort List " + type);
-        stopCurrentMedia();
+        stopCurrentMedia(true);
         if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
             Collections.sort(surahInfoList, comparatorByNumber);
         else if (type == Constants.SURAH_VERSE_SORT_BY_DURATION)
@@ -679,7 +700,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Log.d(getClass().getSimpleName(), "onOptionsItemSelected");
         switch (item.getItemId()) {
             case R.id.actionSort:
-                stopCurrentMedia();
+                stopCurrentMedia(true);
                 closeSearchBar();
                 showSortSelectDialog();
                 return true;
@@ -737,14 +758,14 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public boolean onQueryTextChange(String newText) {
         Log.d(getClass().getSimpleName(), "onQueryTextChange");
-        stopCurrentMedia();
+        stopCurrentMedia(true);
         mAdapter.getFilter().filter(newText);
         return true;
     }
 
     @Override
     public void playPauseButtonPressed(SurahInfo surahInfo, int position) {
-        Log.d(getClass().getSimpleName(), "playPauseButtonPressed");
+        Log.d(getClass().getSimpleName(), "playPauseButtonPressed " + position + " isPlaying " + surahInfo.isPlaying() + " surahInfo " + surahInfo.getSurahNumber());
         if (surahInfo == null)
             return;
         if (mediaManager == null) {
@@ -754,7 +775,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             DashboardActivity.position = position;
         } else if ((surahInfo.getSurahNumber() != surahNumber)) {
             // Stop the previous audio and update the surahInfo in adapter
-            stopCurrentMedia();
+            stopCurrentMedia(true);
 
             // Set new audio
             mediaManager = new MediaManager(this, Utility.getRawFileFromSurahNumber(surahInfo.getSurahNumber()), this, surahInfo.getSurahNumber());
@@ -763,8 +784,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             DashboardActivity.position = position;
         }
         if (mediaManager.isMediaPlaying()) {
+            Log.d(getClass().getSimpleName(), "Media is playing, stop the media");
             mediaManager.pauseMedia();
         } else {
+            Log.d(getClass().getSimpleName(), "Media is not playing, start the media and update progressbar");
             mediaManager.startMedia();
             updateProgressBar(surahInfo, position);
         }
@@ -777,7 +800,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      * @param position
      */
     private void updateProgressBar(SurahInfo surahInfo, int position) {
-        Log.d(getClass().getSimpleName(), "updateProgressBar");
+        //Log.d(getClass().getSimpleName(), "updateProgressBar");
         if (mediaManager != null) {
             int duration = mediaManager.getMediaDuration();
             int currentPosition = mediaManager.getCurrentPosition();
@@ -795,10 +818,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     /**
      * Stop currently playing surah (if any)
      */
-    private void stopCurrentMedia() {
+    private void stopCurrentMedia(boolean userInitiated) {
         Log.d(getClass().getSimpleName(), "stopCurrentMedia");
         if (mediaManager != null)
-            mediaManager.stopMedia();
+            mediaManager.stopMedia(userInitiated);
         if (DashboardActivity.surahInfo != null) {
             DashboardActivity.surahInfo.setAudioPercent(0);
             DashboardActivity.surahInfo.setPlaying(false);
@@ -815,7 +838,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void listItemPressed(int surahNumber) {
         Log.d(getClass().getSimpleName(), "listItemPressed");
-        stopCurrentMedia();
+        stopCurrentMedia(true);
         Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
         surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO, surahNumber);
         startActivity(surahIntent);
@@ -848,18 +871,30 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      * @param surahNumber
      */
     @Override
-    public void audioFinished(int surahNumber) {
+    public void audioFinished(int surahNumber, boolean userInitiated) {
         Log.d(getClass().getSimpleName(), "audioFinished");
-        surahNumber = 0;
+        //surahNumber = 0;
         if (mediaManager != null) {
             mediaManager.release();
             mediaManager = null;
         }
-
+        Log.d(getClass().getSimpleName(), "surah number " + surahNumber + " surah info " + surahInfo);
         DashboardActivity.surahInfo.setAudioPercent(0);
         DashboardActivity.surahInfo.setPlaying(false);
         if (this.mAdapter != null)
             this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo);
+
+        // Play the next Surah if available
+        if (isContinuousPlay && !userInitiated)
+        {
+            if (surahInfoList.size()  > DashboardActivity.position + 1) {
+                DashboardActivity.position++;
+                DashboardActivity.surahInfo = surahInfoList.get(DashboardActivity.position);
+                DashboardActivity.surahInfo.setPlaying(true);
+                this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo);
+                playPauseButtonPressed(DashboardActivity.surahInfo, DashboardActivity.position);
+            }
+        }
     }
 
     @Override

@@ -8,5 +8,5 @@ public interface AudioControllerListener {
 
     void audioStarted( int surahNumber);
 
-    void audioFinished( int surahNumber);
+    void audioFinished( int surahNumber, boolean userInitiated);
 }

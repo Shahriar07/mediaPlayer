@@ -13,6 +13,33 @@
                       <PersistentState>
                         <option name="children">
                           <map>
+                            <entry key="actionbar">
+                              <value>
+                                <PersistentState>
+                                  <option name="children">
+                                    <map>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/D:/Software/InstalledSoftware/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="outputName" value="search_icon" />
+                                      <entry key="theme" value="HOLO_DARK" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
@@ -34,7 +61,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="scalingPercent" value="66" />
+                                                <entry key="scalingPercent" value="62" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -44,12 +71,24 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="C:\Users\USER\Desktop\iCon\index\surah_shikkh_1.png" />
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundColor" value="03a8f2" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background" />
+                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+                                      <entry key="foregroundImage" value="E:\Projects\AndroidProjects\Project-Icon\SurahShiksha\updated_icon.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground" />
+                                      <entry key="outputName" value="search_icon" />
+                                      <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
                                 </PersistentState>
                               </value>
                             </entry>
+                          </map>
+                        </option>
+                        <option name="values">
+                          <map>
+                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>

@@ -60,15 +60,12 @@ public class MediaManager implements AudioManager.OnAudioFocusChangeListener, Me
     public void onCompletion(MediaPlayer mp) {
         if (audioControllerListener != null)
         {
-            audioControllerListener.audioFinished(surahNumber);
+            audioControllerListener.audioFinished(surahNumber,false);
         }
     }
 
     public boolean isMediaPlaying() {
-        if (player != null)
-            return player.isPlaying();
-        else
-            return false;
+        return player != null && player.isPlaying();
     }
 
     public void pauseMedia() {
@@ -81,11 +78,11 @@ public class MediaManager implements AudioManager.OnAudioFocusChangeListener, Me
 
     }
 
-    public void stopMedia() {
+    public void stopMedia(boolean userInitiated) {
         if (player != null){
             player.stop();
             if (audioControllerListener != null) {
-                audioControllerListener.audioFinished(surahNumber);
+                audioControllerListener.audioFinished(surahNumber, userInitiated);
             }
         }
 

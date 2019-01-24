@@ -113,24 +113,6 @@
                 android:elevation="4dp"
                 android:foreground="?attr/selectableItemBackgroundBorderless"/>
 
-            <!--com.shahriar.surahshikkha.CustomComponents.CustomSpinner
-                android:id="@+id/start_loop"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                style="@style/SpinnerStartTheme"
-                android:elevation="4dp"
-                android:dropDownWidth="60dp"
-                android:layout_weight="1"/>
-
-            <com.shahriar.surahshikkha.CustomComponents.CustomSpinner
-                android:id="@+id/end_loop"
-                android:layout_width="0dp"
-                android:dropDownWidth="60dp"
-                style="@style/SpinnerEndTheme"
-                android:layout_height="match_parent"
-                android:elevation="4dp"
-                android:layout_weight="1"/-->
-
             <Button
                 android:id="@+id/startLoop"
                 android:layout_width="0dp"
