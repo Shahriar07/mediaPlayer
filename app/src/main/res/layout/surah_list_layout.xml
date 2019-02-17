@@ -3,64 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="8dp">
-    <com.shahriar.surahshikkha.CustomComponents.ExpandableTextView
-        android:id="@+id/headerText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        android:background="@color/window_background"
-        android:text="@string/user_guide"
-        android:textColor="@color/colorAccentSecondary"
-        android:layout_marginTop="?attr/actionBarSize"
-        />
-
-    <RelativeLayout
+    android:background="@color/window_background">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       >
-        <TextView
-            android:id="@+id/divider"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:text=" : "
-            android:layout_centerInParent="true"
-            android:gravity="center|center_horizontal|center_vertical"
-            android:textSize="@dimen/sort_header"/>
-        <TextView
-            android:id="@+id/SortTextHeader"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toLeftOf="@id/divider"
-            android:layout_toStartOf="@id/divider"
-            android:text="@string/sort_header"
-            android:textColor="@color/colorAccentSecondary"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="@dimen/sort_header"/>
-        <TextView
-            android:id="@+id/SortText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toRightOf="@id/divider"
-            android:layout_toEndOf="@id/divider"
-            android:text="@string/verses"
-            android:textColor="@color/colorAccentSecondary"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="@dimen/sort_header"/>
-    </RelativeLayout>
+        android:layout_marginTop="?attr/actionBarSize"
+        >
+        <include
+            layout="@layout/header_verse_of_dashboard" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/surahList"
         android:layout_width="match_parent"

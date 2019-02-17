@@ -162,6 +162,9 @@
         <item>Therein come down the angels and the Spirit by Allah.s permission, on every errand:</item>
         <item>Peace!...This until the rise of morn!</item>
     </string-array>
+    <string-array name="se96">
+        <item> Proclaim! (or read!) in the name of your Lord and Cherisher, Who created-</item>
+    </string-array>
     <string-array name="se95">
         <item>By the Fig and the Olive,</item>
         <item>And the Mount of Sinai,</item>
@@ -518,6 +521,7 @@
         <item>এটা নিরাপত্তা, যা ফজরের উদয় পর্যন্ত অব্যাহত থাকে।</item>
     </string-array>
     <string-array name="s96">
+        <item> পাঠ কর তোমার প্রতিপালকের নামে, যিনি সৃষ্টি করিয়াছেন-</item>
     </string-array>
     <string-array name="s95">
         <item>শপথ আঞ্জীর (ডুমুর) ও যয়তুনের,</item>

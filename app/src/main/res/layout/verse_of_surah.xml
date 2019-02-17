@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
+    android:theme="@style/colorControlHighlight_ripple"
     android:layout_marginTop="4dp"
     android:clickable="true"
     android:layout_marginBottom="4dp"

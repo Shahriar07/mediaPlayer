@@ -3,6 +3,9 @@
     <string name="bismillah_bangla"> শুরু করছি আল্লাহর নামে যিনি পরম করুণাময়, অতি দয়ালু।</string>
     <string name="bismillah_english"> In the name of Allah, Most Gracious, Most Merciful.</string>
 
+    <string name="header_verse_bn"> পাঠ কর তোমার প্রতিপালকের নামে, যিনি সৃষ্টি করিয়াছেন-</string>
+    <string name="header_verse_en"> Proclaim! (or read!) in the name of your Lord and Cherisher, Who created-</string>
+
     <string-array name="se1">
         <item>Praise be to Allah, the Cherisher and Sustainer of the worlds;</item>
         <item>Most Gracious, Most Merciful;</item>
@@ -161,6 +164,9 @@
         <item>The Night of Power is better than a thousand months.</item>
         <item>Therein come down the angels and the Spirit by Allah.s permission, on every errand:</item>
         <item>Peace!...This until the rise of morn!</item>
+    </string-array>
+    <string-array name="se96">
+        <item> Proclaim! (or read!) in the name of your Lord and Cherisher, Who created-</item>
     </string-array>
     <string-array name="se95">
         <item>By the Fig and the Olive,</item>
@@ -518,6 +524,7 @@
         <item>এটা নিরাপত্তা, যা ফজরের উদয় পর্যন্ত অব্যাহত থাকে।</item>
     </string-array>
     <string-array name="s96">
+        <item> পাঠ কর তোমার প্রতিপালকের নামে, যিনি সৃষ্টি করিয়াছেন-</item>
     </string-array>
     <string-array name="s95">
         <item>শপথ আঞ্জীর (ডুমুর) ও যয়তুনের,</item>

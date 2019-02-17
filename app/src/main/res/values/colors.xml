@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#00695C</color>
     <color name="colorAccent">#4DB6AC</color>
 
+    <color name="orangeTint">#eba222</color>
+
     <color name="borderColor">#80CBC4</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorHint">#BDBDBD</color>
@@ -25,4 +27,6 @@
 
     <color name="pause_button_background">#046ea7</color>
     <color name="play_button_background">#4DB6AC</color>
+
+    <color name="header_verse_background">#e8bae9e5</color>
 </resources>
