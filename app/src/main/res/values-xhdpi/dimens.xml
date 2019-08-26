@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size">8sp</dimen>
+    <dimen name="text_size">9sp</dimen>
 
-    <dimen name="surah_info_text_size_in_dashboard">12sp</dimen>
-    <dimen name="sort_header">15sp</dimen>
+    <dimen name="surah_info_text_size_in_dashboard">11sp</dimen>
+    <dimen name="text_size_in_verse_of_surah">16sp</dimen>
+    <dimen name="sort_header">18sp</dimen>
     <dimen name="start_end_button_padding">10dp</dimen>
 
     <dimen name="start_end_text_size">20dp</dimen>
