@@ -2,7 +2,8 @@
 <resources>
     <dimen name="text_size">8sp</dimen>
 
-    <dimen name="surah_info_text_size_in_dashboard">13sp</dimen>
+    <dimen name="surah_info_text_size_in_dashboard">17sp</dimen>
+    <dimen name="text_size_in_verse_of_surah">22sp</dimen>
     <dimen name="start_end_button_padding">32dp</dimen>
     <dimen name="play_pause_padding">3dp</dimen>
 

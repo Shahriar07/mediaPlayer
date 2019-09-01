@@ -3,7 +3,7 @@
     <dimen name="text_size">10sp</dimen>
 
     <dimen name="surah_info_text_size_in_dashboard">13sp</dimen>
-
+    <dimen name="text_size_in_verse_of_surah">15sp</dimen>
     <dimen name="sort_header">16sp</dimen>
     <dimen name="start_end_button_padding">12dp</dimen>
 

@@ -37,6 +37,7 @@
         android:paddingTop="4dp"
         android:text="@string/header_verse_bn"
         android:textColor="@android:color/black"
+        android:textSize="@dimen/surah_info_text_size_in_dashboard"
         android:textStyle="bold|italic" />
 
     <TextView
@@ -53,6 +54,7 @@
         android:layout_gravity="center_vertical"
         android:gravity="center_vertical|center_horizontal"
         android:layout_below="@id/header_verse_bangla"
+        android:textSize="@dimen/surah_info_text_size_in_dashboard"
         android:text="@string/header_verse_en"/>
 
 </RelativeLayout>

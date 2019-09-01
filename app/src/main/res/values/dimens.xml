@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size">6sp</dimen>
+    <dimen name="text_size">7sp</dimen>
 
     <dimen name="surah_info_text_size_in_dashboard">12sp</dimen>
+    <dimen name="text_size_in_verse_of_surah">13sp</dimen>
     <dimen name="start_end_button_padding">6dp</dimen>
 
     <dimen name="start_end_text_size">20dp</dimen>

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/list_item_height"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <RelativeLayout
         android:id="@+id/SurahInformation"
@@ -18,7 +19,7 @@
         <TextView
             android:id="@+id/surahListSurahName"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -29,15 +30,17 @@
             android:text="Test"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textSize="@dimen/surah_info_text_size_in_dashboard" />
 
         <TextView
             android:id="@+id/surahListSurahNameSecondary"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="8dp"
             android:layout_toRightOf="@id/surahListSurahName"
+            android:layout_toEndOf="@id/surahListSurahName"
             android:gravity="center_vertical"
             android:paddingLeft="8dp"
             android:paddingStart="8dp"
@@ -46,56 +49,59 @@
             android:textColor="@color/colorAccentSecondary"
             android:textSize="@dimen/surah_info_text_size_in_dashboard" />
 
-        <TextView
-            android:id="@+id/surahListSurahNumber"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/surahListSurahNameSecondary"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/surahListSurahName"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical|center"
-            android:paddingLeft="8dp"
-            android:paddingStart="8dp"
-            android:text="Test"
-            android:textAllCaps="false"
-            android:textColor="@color/surah_list_item_color"
-            android:textSize="@dimen/surah_info_text_size_in_dashboard" />
-
-        <TextView
-            android:id="@+id/verseCount"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@id/surahListSurahName"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical"
-            android:text="Test"
-            android:textAllCaps="false"
-            android:textColor="@color/surah_list_item_color"
-            android:textSize="@dimen/surah_info_text_size_in_dashboard" />
-
-        <TextView
-            android:id="@+id/surahDuration"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/surahListSurahName"
-            android:layout_marginBottom="8dp"
-            android:layout_marginTop="4dp"
-            android:gravity="center_vertical|end"
-            android:paddingEnd="4dp"
-            android:paddingRight="4dp"
-            android:text="Duration:00:00"
-            android:textAllCaps="false"
-            android:textColor="@color/surah_list_item_color"
-            android:textSize="@dimen/surah_info_text_size_in_dashboard" />
+            android:layout_alignParentEnd="true">
+            <TextView
+                android:id="@+id/surahListSurahNumber"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="13"
+                android:gravity="left|start"
+                android:paddingLeft="8dp"
+                android:paddingStart="8dp"
+                android:text="Surah No: 100"
+                android:textAllCaps="false"
+                android:textColor="@color/surah_list_item_color"
+                android:textSize="@dimen/surah_info_text_size_in_dashboard" />
+
+            <TextView
+                android:id="@+id/verseCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="9"
+                android:gravity="center_vertical|center|center_horizontal"
+                android:text="Verses: 10"
+                android:textAllCaps="false"
+                android:textColor="@color/surah_list_item_color"
+                android:textSize="@dimen/surah_info_text_size_in_dashboard"/>
+
+            <TextView
+                android:id="@+id/surahDuration"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_weight="14.5"
+                android:gravity="end|right"
+                android:paddingEnd="4dp"
+                android:paddingRight="4dp"
+                android:text="Duration:00:00"
+                android:textAllCaps="false"
+                android:textColor="@color/surah_list_item_color"
+                android:textSize="@dimen/surah_info_text_size_in_dashboard" />
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout
