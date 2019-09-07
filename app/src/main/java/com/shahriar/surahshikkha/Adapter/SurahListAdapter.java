@@ -2,6 +2,8 @@ package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,19 +27,36 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 /**
+ * List Adapter to handle Dashboard Surah list
+ *
  * Created by H. M. Shahriar on 2/24/2018.
  */
 
 public class SurahListAdapter extends RecyclerView.Adapter implements Filterable {
 
+    private final int interval = 500; // 500 milliSecond
     private Context context;
     private LayoutInflater inflater;
     private DashboardListItemListener listItmeListener;
     private ArrayList<SurahInfo> surahList;
     private ArrayList<SurahInfo> filteredData;
     private ItemFilter mFilter = new ItemFilter();
-    DashboardListItemUpdateListener updateListener;
-    int updatePosition = 0;
+    private DashboardListItemUpdateListener updateListener;
+    private int updatePosition = 0;
+    private Handler handler = new Handler();
+
+    // Run the next surah if the view is in background
+    private Runnable runnable = new Runnable() {
+        public void run() {
+            if (updateListener != null) {
+                updateListener.listItemUpdated(updatePosition);
+                updatePosition = 0;
+                updateListener = null;
+            } else {
+                Log.d(getClass().getSimpleName(), "Update Listener null");
+            }
+        }
+    };
 
     public SurahListAdapter(ArrayList<SurahInfo> surahList, Context context, DashboardListItemListener listItemListener) {
         this.surahList = surahList;
@@ -53,11 +72,11 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(getClass().getSimpleName(), "onCreateViewHolder");
         View v = inflater.inflate(R.layout.dashboard_surah_list_item, parent, false);
         SurahHolder vh = new SurahHolder(v);
-        Log.d(getClass().getSimpleName(),"onCreateViewHolder");
+        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
         return vh;
     }
 
@@ -66,7 +85,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(getClass().getSimpleName(), "onBindViewHolder");
         SurahHolder surahHolder = (SurahHolder) holder;
         surahHolder.bindSurah(filteredData.get(position), position);
@@ -85,6 +104,19 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
     @Override
     public Filter getFilter() {
         return mFilter;
+    }
+
+    // Update the view of single item from list which holds the surahinfo
+    public synchronized void refresh(int position, SurahInfo item, DashboardListItemUpdateListener updateListener) {
+        this.updateListener = updateListener;
+        if (this.filteredData.size() > position) {
+            this.filteredData.set(position, item);
+            Log.i(getClass().getSimpleName(), " Refresh list item with playing status " + item.isPlaying() + " position " + position);
+            this.updatePosition = position;
+            notifyItemChanged(position);
+        }
+        handler.postAtTime(runnable, System.currentTimeMillis() + interval);
+        handler.postDelayed(runnable, interval);
     }
 
     private class ItemFilter extends Filter {
@@ -159,8 +191,8 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             playingState = false;
         }
 
-        public void bindSurah(final SurahInfo surahInfo,final int position) {
-            Log.d(getClass().getSimpleName(),"BindSurah called for possition " + position + " surah Info " + surahInfo.getSurahNumber());
+        public void bindSurah(final SurahInfo surahInfo, final int position) {
+            Log.d(getClass().getSimpleName(), "BindSurah called for possition " + position + " surah Info " + surahInfo.getSurahNumber());
             surahNumberHeader = context.getString(R.string.surah_number);
             verseTextHeader = context.getString(R.string.verses);
             durationTextHeader = context.getString(R.string.duration);
@@ -185,8 +217,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
                 Log.d(getClass().getSimpleName(), "Set Button to pause " + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
                 playingState = true;
-            }
-            else {
+            } else {
                 Log.d(getClass().getSimpleName(), "Set Button to play " + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
                 playingState = false;
@@ -196,7 +227,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
                 @Override
                 public void onClick(View v) {
                     Log.d(getClass().getSimpleName(), "******************* PlayPause button clicked *********************");
-                    updatePlayPauseButton(surahInfo,position);
+                    updatePlayPauseButton(surahInfo, position);
                 }
             });
             if (surahInformation != null) {
@@ -209,41 +240,21 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
                     }
                 });
             }
-            if (updateListener != null) {
-                updateListener.listItemUpdated(updatePosition);
-                updatePosition = 0;
-                updateListener = null;
-            } else {
-                Log.d(getClass().getSimpleName(), "Update Listener null");
-            }
         }
 
 
-        public void updatePlayPauseButton(final SurahInfo surahInfo,final int possition){
+        public void updatePlayPauseButton(final SurahInfo surahInfo, final int position) {
             if (listItmeListener != null) {
-                Log.d(getClass().getSimpleName(), "Playing State " + playingState + " Surah Number " + surahInfo.getSurahNumber() + " Possition " + possition);
-                if (playingState)
-                {
+                Log.d(getClass().getSimpleName(), "Playing State " + playingState + " Surah Number " + surahInfo.getSurahNumber() + " Possition " + position);
+                if (playingState) {
                     playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
-                }
-                else{
+                } else {
                     playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
                 }
                 playingState = !playingState;
                 surahInfo.setPlaying(playingState);
-                listItmeListener.playPauseButtonPressed(surahInfo, possition);
+                listItmeListener.playPauseButtonPressed(surahInfo, position);
             }
-        }
-    }
-
-    // Update the view of single item from list which holds the surahinfo
-    public synchronized void refresh(int position, SurahInfo item, DashboardListItemUpdateListener updateListener){
-        this.updateListener = updateListener;
-        if (this.filteredData.size() > position) {
-            this.filteredData.set(position, item);
-            Log.i(getClass().getSimpleName(), " Refresh list item with playing status " + item.isPlaying() + " position " + position);
-            this.updatePosition = position;
-            notifyItemChanged(position);
         }
     }
 }

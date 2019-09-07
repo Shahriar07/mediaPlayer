@@ -11,9 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -35,7 +33,6 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shahriar.surahshikkha.Adapter.SurahListAdapter;
 import com.shahriar.surahshikkha.CustomComponents.CustomTypeface;
@@ -129,7 +126,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
     };
     private SurahListAdapter mAdapter;
-    private RecyclerView surahListView;
+
     private SwitchCompat menuBdTranslationSwitch;
     private SwitchCompat menuEnTranslationSwitch;
     private TextView drawerMaxRepeatCount;
@@ -192,20 +189,17 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        Log.d(getClass().getSimpleName(), "setSupportActionBar");
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.menu);
+        if(actionBar != null) {
+            Log.d(getClass().getSimpleName(), "setSupportActionBar");
+            actionBar.setHomeAsUpIndicator(R.drawable.menu);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         updateTitleBar(context);
 
         mediaHandler = new Handler();
 
-//        sortTypeTextHeaderView = (TextView) findViewById(R.id.SortTextHeader);
-//        sortTypeTextHeaderView.setTypeface(typeface);
-//        sortTypeTextView = (TextView) findViewById(R.id.SortText);
-//        sortTypeTextView.setTypeface(typeface);
-
         Log.d(getClass().getSimpleName(), "setHomeAsUpIndicator");
-        surahListView = (RecyclerView) findViewById(R.id.surahList);
+        RecyclerView surahListView = (RecyclerView) findViewById(R.id.surahList);
         surahListView.setHasFixedSize(true);
         mLayoutManager = new ScrollingLinearLayoutManager(this, 1);
         surahListView.setLayoutManager(mLayoutManager);
@@ -215,78 +209,17 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList, context, this);
         Log.d(getClass().getSimpleName(), "SurahListAdapter");
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(context, LinearLayoutManager.VERTICAL);
-//        dividerItemDecoration.setDrawable(context.getResources().getDrawable(R.drawable.divider_item_decoration));
-//        surahListView.addItemDecoration(dividerItemDecoration);
-        Log.d(getClass().getSimpleName(), "addItemDecoration");
 
         surahListView.setAdapter(mAdapter);
         Log.d(getClass().getSimpleName(), "setAdapter");
-       /* surahListView.addOnItemTouchListener(new RecyclerItemTouchListener(this, surahListView, new OnRecycleViewClicked(){
-            @Override
-            public void onClick(View view, int position) {
-                Log.d("View Id ", "View Id " + view.getId() + " R.id.playpauseButton " + R.id.playPauseButton);
-                if (view.getId() != R.id.playPauseButton) {
-                    SurahInfo info = mAdapter.getFilteredData().get(position);
-                    //Toast.makeText(getApplicationContext(), info.getSurahName() + " is selected!", Toast.LENGTH_SHORT).show();
-                    Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
-                    surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO, info.getSurahNumber());
-                    startActivity(surahIntent);
-                    closeSearchBar();
-                }
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-        */
-
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-        float textSize = getResources().getDimension(R.dimen.text_size_in_verse_of_surah);
-        float density = getResources().getDisplayMetrics().density;
-        int dp = (int) (textSize / density);
-        Utility.showCustomToast(DashboardActivity.this, "DP: "+dp + " TextSize : " + textSize + " density " + density, Toast.LENGTH_SHORT);
 
     }
-
-//    /**
-//     * Called from method sortlist
-//     * Sets the sort type text at top of surah list
-//     *
-//     * @param type sort type (surah number -> 0, surah duration -> 1, verse count -> 2)
-//     * @param context the application context for language support)
-//     */
-//    private void setSortText(int type, Context context) {
-//        Log.d(getClass().getSimpleName(), "setSortText");
-//        String header = context.getString(R.string.sort_header);
-//        sortTypeTextHeaderView.setText(header);
-//        String sortText = "";
-//        if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
-//            sortText = context.getString(R.string.surah_number);
-//        else if (type == Constants.SURAH_VERSE_SORT_BY_DURATION)
-//            sortText = context.getString(R.string.duration);
-//        else if (type == Constants.SURAH_VERSE_SORT_BY_VERSE_NUMBER)
-//            sortText = context.getString(R.string.verses);
-//        else
-//            sortText = context.getString(R.string.duration);
-//
-//        sortText = sortText.substring(0, sortText.length() - 1); // Remove the last ':' from text
-//        sortTypeTextView.setText(sortText);
-//    }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(getClass().getSimpleName(), "onResume");
+        scrollListToPosition(DashboardActivity.position);
     }
 
     private void initializeMenuItem() {
@@ -497,6 +430,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     private void scrollListToPosition(int index) {
         Log.d(getClass().getSimpleName(), "scrollListToPosition " + index);
+        if (mLayoutManager != null)
         mLayoutManager.scrollToPosition(index);
     }
 
@@ -874,7 +808,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     /**
      * Update the playPause button image when audio play finished
      *
-     * @param surahNumber Surah number to stop
+     * @param surahNumber   Surah number to stop
      * @param userInitiated if userInitiated, next surah will not play automatically
      */
     @Override
@@ -891,13 +825,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         if (this.mAdapter != null) {
             //if the finished method called automatically, try to play the next surah
             if (isContinuousPlay && !userInitiated) {
-                Log.d("UpdateListener ", "UpdateListener true");
+                Log.d("UpdateListener ", "UpdateListener, Not user Initiated");
                 this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo, this);
             } else {
-                Log.d("UpdateListener ", "UpdateListener false");
+                Log.d("UpdateListener ", "UpdateListener, User Initiated");
                 this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo, null);
             }
-
         }
 
 //        // Play the next Surah if available
@@ -945,7 +878,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         }
 
         protected void onPostExecute(SurahListAdapter listAdapters) {
-            listAdapters.refresh(DashboardActivity.position, DashboardActivity.surahInfo,null);
+            listAdapters.refresh(DashboardActivity.position, DashboardActivity.surahInfo, null);
             playPauseButtonPressed(DashboardActivity.surahInfo, DashboardActivity.position);
             scrollListToPosition(DashboardActivity.position);
         }

@@ -3,6 +3,9 @@
     <string name="bismillah_bangla"> শুরু করছি আল্লাহর নামে যিনি পরম করুণাময়, অতি দয়ালু।</string>
     <string name="bismillah_english"> In the name of Allah, Most Gracious, Most Merciful.</string>
 
+    <string name="header_verse_bn"> পাঠ কর তোমার প্রতিপালকের নামে, যিনি সৃষ্টি করিয়াছেন-</string>
+    <string name="header_verse_en"> Proclaim! (or read!) in the name of your Lord and Cherisher, Who created-</string>
+
     <string-array name="se1">
         <item>Praise be to Allah, the Cherisher and Sustainer of the worlds;</item>
         <item>Most Gracious, Most Merciful;</item>
