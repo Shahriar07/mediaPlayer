@@ -5,7 +5,7 @@
         android:title="@string/search_hint"
         android:icon="@drawable/search_icon"
         app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.support.v7.widget.SearchView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <item
         android:id="@+id/actionSort"
         android:icon="@drawable/sort_white"

@@ -7,10 +7,10 @@
     <string name="reset_loop">Reset</string>
     <string name="surah_and_verse">Verse: </string>
     <string name="arabic_verse">Arabic Verse</string>
-    <string name="surah_number">Surah No:</string>
+    <string name="surah_number">Surah:</string>
     <string name="surah_name">Surah: </string>
     <string name="verses"> Verses:</string>
-    <string name="duration"> Duration:</string>
+    <string name="duration"> Time:</string>
     <string name="repeat">Repeat</string>
 
     <string name="instruction1">* To listen a specific verse, tap on it.</string>

@@ -18,7 +18,7 @@
         android:background="@color/colorPrimary"
         android:layout_alignParentTop="true"/>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dlg_list_items"
         android:layout_width="match_parent"
         android:layout_height="230dp"
@@ -28,7 +28,7 @@
         android:paddingTop="8dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/lng_dlg_btn_cancel"

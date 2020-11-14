@@ -13,7 +13,7 @@
             layout="@layout/header_verse_of_dashboard" />
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/surahList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,5 +23,5 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp">
-    </android.support.v7.widget.RecyclerView>
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

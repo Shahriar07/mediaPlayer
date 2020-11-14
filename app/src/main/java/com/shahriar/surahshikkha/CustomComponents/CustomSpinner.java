@@ -7,7 +7,7 @@ import android.util.AttributeSet;
  * Created by H. M. Shahriar on 3/4/2018.
  */
 
-public class CustomSpinner extends android.support.v7.widget.AppCompatSpinner {
+public class CustomSpinner extends androidx.appcompat.widget.AppCompatSpinner {
 
         public CustomSpinner(Context context)
         { super(context); }
