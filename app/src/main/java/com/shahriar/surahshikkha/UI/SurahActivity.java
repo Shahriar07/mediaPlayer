@@ -118,7 +118,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             showHelpDialogPopup();
         }
         else {
-            Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_SHORT);
+            Utility.showCustomToast(SurahActivity.this, getString(R.string.splash_text),Toast.LENGTH_LONG);
         }
     //    setAutoScrollFromSharedPreference();
     }

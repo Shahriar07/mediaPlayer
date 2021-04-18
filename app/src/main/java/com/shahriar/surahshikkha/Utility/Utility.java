@@ -210,9 +210,9 @@ public class Utility {
 
     public static void  showCustomToast(Context context, String text, int duration){
         Toast toast = Toast.makeText(context, text , duration);
-        LinearLayout toastLayout = (LinearLayout) toast.getView();
-        TextView toastTV = (TextView) toastLayout.getChildAt(0);
-        toastTV.setTypeface(Utility.getTypeFace(context));
+//        LinearLayout toastLayout = (LinearLayout) toast.getView(); // Get view is deprecated from api 30
+//        TextView toastTV = (TextView) toastLayout.getChildAt(0);
+//        toastTV.setTypeface(Utility.getTypeFace(context));
         toast.show();
     }
 
