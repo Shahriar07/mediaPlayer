@@ -141,7 +141,6 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         Log.d(getClass().getSimpleName(), "onCreate");
         setContentView(R.layout.drawer_layout);
         localizedContext = this;
-        Log.d(getClass().getSimpleName(), "onCreate");
         controller = new SharedPreferenceController(this);
         typeface = ResourcesCompat.getFont(this, R.font.solaimanlipi);
         //int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
@@ -760,8 +759,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     private void stopCurrentMedia(boolean userInitiated) {
         Log.d(getClass().getSimpleName(), "stopCurrentMedia");
-        if (mediaManager != null)
+        if (mediaManager != null) {
             mediaManager.stopMedia(userInitiated);
+        }
         if (DashboardActivity.surahInfo != null) {
             DashboardActivity.surahInfo.setAudioPercent(0);
             DashboardActivity.surahInfo.setPlaying(false);
@@ -877,7 +877,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
             return listAdapters[0];
         }
 
-        protected void onPostExecute(SurahListAdapter listAdapters) {
+        protected void onPostExecute(@NonNull SurahListAdapter listAdapters) {
             listAdapters.refresh(DashboardActivity.position, DashboardActivity.surahInfo, null);
             playPauseButtonPressed(DashboardActivity.surahInfo, DashboardActivity.position);
             scrollListToPosition(DashboardActivity.position);

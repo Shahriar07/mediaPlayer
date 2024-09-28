@@ -34,19 +34,18 @@ import java.util.Locale;
 
 public class SurahListAdapter extends RecyclerView.Adapter implements Filterable {
 
-    private final int interval = 500; // 500 milliSecond
     private Context context;
-    private LayoutInflater inflater;
-    private DashboardListItemListener listItmeListener;
+    private final LayoutInflater inflater;
+    private final DashboardListItemListener listItmeListener;
     private ArrayList<SurahInfo> surahList;
     private ArrayList<SurahInfo> filteredData;
-    private ItemFilter mFilter = new ItemFilter();
+    private final ItemFilter mFilter = new ItemFilter();
     private DashboardListItemUpdateListener updateListener;
     private int updatePosition = 0;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
     // Run the next surah if the view is in background
-    private Runnable runnable = new Runnable() {
+    private final Runnable runnable = new Runnable() {
         public void run() {
             if (updateListener != null) {
                 updateListener.listItemUpdated(updatePosition);
@@ -71,6 +70,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
         this.filteredData = surahList;
     }
 
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d(getClass().getSimpleName(), "onCreateViewHolder");
@@ -115,6 +115,8 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             this.updatePosition = position;
             notifyItemChanged(position);
         }
+        // 500 milliSecond
+        int interval = 500;
         handler.postAtTime(runnable, System.currentTimeMillis() + interval);
         handler.postDelayed(runnable, interval);
     }

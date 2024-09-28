@@ -42,12 +42,11 @@ public class SurahFactory {
     private static SurahFactory instance;
     Context applicationContext;
 
-    public static SurahFactory getInstance(Context context){
-        if (instance == null)
-        {
-            synchronized (SurahFactory.class){
+    public static SurahFactory getInstance(Context context) {
+        if (instance == null) {
+            synchronized (SurahFactory.class) {
                 if (instance == null)
-                instance = new SurahFactory();
+                    instance = new SurahFactory();
             }
         }
         if (context != null)
@@ -55,124 +54,97 @@ public class SurahFactory {
         return instance;
     }
 
-    public Surah prepareSurah(String surahNumber){
-        switch (surahNumber){
-            case "1":
-            {
+    public Surah prepareSurah(String surahNumber) {
+        switch (surahNumber) {
+            case "1": {
                 return new SurahAlFatihah(applicationContext);
-            }case "86":
-            {
+            }
+            case "86": {
                 return new SurahAtTariq(applicationContext);
             }
-            case "87":
-            {
+            case "87": {
                 return new SurahAlAla(applicationContext);
             }
-            case "88":
-            {
+            case "88": {
                 return new SurahAlGhashiyah(applicationContext);
             }
-            case "89":
-            {
+            case "89": {
                 return new SurahAlFajr(applicationContext);
             }
-            case "90":
-            {
+            case "90": {
                 return new SurahAlBalad(applicationContext);
             }
-            case "91":
-            {
+            case "91": {
                 return new SurahAshShams(applicationContext);
-            }case "92":
-            {
+            }
+            case "92": {
                 return new SurahAlLayl(applicationContext);
             }
-            case "93":
-            {
+            case "93": {
                 return new SurahAdDuha(applicationContext);
             }
-            case "94":
-            {
+            case "94": {
                 return new SurahAsSharh(applicationContext);
             }
-            case "95":
-            {
+            case "95": {
                 return new SurahAtTin(applicationContext);
             }
 //            case "96":
 //            {
 //                return new SurahAlAlaq(applicationContext);
 //            }
-            case "97":
-            {
+            case "97": {
                 return new SurahAlQadr(applicationContext);
             }
-            case "98":
-            {
+            case "98": {
                 return new SurahAlBayyinah(applicationContext);
             }
-            case "99":
-            {
+            case "99": {
                 return new SurahAzZilzalah(applicationContext);
             }
-            case "100":
-            {
+            case "100": {
                 return new SurahAlAdiyat(applicationContext);
             }
-            case "101":
-            {
+            case "101": {
                 return new SurahAlQariah(applicationContext);
             }
-            case "102":
-            {
+            case "102": {
                 return new SurahAtTakathur(applicationContext);
             }
-            case "103":
-            {
+            case "103": {
                 return new SurahAlAsr(applicationContext);
             }
-            case "104":
-            {
+            case "104": {
                 return new SurahAlHumazah(applicationContext);
             }
-            case "105":
-            {
+            case "105": {
                 return new SurahAlFil(applicationContext);
             }
-            case "106":
-            {
+            case "106": {
                 return new SurahAlQuraysh(applicationContext);
             }
-            case "107":
-            {
+            case "107": {
                 return new SurahAlMaun(applicationContext);
             }
-            case "108":
-            {
+            case "108": {
                 return new SurahAlKawthar(applicationContext);
             }
-            case "109":
-            {
+            case "109": {
                 return new SurahAlKafirun(applicationContext);
             }
-            case "110":
-            {
+            case "110": {
                 return new SurahAnNasr(applicationContext);
             }
-            case "111":
-            {
+            case "111": {
                 return new SurahAlMasad(applicationContext);
             }
-            case "112":
-            {
+            case "112": {
                 return new SurahAlIkhlash(applicationContext);
             }
-            case "113":
-            {
+            case "113": {
                 return new SurahAlFalaq(applicationContext);
             }
-            case "114":
-            {
+            case "114": {
                 return new SurahAnNas(applicationContext);
             }
             default:

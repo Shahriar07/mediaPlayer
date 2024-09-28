@@ -1,6 +1,8 @@
 package com.shahriar.surahshikkha.Listeners;
 
 import android.content.Context;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -14,8 +16,8 @@ import com.shahriar.surahshikkha.Interfaces.OnRecycleViewClicked;
 
 public class VerseTouchListener implements RecyclerView.OnItemTouchListener {
 
-    private GestureDetector gestureDetector;
-    private OnRecycleViewClicked clickListener;
+    private final GestureDetector gestureDetector;
+    private final OnRecycleViewClicked clickListener;
 
 
     @Override
@@ -28,7 +30,7 @@ public class VerseTouchListener implements RecyclerView.OnItemTouchListener {
     }
 
     @Override
-    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+    public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
 
     }
 
@@ -48,9 +50,8 @@ public class VerseTouchListener implements RecyclerView.OnItemTouchListener {
             @Override
             public void onLongPress(MotionEvent e) {
                 View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                if (child != null && clickListener != null) {
-                    clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                }
+                if (child != null && clickListener != null)
+                    clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
             }
         });
     }
