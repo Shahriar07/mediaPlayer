@@ -24,7 +24,7 @@ public class SharedPreferenceController {
     public boolean readBooleanWithKey(String key, boolean defaultValue){
         SharedPreferences sharedPref = getSharedPreferences(appContext);
         if (key!=null)
-        return sharedPref.getBoolean(key, defaultValue);
+            return sharedPref.getBoolean(key, defaultValue);
         return defaultValue;
     }
 
@@ -32,12 +32,12 @@ public class SharedPreferenceController {
         return  readBooleanWithKey(key,true);
     }
 
-    public boolean writeBooleanWithKey(String key, boolean value){
-        if (key == null) return false;
+    public void writeBooleanWithKey(String key, boolean value){
+        if (key == null) return;
         SharedPreferences sharedPref = getSharedPreferences(appContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(key, value);
-        return editor.commit();
+        editor.commit();
     }
 
     public int readIntWithKey(String key){
@@ -53,12 +53,12 @@ public class SharedPreferenceController {
             return sharedPref.getInt(key, defaultValue);
         return defaultValue;
     }
-    public boolean writeIntWithKey(String key, int value){
-        if (key == null) return false;
+    public void writeIntWithKey(String key, int value){
+        if (key == null) return;
         SharedPreferences sharedPref = getSharedPreferences(appContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, value);
-        return editor.commit();
+        editor.commit();
     }
 
 

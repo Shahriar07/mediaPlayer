@@ -2,6 +2,8 @@ package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -38,8 +40,9 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
         this.offset = offset;
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.sort_item_layout, parent, false);
         ItemHolder vh = new ItemHolder(v);
         //Log.d(getClass().getSimpleName(),"onCreateViewHolder");
@@ -47,7 +50,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ItemHolder itemHolder = (ItemHolder) holder;
         itemHolder.bindItem(itemList.get(position),position);
         Log.d(getClass().getSimpleName(),"onBindViewHolder");

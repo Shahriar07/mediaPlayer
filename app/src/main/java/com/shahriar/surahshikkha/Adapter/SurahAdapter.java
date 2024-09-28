@@ -2,6 +2,8 @@ package com.shahriar.surahshikkha.Adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;
+
+import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -40,8 +42,9 @@ public class SurahAdapter extends RecyclerView.Adapter {
         inflater = LayoutInflater.from(this.context);
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.verse_of_surah, parent, false);
         VerseHolder vh = new VerseHolder(v);
         Log.d(getClass().getSimpleName(), "onCreateViewHolder");
@@ -49,7 +52,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         VerseHolder verseHolder = (VerseHolder) holder;
         verseHolder.bindVerse(verseArrayList.get(position));
         Log.d(getClass().getSimpleName(), "onBindViewHolder");

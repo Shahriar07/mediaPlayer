@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import android.util.Log;
 import android.widget.LinearLayout;
@@ -110,51 +112,24 @@ public class Utility {
 
 
     public static String getLanguageText(int selectedLanguage) {
-        switch (selectedLanguage){
-            case Constants.LANGUAGE_ENGLISH_VALUE:
-            {
-                return Constants.LANGUAGE_ENGLISH;
-            }
-            case Constants.LANGUAGE_BANGLA_VALUE:
-            {
-                return Constants.LANGUAGE_BANGLA;
-            }
-            default:{
-                return Constants.LANGUAGE_ENGLISH;
-            }
+        if (selectedLanguage == Constants.LANGUAGE_BANGLA_VALUE) {
+            return Constants.LANGUAGE_BANGLA;
         }
+        return Constants.LANGUAGE_ENGLISH;
     }
 
     public static String getCountry(int selectedLanguage) {
-        switch (selectedLanguage){
-            case Constants.LANGUAGE_ENGLISH_VALUE:
-            {
-                return Locale.US.getCountry();
-            }
-            case Constants.LANGUAGE_BANGLA_VALUE:
-            {
-                return "";
-            }
-            default:{
-                return Locale.US.getCountry();
-            }
+        if (selectedLanguage == Constants.LANGUAGE_BANGLA_VALUE) {
+            return "";
         }
+        return Locale.US.getCountry();
     }
 
     public static String getLanguage(int selectedLanguage) {
-        switch (selectedLanguage){
-            case Constants.LANGUAGE_ENGLISH_VALUE:
-            {
-                return Locale.US.getLanguage();
-            }
-            case Constants.LANGUAGE_BANGLA_VALUE:
-            {
-                return "bn";
-            }
-            default:{
-                return Locale.US.getLanguage();
-            }
+        if (selectedLanguage == Constants.LANGUAGE_BANGLA_VALUE) {
+            return "bn";
         }
+        return Locale.US.getLanguage();
     }
     public static String getLocalizedInteger(int maxRepeatCount, Locale locale ) {
 //        return  NumberFormat.getInstance(locale).format(maxRepeatCount);
@@ -185,6 +160,7 @@ public class Utility {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void rateUs(Context context){
         if (context == null)
             return;
