@@ -97,8 +97,9 @@ public class ListItemDialog extends Dialog {
     }
 
     public void scrollToPosition(){
-        int itemcount = dlg_priority_lvw.getAdapter().getItemCount();
-        if (mLayoutManager != null){
+
+        if (mLayoutManager != null && dlg_priority_lvw.getAdapter() != null){
+            int itemcount = dlg_priority_lvw.getAdapter().getItemCount();
             if (selectedItem < 3)
                 mLayoutManager.scrollToPosition(0);
             else if (selectedItem >=  itemcount - 3){
