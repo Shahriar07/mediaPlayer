@@ -79,26 +79,17 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     // Playing surah information
     int surahNumber;
     Handler mediaHandler;
-    Comparator<SurahInfo> comparatorByNumber = new Comparator<SurahInfo>() {
-        @Override
-        public int compare(SurahInfo lhs, SurahInfo rhs) {
-            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-            return lhs.getSurahNumber() > rhs.getSurahNumber() ? 1 : (lhs.getSurahNumber() < rhs.getSurahNumber()) ? -1 : 0;
-        }
+    Comparator<SurahInfo> comparatorByNumber = (lhs, rhs) -> {
+        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+        return lhs.getSurahNumber() > rhs.getSurahNumber() ? 1 : (lhs.getSurahNumber() < rhs.getSurahNumber()) ? -1 : 0;
     };
-    Comparator<SurahInfo> comparatorByVerseNumber = new Comparator<SurahInfo>() {
-        @Override
-        public int compare(SurahInfo lhs, SurahInfo rhs) {
-            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-            return lhs.getVerseCount() > rhs.getVerseCount() ? 1 : (lhs.getVerseCount() < rhs.getVerseCount()) ? -1 : 0;
-        }
+    Comparator<SurahInfo> comparatorByVerseNumber = (lhs, rhs) -> {
+        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+        return lhs.getVerseCount() > rhs.getVerseCount() ? 1 : (lhs.getVerseCount() < rhs.getVerseCount()) ? -1 : 0;
     };
-    Comparator<SurahInfo> comparatorByDuration = new Comparator<SurahInfo>() {
-        @Override
-        public int compare(SurahInfo lhs, SurahInfo rhs) {
-            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
-            return lhs.getSurahDuration() > rhs.getSurahDuration() ? 1 : (lhs.getSurahDuration() < rhs.getSurahDuration()) ? -1 : 0;
-        }
+    Comparator<SurahInfo> comparatorByDuration = (lhs, rhs) -> {
+        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+        return lhs.getSurahDuration() > rhs.getSurahDuration() ? 1 : (lhs.getSurahDuration() < rhs.getSurahDuration()) ? -1 : 0;
     };
     AlertDialogCommandInterface exitDialogInterface = new AlertDialogCommandInterface() {
         @Override
@@ -138,19 +129,17 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(getClass().getSimpleName(), "onCreate");
+//        Log.d(getClass().getSimpleName(), "onCreate");
         setContentView(R.layout.drawer_layout);
         localizedContext = this;
         controller = new SharedPreferenceController(this);
         typeface = ResourcesCompat.getFont(this, R.font.solaimanlipi);
-        //int index = controller.readIntWithKey(Constants.SELECTED_LANGUAGE);
-        // Context context = LocaleManager.setLocale(DashboardActivity.this, index==0?"en":"bn");
         initComponent(localizedContext);
 
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d(getClass().getSimpleName(), "OnCreate " + query);
+//            Log.d(getClass().getSimpleName(), "OnCreate " + query);
         } else {
             closeSearchBar();
         }
@@ -161,7 +150,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void closeSearchBar() {
-        Log.d(getClass().getSimpleName(), "closeSearchBar");
+//        Log.d(getClass().getSimpleName(), "closeSearchBar");
         // close search view if its visible
         if (searchView != null && searchView.isShown()) {
             searchMenuItem.collapseActionView();
@@ -170,13 +159,13 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         initComponent(this);
     }
 
     void updateTitleBar(Context context) {
-        Log.d(getClass().getSimpleName(), "updateTitleBar");
+//        Log.d(getClass().getSimpleName(), "updateTitleBar");
         SpannableString s = new SpannableString(context.getString(R.string.app_name));
         s.setSpan(new CustomTypeface("", typeface), 0, s.length(),
                 Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -184,12 +173,12 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     void initComponent(Context context) {
-        Log.d(getClass().getSimpleName(), "initComponent");
+//        Log.d(getClass().getSimpleName(), "initComponent");
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
-            Log.d(getClass().getSimpleName(), "setSupportActionBar");
+//            Log.d(getClass().getSimpleName(), "setSupportActionBar");
             actionBar.setHomeAsUpIndicator(R.drawable.menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
@@ -197,50 +186,50 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         mediaHandler = new Handler();
 
-        Log.d(getClass().getSimpleName(), "setHomeAsUpIndicator");
+//        Log.d(getClass().getSimpleName(), "setHomeAsUpIndicator");
         RecyclerView surahListView = (RecyclerView) findViewById(R.id.surahList);
         surahListView.setHasFixedSize(true);
         mLayoutManager = new ScrollingLinearLayoutManager(this, 1);
         surahListView.setLayoutManager(mLayoutManager);
         surahInfoList = getSurahInfoList(context);
         int type = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL, Constants.SURAH_VERSE_SORT_BY_NUMBER);
-        Log.d(getClass().getSimpleName(), "sortList");
+//        Log.d(getClass().getSimpleName(), "sortList");
         sortList(type);
         mAdapter = new SurahListAdapter(surahInfoList, context, this);
-        Log.d(getClass().getSimpleName(), "SurahListAdapter");
+//        Log.d(getClass().getSimpleName(), "SurahListAdapter");
 
         surahListView.setAdapter(mAdapter);
-        Log.d(getClass().getSimpleName(), "setAdapter");
+//        Log.d(getClass().getSimpleName(), "setAdapter");
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(getClass().getSimpleName(), "onResume");
+//        Log.d(getClass().getSimpleName(), "onResume");
         scrollListToPosition(DashboardActivity.position);
     }
 
     private void initializeMenuItem() {
-        Log.d(getClass().getSimpleName(), "initializeMenuItem()");
+//        Log.d(getClass().getSimpleName(), "initializeMenuItem()");
         mDrawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        Log.d(getClass().getSimpleName(), "initializeMenuItem setNavigationItemSelectedListener");
+//        Log.d(getClass().getSimpleName(), "initializeMenuItem setNavigationItemSelectedListener");
         mDrawerLayout.addDrawerListener(
                 new DrawerLayout.DrawerListener() {
                     @Override
-                    public void onDrawerSlide(View drawerView, float slideOffset) {
+                    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
                         // Respond when the drawer's position changes
                     }
 
                     @Override
-                    public void onDrawerOpened(View drawerView) {
+                    public void onDrawerOpened(@NonNull View drawerView) {
                         // Respond when the drawer is opened
                     }
 
                     @Override
-                    public void onDrawerClosed(View drawerView) {
+                    public void onDrawerClosed(@NonNull View drawerView) {
                         // Respond when the drawer is closed
                     }
 
@@ -250,7 +239,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                     }
                 }
         );
-        Log.d(getClass().getSimpleName(), "initComponent Menu");
+//        Log.d(getClass().getSimpleName(), "initComponent Menu");
         Menu menu = navigationView.getMenu();
         MenuItem menuItem;
 
@@ -287,7 +276,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         // Set Max repeat count
         Locale locale = Utility.getCurrentLocale(this);
-        Log.d(getClass().getSimpleName(), "initComponent drawerMaxRepeatCount");
+//        Log.d(getClass().getSimpleName(), "initComponent drawerMaxRepeatCount");
         menuItem = menu.findItem(R.id.max_loop_count_control);
         menuItem.setTitle(localizedContext.getString(R.string.max_repeat_count));
         actionView = menuItem.getActionView();//MenuItemCompat.getActionView(menuItem);
@@ -330,7 +319,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
         // set rate us
         menuItem = menu.findItem(R.id.rateUs);
         menuItem.setTitle(localizedContext.getString(R.string.rate_us));
-        Log.d(getClass().getSimpleName(), "rate app");
+//        Log.d(getClass().getSimpleName(), "rate app");
 
         // set guide
         menuItem = menu.findItem(R.id.userGuide);
@@ -377,7 +366,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void applyFontToMenuItem(MenuItem mi) {
-        Log.d(getClass().getSimpleName(), "applyFontToMenuItem");
+//        Log.d(getClass().getSimpleName(), "applyFontToMenuItem");
         SpannableString mNewTitle = new SpannableString(mi.getTitle());
         mNewTitle.setSpan(new CustomTypeface("", typeface), 0, mNewTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mNewTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorBlack)), 0, mNewTitle.length(), 0);
@@ -385,7 +374,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void updateLanguage(Context localizedContext) {
-        Log.d(getClass().getSimpleName(), "updateLanguage");
+//        Log.d(getClass().getSimpleName(), "updateLanguage");
         this.localizedContext = localizedContext;
         typeface = ResourcesCompat.getFont(localizedContext, R.font.solaimanlipi);
         updateListLanguage(localizedContext);
@@ -394,7 +383,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void updateListLanguage(Context localiContext) {
-        Log.d(getClass().getSimpleName(), "updateListLanguage");
+//        Log.d(getClass().getSimpleName(), "updateListLanguage");
         stopCurrentMedia(true);
         surahInfoList = getSurahInfoList(localiContext);
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL, Constants.SURAH_VERSE_SORT_BY_NUMBER);
@@ -405,7 +394,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     void sortList(int type) {
-        Log.d(getClass().getSimpleName(), " Sort List " + type);
+//        Log.d(getClass().getSimpleName(), " Sort List " + type);
         stopCurrentMedia(true);
         if (type == Constants.SURAH_VERSE_SORT_BY_NUMBER)
             Collections.sort(surahInfoList, comparatorByNumber);
@@ -428,9 +417,10 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      * Scroll List to position
      */
     private void scrollListToPosition(int index) {
-        Log.d(getClass().getSimpleName(), "scrollListToPosition " + index);
-        if (mLayoutManager != null)
-        mLayoutManager.scrollToPosition(index);
+//        Log.d(getClass().getSimpleName(), "scrollListToPosition " + index);
+        if (mLayoutManager != null) {
+            mLayoutManager.scrollToPosition(index);
+        }
     }
 
     @Override
@@ -440,7 +430,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View v) {
-        Log.d(getClass().getSimpleName(), "onClick");
+//        Log.d(getClass().getSimpleName(), "onClick");
         switch (v.getId()) {
             case R.id.language_control:
                 mDrawerLayout.closeDrawers();
@@ -452,7 +442,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void closeDrawer() {
-        Log.d(getClass().getSimpleName(), "closeDrawer");
+//        Log.d(getClass().getSimpleName(), "closeDrawer");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
@@ -462,7 +452,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.d(getClass().getSimpleName(), "onNavigationItemSelected");
+//        Log.d(getClass().getSimpleName(), "onNavigationItemSelected");
         int id = item.getItemId();
         // Handle navigation view item clicks here.
         switch (id) {
@@ -524,7 +514,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showUserGuide() {
-        Log.d(getClass().getSimpleName(), "showUserGuide");
+//        Log.d(getClass().getSimpleName(), "showUserGuide");
         String contents[] = {localizedContext.getString(R.string.instruction1), localizedContext.getString(R.string.instruction2), localizedContext.getString(R.string.instruction3)};
         HelpDialog dialog = new HelpDialog(this, localizedContext.getString(R.string.help_outlined_title), localizedContext.getString(R.string.ok), contents);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -532,7 +522,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showLanguageDialog(Context context) {
-        Log.d(getClass().getSimpleName(), "showLanguageDialog");
+//        Log.d(getClass().getSimpleName(), "showLanguageDialog");
 //        final ArrayList<String> itemList = new ArrayList<String>(Arrays.asList(this.getResources().getStringArray(R.array.s114)));
         final ArrayList<String> itemList = new ArrayList<>();
         for (int i = 0; i < Constants.LANGUAGE_LIST.length; i++) {
@@ -546,7 +536,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                 drawerSelectedLanguage.setText(Utility.getLanguageText(position));
                 Context localizedContext = LocaleManager.setNewLocale(DashboardActivity.this, Utility.getLanguage(position), Utility.getCountry(position));
                 Locale locale = Utility.getCurrentLocale(localizedContext);
-                Log.d(getClass().getSimpleName(), "Locale " + locale.getLanguage() + " country " + locale.getCountry());
+//                Log.d(getClass().getSimpleName(), "Locale " + locale.getLanguage() + " country " + locale.getCountry());
                 updateLanguage(localizedContext);
             }
         });
@@ -555,7 +545,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showMaxLoopCountPopup() {
-        Log.d(getClass().getSimpleName(), "showMaxLoopCountPopup");
+//        Log.d(getClass().getSimpleName(), "showMaxLoopCountPopup");
         final Locale locale = Utility.getCurrentLocale(this);
         final ArrayList<String> itemList = new ArrayList<>();
         for (int i = Constants.SURAH_VERSE_MIN_REPEAT_COUNT_NUMBER; i <= Constants.SURAH_VERSE_MAX_REPEAT_COUNT_NUMBER; i++) {
@@ -576,7 +566,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private ArrayList<SurahInfo> getSurahInfoList(@NonNull Context context) {
-        Log.d(getClass().getSimpleName(), "getSurahInfoList");
+//        Log.d(getClass().getSimpleName(), "getSurahInfoList");
         ArrayList<SurahInfo> surahList = new ArrayList<>();
         surahList.add(new SurahInfo(context.getString(R.string.surah_al_fatihah), context.getString(R.string.bn_surah_al_fatihah), 1, false, 46080, 7));
         surahList.add(new SurahInfo(context.getString(R.string.surah_at_tariq), context.getString(R.string.bn_surah_at_tariq), 86, false, 100656, 17));
@@ -616,7 +606,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        Log.d(getClass().getSimpleName(), "onCreateOptionsMenu");
+//        Log.d(getClass().getSimpleName(), "onCreateOptionsMenu");
         android.view.MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.dashboard_activity_action_bar_items, menu);
         initializeMenuItem();
@@ -636,7 +626,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
-        Log.d(getClass().getSimpleName(), "onOptionsItemSelected");
+//        Log.d(getClass().getSimpleName(), "onOptionsItemSelected");
         switch (item.getItemId()) {
             case R.id.actionSort:
                 stopCurrentMedia(true);
@@ -654,7 +644,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showSortSelectDialog() {
-        Log.d(getClass().getSimpleName(), "showSortSelectDialog");
+//        Log.d(getClass().getSimpleName(), "showSortSelectDialog");
         int selectedOrder = controller.readIntWithKey(Constants.SURAH_SORT_CONTROL, Constants.SURAH_VERSE_SORT_BY_NUMBER);
         ListItemDialog dialog = new ListItemDialog(this, localizedContext.getString(R.string.sort), localizedContext.getString(R.string.cancel), new ArrayList<String>(Arrays.asList(localizedContext.getResources().getStringArray(R.array.sort_array))), selectedOrder, new DialogItemTouchListener() {
             @Override
@@ -681,7 +671,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        Log.d(getClass().getSimpleName(), "onQueryTextSubmit");
+//        Log.d(getClass().getSimpleName(), "onQueryTextSubmit");
 
         if (!"".equals(query)) {
             mAdapter.getFilter().filter(query);
@@ -696,7 +686,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        Log.d(getClass().getSimpleName(), "onQueryTextChange");
+//        Log.d(getClass().getSimpleName(), "onQueryTextChange");
         stopCurrentMedia(true);
         mAdapter.getFilter().filter(newText);
         return true;
@@ -704,7 +694,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void playPauseButtonPressed(SurahInfo surahInfo, int position) {
-        Log.d(getClass().getSimpleName(), "playPauseButtonPressed " + position + " isPlaying " + surahInfo.isPlaying() + " surahInfo " + surahInfo.getSurahNumber());
+//        Log.d(getClass().getSimpleName(), "playPauseButtonPressed " + position + " isPlaying " + surahInfo.isPlaying() + " surahInfo " + surahInfo.getSurahNumber());
         if (surahInfo == null)
             return;
         if (mediaManager == null) {
@@ -758,7 +748,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      * Stop currently playing surah (if any)
      */
     private void stopCurrentMedia(boolean userInitiated) {
-        Log.d(getClass().getSimpleName(), "stopCurrentMedia");
+//        Log.d(getClass().getSimpleName(), "stopCurrentMedia");
         if (mediaManager != null) {
             mediaManager.stopMedia(userInitiated);
         }
@@ -777,7 +767,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     public void listItemPressed(int surahNumber) {
-        Log.d(getClass().getSimpleName(), "listItemPressed");
+//        Log.d(getClass().getSimpleName(), "listItemPressed");
         stopCurrentMedia(true);
         Intent surahIntent = new Intent(DashboardActivity.this, SurahActivity.class);
         surahIntent.putExtra(Constants.SURAH_ACTIVITY_SURAH_NO, surahNumber);
@@ -787,7 +777,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void audioPaused(int surahNumber) {
-        Log.d(getClass().getSimpleName(), "audioPaused");
+//        Log.d(getClass().getSimpleName(), "audioPaused");
         if (mediaManager.isMediaPlaying()) {
             mediaManager.pauseMedia();
             DashboardActivity.surahInfo.setPlaying(false);
@@ -801,7 +791,7 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     public void audioStarted(int surahNumber) {
-        Log.d(getClass().getSimpleName(), "audioStarted");
+//        Log.d(getClass().getSimpleName(), "audioStarted");
         mediaHandler.postDelayed(run, 1000);
     }
 
@@ -813,55 +803,45 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
      */
     @Override
     public void audioFinished(int surahNumber, boolean userInitiated) {
-        Log.d(getClass().getSimpleName(), "audioFinished");
+//        Log.d(getClass().getSimpleName(), "audioFinished");
         //surahNumber = 0;
         if (mediaManager != null) {
             mediaManager.release();
             mediaManager = null;
         }
-        Log.d(getClass().getSimpleName(), "surah number " + surahNumber + " surah info " + surahInfo.toString());
+//        Log.d(getClass().getSimpleName(), "surah number " + surahNumber + " surah info " + surahInfo.toString());
         DashboardActivity.surahInfo.setAudioPercent(0);
         DashboardActivity.surahInfo.setPlaying(false);
         if (this.mAdapter != null) {
             //if the finished method called automatically, try to play the next surah
             if (isContinuousPlay && !userInitiated) {
-                Log.d("UpdateListener ", "UpdateListener, Not user Initiated");
+//                Log.d("UpdateListener ", "UpdateListener, Not user Initiated");
                 this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo, this);
             } else {
-                Log.d("UpdateListener ", "UpdateListener, User Initiated");
+//                Log.d("UpdateListener ", "UpdateListener, User Initiated");
                 this.mAdapter.refresh(DashboardActivity.position, DashboardActivity.surahInfo, null);
             }
         }
-
-//        // Play the next Surah if available
-//        if (isContinuousPlay && !userInitiated)
-//        {
-//            if (surahInfoList.size()  > DashboardActivity.position + 1) {
-//                Log.d(getClass().getSimpleName(), "Start the next surah ");
-//                StartSurahAsyncTask startSurahTask = new StartSurahAsyncTask();
-//                startSurahTask.execute(this.mAdapter);
-//            }
-//        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(getClass().getSimpleName(), "onDestroy");
+//        Log.d(getClass().getSimpleName(), "onDestroy");
         if (mediaManager != null)
             mediaManager.release();
         mediaHandler.removeCallbacks(run);
         DashboardActivity.surahInfo = null;
         DashboardActivity.position = 0;
-        Log.d(getClass().getSimpleName(), "On destroy called");
+//        Log.d(getClass().getSimpleName(), "On destroy called");
     }
 
     @Override
     public void listItemUpdated(int position) {
-        Log.d(getClass().getSimpleName(), "listItemUpdated " + position);
+//        Log.d(getClass().getSimpleName(), "listItemUpdated " + position);
         // Play the next Surah if available
         if (surahInfoList.size() > DashboardActivity.position + 1) {
-            Log.d(getClass().getSimpleName(), "Start the next surah ");
+//            Log.d(getClass().getSimpleName(), "Start the next surah ");
             StartSurahAsyncTask startSurahTask = new StartSurahAsyncTask();
             startSurahTask.execute(this.mAdapter);
         }

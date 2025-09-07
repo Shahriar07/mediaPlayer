@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -70,7 +69,7 @@ public class LanguageDialog extends Dialog {
         dlg_priority_lvw.addOnItemTouchListener(new RecyclerItemTouchListener(context, dlg_priority_lvw, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
-                Log.d(getClass().getSimpleName(), "Item Selected " + position);
+//                Log.d(getClass().getSimpleName(), "Item Selected " + position);
                 dismiss();
                 if (listener != null){
                     listener.onDialogItemSelected(position);

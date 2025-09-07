@@ -70,7 +70,7 @@ public class ListItemDialog extends Dialog {
         dlg_priority_lvw.addOnItemTouchListener(new RecyclerItemTouchListener(context, dlg_priority_lvw, new OnRecycleViewClicked(){
             @Override
             public void onClick(View view, int position) {
-                Log.d(getClass().getSimpleName(), "Item Selected " + position);
+//                Log.d(getClass().getSimpleName(), "Item Selected " + position);
                 dismiss();
                 if (listener != null){
                     listener.onDialogItemSelected(position);
@@ -97,8 +97,9 @@ public class ListItemDialog extends Dialog {
     }
 
     public void scrollToPosition(){
-        int itemcount = dlg_priority_lvw.getAdapter().getItemCount();
-        if (mLayoutManager != null){
+
+        if (mLayoutManager != null && dlg_priority_lvw.getAdapter() != null){
+            int itemcount = dlg_priority_lvw.getAdapter().getItemCount();
             if (selectedItem < 3)
                 mLayoutManager.scrollToPosition(0);
             else if (selectedItem >=  itemcount - 3){

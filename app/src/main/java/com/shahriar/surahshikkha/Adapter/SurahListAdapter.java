@@ -73,10 +73,10 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
+//        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
         View v = inflater.inflate(R.layout.dashboard_surah_list_item, parent, false);
         SurahHolder vh = new SurahHolder(v);
-        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
+//        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
         return vh;
     }
 
@@ -86,7 +86,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        Log.d(getClass().getSimpleName(), "onBindViewHolder");
+//        Log.d(getClass().getSimpleName(), "onBindViewHolder");
         SurahHolder surahHolder = (SurahHolder) holder;
         surahHolder.bindSurah(filteredData.get(position), position);
         holder.itemView.setBackgroundResource(R.drawable.surah_verse_border);
@@ -175,7 +175,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
 
         public SurahHolder(View v) {
             super(v);
-            Log.d(getClass().getSimpleName(), "SurahHolder");
+//            Log.d(getClass().getSimpleName(), "SurahHolder");
             Typeface typeface = ResourcesCompat.getFont(v.getContext(), R.font.solaimanlipi);
             surahNo = (TextView) v.findViewById(R.id.surahListSurahNumber);
             surahNo.setTypeface(typeface);
@@ -194,7 +194,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
         }
 
         public void bindSurah(final SurahInfo surahInfo, final int position) {
-            Log.d(getClass().getSimpleName(), "BindSurah called for possition " + position + " surah Info " + surahInfo.getSurahNumber());
+//            Log.d(getClass().getSimpleName(), "BindSurah called for possition " + position + " surah Info " + surahInfo.getSurahNumber());
             surahNumberHeader = context.getString(R.string.surah_number);
             verseTextHeader = context.getString(R.string.verses);
             durationTextHeader = context.getString(R.string.duration);
@@ -216,11 +216,11 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             progressBar.setMax(100);
             progressBar.setProgress(surahInfo.getAudioPercent());
             if (surahInfo.isPlaying()) {
-                Log.d(getClass().getSimpleName(), "Set Button to pause " + surahInfo.getSurahNumber());
+//                Log.d(getClass().getSimpleName(), "Set Button to pause " + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_button_background_pause);
                 playingState = true;
             } else {
-                Log.d(getClass().getSimpleName(), "Set Button to play " + surahInfo.getSurahNumber());
+//                Log.d(getClass().getSimpleName(), "Set Button to play " + surahInfo.getSurahNumber());
                 playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
                 playingState = false;
             }
@@ -228,7 +228,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
             playPauseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(getClass().getSimpleName(), "******************* PlayPause button clicked *********************");
+//                    Log.d(getClass().getSimpleName(), "******************* PlayPause button clicked *********************");
                     updatePlayPauseButton(surahInfo, position);
                 }
             });
@@ -247,7 +247,7 @@ public class SurahListAdapter extends RecyclerView.Adapter implements Filterable
 
         public void updatePlayPauseButton(final SurahInfo surahInfo, final int position) {
             if (listItmeListener != null) {
-                Log.d(getClass().getSimpleName(), "Playing State " + playingState + " Surah Number " + surahInfo.getSurahNumber() + " Possition " + position);
+//                Log.d(getClass().getSimpleName(), "Playing State " + playingState + " Surah Number " + surahInfo.getSurahNumber() + " Possition " + position);
                 if (playingState) {
                     playPauseButton.setBackgroundResource(R.drawable.rounded_play_button_background);
                 } else {
