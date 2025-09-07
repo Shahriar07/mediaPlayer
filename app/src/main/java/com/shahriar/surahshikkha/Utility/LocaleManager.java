@@ -7,7 +7,6 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.util.Locale;
 
@@ -33,13 +32,13 @@ public class LocaleManager {
 
         public static String getLanguage(Context context) {
             Locale locale = Utility.getCurrentLocale(context);
-            Log.d("LocaleManager"," getLanguage "+locale.getLanguage());
+//            Log.d("LocaleManager"," getLanguage "+locale.getLanguage());
             return locale.getLanguage();
         }
 
         public static String getCountry(Context context) {
             Locale locale = Utility.getCurrentLocale(context);
-            Log.d("LocaleManager"," getCountry "+locale.getCountry());
+//            Log.d("LocaleManager"," getCountry "+locale.getCountry());
             return locale.getCountry();
         }
     public static Context setLocale(Context context) {

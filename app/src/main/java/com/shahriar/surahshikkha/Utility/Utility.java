@@ -9,9 +9,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
-import android.util.Log;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shahriar.surahshikkha.R;
@@ -73,7 +70,7 @@ public class Utility {
 
     public Integer[] getIntArray(int startRange, int endRange){
         int duration = Math.abs(endRange-startRange);
-        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
+//        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
         Integer[] intArray = new Integer[duration+1];
         if (endRange > startRange){
             for (int i = 0;i <= duration; ++i,++startRange){
@@ -89,7 +86,7 @@ public class Utility {
     }
     public String[] getStringArray(int startRange, int endRange, Locale locale){
         int duration = Math.abs(endRange-startRange);
-        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
+//        Log.d(getClass().getSimpleName(),"Duration "+duration + " start " + startRange + " End " + endRange);
         String[] intArray = new String[duration+1];
         if (endRange > startRange){
             if (locale == null){

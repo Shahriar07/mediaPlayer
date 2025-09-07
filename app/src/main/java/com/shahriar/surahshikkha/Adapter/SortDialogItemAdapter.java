@@ -6,7 +6,6 @@ import android.graphics.Typeface;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     int offset;
     LayoutInflater inflater;
     public SortDialogItemAdapter( Context context, ArrayList<String> itemList, int selectedItem, int offset) {
-        Log.d(getClass().getSimpleName(), " Item List Size "+itemList.size());
+//        Log.d(getClass().getSimpleName(), " Item List Size "+itemList.size());
         this.itemList = itemList;
         this.context = context;
         inflater = LayoutInflater.from(this.context);
@@ -53,7 +52,7 @@ public class SortDialogItemAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ItemHolder itemHolder = (ItemHolder) holder;
         itemHolder.bindItem(itemList.get(position),position);
-        Log.d(getClass().getSimpleName(),"onBindViewHolder");
+//        Log.d(getClass().getSimpleName(),"onBindViewHolder");
     }
 
     @Override

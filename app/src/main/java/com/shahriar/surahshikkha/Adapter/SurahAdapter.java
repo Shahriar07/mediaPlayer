@@ -47,7 +47,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = inflater.inflate(R.layout.verse_of_surah, parent, false);
         VerseHolder vh = new VerseHolder(v);
-        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
+//        Log.d(getClass().getSimpleName(), "onCreateViewHolder");
         return vh;
     }
 
@@ -55,7 +55,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         VerseHolder verseHolder = (VerseHolder) holder;
         verseHolder.bindVerse(verseArrayList.get(position));
-        Log.d(getClass().getSimpleName(), "onBindViewHolder");
+//        Log.d(getClass().getSimpleName(), "onBindViewHolder");
 
         Verse item = verseArrayList.get(position);
 
@@ -105,7 +105,7 @@ public class SurahAdapter extends RecyclerView.Adapter {
             banglaTranslation.setTypeface(typeface);
             englishTranslation = (TextView) v.findViewById(R.id.verse_translation_in_english);
             surahVersesArabic = (ImageView) v.findViewById(R.id.arabic_verse);
-            Log.d(getClass().getSimpleName(), "VerseHolder");
+//            Log.d(getClass().getSimpleName(), "VerseHolder");
         }
 
         public void bindVerse(Verse verse) {

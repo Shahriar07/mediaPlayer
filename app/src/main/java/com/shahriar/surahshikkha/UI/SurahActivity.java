@@ -3,10 +3,12 @@ package com.shahriar.surahshikkha.UI;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.text.Spannable;
@@ -110,7 +112,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.surah_activity_layout);
         surahNo = getIntent().getIntExtra(Constants.SURAH_ACTIVITY_SURAH_NO,114);
-        Log.d(getLocalClassName(),"Surah number "+ surahNo);
+//        Log.d(getLocalClassName(),"Surah number "+ surahNo);
         initializeComponents();
         setMaxLoopCountFromSharedPreference();
         boolean showGuide = controller.readBooleanWithKey(Constants.ACTIVITY_SHOW_GUIDE,false);
@@ -235,7 +237,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 
         loop_reset_button = (ImageButton) findViewById(R.id.reset_loop);
         loop_reset_button.setOnClickListener(this);
-        Log.d(getClass().getSimpleName(), " Media duration is " + mediaDuration);
+//        Log.d(getClass().getSimpleName(), " Media duration is " + mediaDuration);
 
         loopStartTime = 0;
         loopEndTime = durationArray[durationArray.length - 2];
@@ -305,7 +307,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             loopEndTime = durationArray[durationArray.length - 1];
             scrollListToPosition(0);
             setCurrentSelectedIndex(0);
-            Log.d(getClass().getSimpleName(),"Set Next Loop in last index with start time " + loopStartTime + " End time "+ loopEndTime);
+//            Log.d(getClass().getSimpleName(),"Set Next Loop in last index with start time " + loopStartTime + " End time "+ loopEndTime);
         }
         else{
             // 1. if verse 2 is running set verse 3
@@ -315,11 +317,11 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
                 currentLoopIndex = utility.getIndexForLoop(loopStartTime,durationArray);
             }
             loopEndTime = durationArray[currentLoopIndex + 1];
-            Log.d(getClass().getSimpleName(),"Set Next Loop with start time " + loopStartTime + " End time "+ loopEndTime);
+//            Log.d(getClass().getSimpleName(),"Set Next Loop with start time " + loopStartTime + " End time "+ loopEndTime);
             scrollListToPosition(currentLoopIndex);
             setCurrentSelectedIndex(currentLoopIndex);
         }
-        Log.d(getClass().getSimpleName(),"Set Next Loop with currentLoopIndex" + currentLoopIndex);
+//        Log.d(getClass().getSimpleName(),"Set Next Loop with currentLoopIndex" + currentLoopIndex);
     }
 
     // Set Loop of the audio and update seekbar and duration text
@@ -330,14 +332,14 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             if (maxLoopCount > 1) {
                 // This is the last play of loop Need to set the next loop
                 if (loopCount >= maxLoopCount) {
-                    Log.d(getClass().getSimpleName(), "Set Next Loop Count");
+//                    Log.d(getClass().getSimpleName(), "Set Next Loop Count");
                     setNextLoop();
                 }
 
                 // If player continue playing and there is a loop set, go to the start position and play again
                 if (loopEndTime <= mediaDuration && player.getCurrentPosition() >= loopEndTime && loopCount < maxLoopCount) {
                     player.seekTo(loopStartTime);
-                    Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
+//                    Log.d(getClass().getSimpleName(), "Loop Count ++ " + loopCount);
                     ++loopCount;
                     try {
                         if (player.isPlaying()) {
@@ -460,9 +462,9 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
     AdapterView.OnItemSelectedListener startItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(SurahActivity.this.getClass().getSimpleName(),"Start ID is "+ id);
+//            Log.d(SurahActivity.this.getClass().getSimpleName(),"Start ID is "+ id);
             if (parent != null)
-            setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
+                setLoopWhenStartVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString()));
         }
 
         @Override
@@ -478,7 +480,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
      * but update end time to index time if smaller than selected index
      */
     public void setLoopWhenStartVerseIndexSelected(int index){
-        Log.d(getClass().getSimpleName(),"setLoopWhenStartVerseIndexSelected");
+//        Log.d(getClass().getSimpleName(),"setLoopWhenStartVerseIndexSelected");
         current_time.setText(utility.getFormatedTimeFromMilisecond(durationArray[index],currentLocale));
 
         currentLoopIndex = index;
@@ -503,15 +505,15 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
             setLoopWhenEndVerseIndexSelected(index+1);
         }
         updateStartVerseText(selectedStartLoopItem);
-        Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime);
+//        Log.d(getLocalClassName(),"LoopIndex " + currentLoopIndex + " loopStartTime " +loopStartTime);
     }
 
     AdapterView.OnItemSelectedListener endItemSelectedListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            Log.d(SurahActivity.this.getClass().getSimpleName(),"End ID is "+ id);
+//            Log.d(SurahActivity.this.getClass().getSimpleName(),"End ID is "+ id);
             if (parent != null)
-            setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString())+1);
+             setLoopWhenEndVerseIndexSelected(Integer.parseInt(parent.getSelectedItem().toString())+1);
         }
 
         @Override
@@ -549,7 +551,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
 //            seekUpdation();
 //            changePlayPauseButton();
 //        }
-        Log.d(getLocalClassName(),"LoopIndex " + index + " LoopEndTime " +loopEndTime);
+//        Log.d(getLocalClassName(),"LoopIndex " + index + " LoopEndTime " +loopEndTime);
     }
 
     private void updateStartVerseText(int value){
@@ -683,7 +685,7 @@ public class SurahActivity extends AppCompatActivity implements OnClickListener,
         player.release();
         seekHandler.removeCallbacks(run);
         mAudioManager.abandonAudioFocus(this);
-        Log.d(getClass().getSimpleName(), "On destroy called");
+//        Log.d(getClass().getSimpleName(), "On destroy called");
     }
 
     /*
