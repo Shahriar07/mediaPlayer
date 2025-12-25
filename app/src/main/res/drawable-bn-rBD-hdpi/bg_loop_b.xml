@@ -10,12 +10,5 @@
             <solid android:color="@android:color/transparent"/>
         </shape>
     </item>
-    <!-- Body -->
-    <item android:top="2dp">
-        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-            android:src="@drawable/end_verse"
-            android:tileMode="disabled"
-            android:gravity="center"/>
-    </item>
 </layer-list>
 
